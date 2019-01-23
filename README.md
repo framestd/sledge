@@ -1,5 +1,5 @@
 <p align="center">
-	<span style="font-size: 40px;">py</span><img src="https://raw.githubusercontent.com/framestd/pyframe/master/images/frame-text300.png" alt="Frame Logo"/>
+	<img src="https://raw.githubusercontent.com/framestd/pyframe/master/images/frame-text300.png" alt="Frame Logo"/>
 </p>
 
 # pyframe  
