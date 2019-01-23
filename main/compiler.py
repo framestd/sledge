@@ -1,11 +1,11 @@
-# Copyright 2019 The Lazy Developers in Frame. All rights reserved.
+# Copyright 2019 Frame Studios. All rights reserved.
 # Frame v1.0 python implementation by some Pane-in-the-Frame developers.
 # pyFrame v1.0
 # Project Manager: Caleb Adepitan
 # The Frame specifications that govern this implementation can be found at:
 # https://frame.github.io/spec/v1/
 # Developers Indulgent Program (DIP)
-# Use of this source code is licensed under the APACHE 2.0 LICENCE
+# Use of this source code is licensed under the GPL 2.0 LICENSE
 # which can be found in the LICENSE file.
 # In attribution to Realongman, Inc.
 
