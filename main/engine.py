@@ -10,9 +10,9 @@
 # In attribution to Realongman, Inc.
 
 import os, sys
-from frame import compiler
+from . import compiler
 import re
-from compiler import Frame
+from .compiler import Frame
 
 nullstr = ""
 status = ["Build failed", "Build successful"]

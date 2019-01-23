@@ -12,10 +12,10 @@
 import re
 import io
 import os
-from frame import framefunctions
-from frame import preprocessors  as prep
+from . import framefunctions
+from . import preprocessors  as prep
 from framefunctions import *
-from frame import escentity as esc
+from . import escentity as esc
 
 __all__ = ["Frame"]
 n = "\n"
