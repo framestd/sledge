@@ -1,4 +1,4 @@
-@load: rel-"panes" src-"panes.json"
+@load: rel-"panes" src-"../pyframe/tests/panes.json"
 <!DOCTYPE html>
 <html>
     <head>
