@@ -142,6 +142,7 @@ def doTabs(context=nullstr, tab=nullstr):
 def buildall(workspace=os.path.dirname(__file__), layout=None):
     layoutFile = layout
     workshop = os.path.abspath(workspace)
+    print workshop
     compiledLayoutFrame = compile(layoutFile) if layout is not None else None
     igpath, flpath = os.path.join(workshop,ig), os.path.join(workshop,fl)
     ignore = open(igpath).read().split(n) if os.path.exists(igpath) else ()
