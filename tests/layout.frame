@@ -1,4 +1,4 @@
-@load: rel-"panes" src-"../../tests/panes.json"
+@load: rel-"panes" src-"panes.json"
 <!DOCTYPE html>
 <html>
     <head>
