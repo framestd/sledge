@@ -167,9 +167,14 @@ class Frame():
 
         #BEGIN: get things ready
         frameup = None
-        prep.workspace = os.path.dirname(os.path.abspath(framefile))
+        print framefile
+        if not os.path.isabs(framefile):
+            framefile = framefile.split("/")
+            for each in framefile:
+                framefile = os.path.join(os.path.dirname(self.WORKSPACE), each)
+        print framefile, prep.workspace
+        prep.workspace = os.path.dirname(framefile)
         self.WORKSPACE = prep.workspace
-        #print prep.workspace, "prep.workspace", os.path.abspath(framefile)
         framefile = os.path.normpath(framefile)
         FILE = framefile.split(os.sep)[-1]
         self.CURFILE = re.sub(r"(\..*?)$", "", FILE) if not mode else self.CURFILE
