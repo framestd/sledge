@@ -107,7 +107,7 @@ def build(basedir, filename, cMainFrame, cLayoutFrame):
     dest = fr.dest
     cLayoutFrame = awaitLayoutFrame if awaitLayoutFrame is not None else cLayoutFrame # a layout frame defined on the page overrides the one set generally in the build method.
     fname = re.sub(_ptrns[0], ext, filename)
-    genHTMLFile = os.path.join(dest, fname)
+    genHTMLFile = os.path.join(workshop, dest, fname)
     tab = re.search(_ptrns[1], cLayoutFrame).group(1)
     fileo = nfc = None
     try:

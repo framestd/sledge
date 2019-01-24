@@ -167,7 +167,7 @@ class Frame():
 
         #BEGIN: get things ready
         frameup = None
-        prep.workspace = os.path.dirname(framefile)
+        prep.workspace = os.path.dirname(os.path.abspath(framefile))
         self.WORKSPACE = prep.workspace
         framefile = os.path.normpath(framefile)
         FILE = framefile.split(os.sep)[-1]

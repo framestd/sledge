@@ -1,5 +1,5 @@
-@load: rel-"dest" href-"../pyframe/tests/build"
-@load: rel-"layout" src-"../pyframe/tests/layout.frame"
+@load: rel-"dest" href-"build"
+@load: rel-"layout" src-"../../tests/layout.frame"
 <div.main-content>
     ${FRAME::DIRNAME}
     ${FRAME::FILENAME}
