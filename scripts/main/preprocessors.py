@@ -80,7 +80,6 @@ def processor(tag, attr):
                 pass
             else:
                 try:
-                    print os.path.join(workspace, dest)
                     os.mkdir(os.path.join(workspace, dest))
                 except OSError:
                     __destinationunresolved__ = True

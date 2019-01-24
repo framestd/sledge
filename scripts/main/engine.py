@@ -111,7 +111,6 @@ def build(basedir, filename, cMainFrame, cLayoutFrame):
     tab = re.search(_ptrns[1], cLayoutFrame).group(1)
     fileo = nfc = None
     try:
-        print genHTMLFile, "dest file"
         fileo = open(genHTMLFile, 'w')
         cMainFrame = doTabs(cMainFrame, tab)
         nfc = re.sub(_ptrns[2], cMainFrame, cLayoutFrame)
@@ -143,7 +142,6 @@ def doTabs(context=nullstr, tab=nullstr):
 def buildall(workspace=os.path.dirname(__file__), layout=None):
     layoutFile = layout
     workshop = os.path.abspath(workspace)
-    print workshop, "workshop"
     compiledLayoutFrame = compile(layoutFile) if layout is not None else None
     igpath, flpath = os.path.join(workshop,ig), os.path.join(workshop,fl)
     ignore = open(igpath).read().split(n) if os.path.exists(igpath) else ()
