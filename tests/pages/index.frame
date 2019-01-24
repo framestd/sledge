@@ -3,7 +3,4 @@
 <div.main-content>
     ${FRAME::DIRNAME}
     ${FRAME::FILENAME}
-    %read(
-        C:/Users/Adepitan/myprograms/WebAidBox/Navigation/build/pages/index.frame
-    )
 </div>
