@@ -13,7 +13,7 @@ set F=PATH
 set PATHFILE=%DIR%%F%
 set SP=
 if exist %PATHFILE% (
-	set /p SP=<%PATHFILE%
+    set /p SP=<%PATHFILE%
 )
 
 rem store these before shifting
@@ -25,7 +25,7 @@ set CHOP=
 shift
 :loop
 if "%1" == "" (
-	goto breakloop
+    goto breakloop
 )
 set CHOP=%CHOP%%1 
 shift
@@ -33,32 +33,32 @@ goto loop
 
 :breakloop
 if %A% == %BUILDCMD% (
-	if exist %PATHFILE% (
-		echo starting script at "%SP%"
-		echo **************************************************************************************
-		echo **************************************************************************************
-		echo build process started...
-		python %SP% %CHOP%
-		goto END
-	) else (
-	  goto PathNotSet
-	)
+    if exist %PATHFILE% (
+        echo starting script at "%SP%"
+        echo **************************************************************************************
+        echo **************************************************************************************
+        echo build process started...
+        python %SP% %CHOP%
+        goto END
+    ) else (
+      goto PathNotSet
+    )
 )
 
 set MSG=Updated your script path to "%C%"
 if %A% == %ADDCMD% (
-	if %B% == %PARAM% (
-		if not exist %DIR% (
-			mkdir %DIR%
-			echo %3>%DIR%%F%
-			echo %MSG%
-			goto END
-		) else (
-			echo %3>%DIR%%F%
-			echo %MSG%
-			goto END
-		)
-	)
+    if %B% == %PARAM% (
+        if not exist %DIR% (
+            mkdir %DIR%
+            echo %3>%DIR%%F%
+            echo %MSG%
+            goto END
+        ) else (
+            echo %3>%DIR%%F%
+            echo %MSG%
+            goto END
+        )
+    )
 )
 
 :PathNotSet
