@@ -1,0 +1,9 @@
+@load: rel-"dest" href-"../build"
+@load: rel-"layout" src-"../layout.frame"
+<div.main-content>
+    ${FRAME::DIRNAME}
+    ${FRAME::FILENAME}
+    %read(
+        C:/Users/Adepitan/myprograms/WebAidBox/Navigation/build/pages/index.frame
+    )
+</div>

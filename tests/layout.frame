@@ -1,0 +1,93 @@
+@load: rel-"panes" src-"panes.json"
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+        <meta name="description" content="${FRAME::METAS::desc}"/>
+        <meta name="author" content="${FRAME::METAS::author}"/>
+        <title>${FRAME::TITLE}</title>
+    </head>
+
+    <body>
+        <div.container>
+            <div.navbar>
+                <span>
+                    <a.no.menu-btn.me.us.we href="#menu" data-controls="${control::id}" title="Menu">
+                        ${icons::menu-btn}
+                    </a>
+                </span>
+                <div.site-icon>
+                    ${icons::site-icon}
+                </div>
+                <div.primary-navlinks>
+                    <ul.override>
+                        %explode(
+                            <li>
+                                <a.override.navbar-link href="${HREF}" title="${TITLE}">
+                                    ${TITLE}
+                                </a>
+                            </li>, navbar::links
+                        )
+                    </ul>
+                    ${navbar::extras}
+                </div>
+            </div><!--navbar-->
+        
+            <!-- Navigation -->
+            <div.backdrop//>
+            <div#${control::id}.main-menu.left data-hash-nav-max-width="${nav::hash-nav-max-width}" data-nav-drawer-max-width="${nav::nav-drawer-max-width}">
+                <ul.no>
+                    <li.exempt.damn#no>
+                        <div.head.lead>
+                            <a.override.nav-link href="javascript:void(window.history.back());" title="${nav::back-btn-title}">
+                                ${icon-arrow-back}
+                            </a>
+                            ${nav::header}
+                        </div>
+                    </li>
+                    <li>
+                        <div.menu-desc>
+                            ${nav::description}
+                        </div>
+                    </li>
+                    <li>
+                        <div.rule//>
+                    </li>
+                    %explode(
+                        <li>
+                            <span.group>
+                                ${FRAME::GROUP}
+                            </span>
+                        </li>,
+                        <li>
+                            <a.override.nav-link href="${HREF}" title="${TITLE}">
+                                ${TITLE}
+                            </a>
+                        </li>, nav::links
+                    )
+                </ul>
+            </div>    
+            ${FRAME::BODY}
+            %htmlspecialchars(
+                <caleb>me&you</caleb>
+            )
+            <footer.footer>
+                <ul.override>
+                    %explode(
+                        <li>
+                            <span.group>
+                                ${FRAME::GROUP}
+                            </span>
+                        </li>,
+                        <li>
+                            <a.footer-links href="${HREF}" title="${TITLE}">
+                                ${TITLE}
+                            </a>
+                        </li>, footer::links
+                    )
+                </ul>
+            </footer>
+        </div><!--/container-->
+    </body>
+</html>

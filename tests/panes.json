@@ -1,0 +1,70 @@
+{
+	"title" : "Frame Web Carpentary",
+	"icons" : {
+		"menu-btn" : null,
+		"site-icon" : null
+	},
+	"navbar" : {
+		"links": [
+			{
+				"TITLE": "Frame",
+				"HREF": "https://github.com/CalebPitan/Frame/",
+				"ICON": null
+			},
+			{
+				"TITLE" : "Python",
+				"HREF" : "https://github.com/CalebPitan/WebAidBox/Navigation/cardinal.js",
+				"ICON" : null
+			}
+		],
+		"extras" : null
+	},
+	"control" :{
+		"id" : "nav-menu"
+	},
+	"nav" : {
+		"hash-nav-max-width" : 978,
+		"nav-drawer-max-width" : 767,
+		"description" : "UX/UI Plugins",
+		"back-btn-title" : "back",
+		"icon-arrow-back" : "<svg width=\"20\" height=\"20\" version=\"1.1\" viewBox=\"0 0 6.6146942 6.61462\" xmlns=\"http:\/\/www.w3.org\/2000\/svg\"><path d=\"m0.66146 3.3197 0.037724-0.057878 3.1213-2.6004 0.016021 0.075965-0.00103 0.79323-2.0779 1.7312-0.037724 0.057878 2.112 1.7725-0.00103 0.86093l-0.053744-0.018603zm0.78449-0.35951h4.5072v0.72228h-4.5072z\" fill=\"#666\" stroke-width=\"0\" style=\"paint-order:stroke markers fill\"/></svg>",
+		"header" : "Home",
+		"links" : {
+			"Modules": [
+				{
+					"TITLE": "WebAidBox",
+					"HREF": "https://github.com/CalebPitan/WebAidBox/",
+					"ICON": null
+				},
+				{
+					"TITLE" : "Cardinal",
+					"HREF" : "https://github.com/CalebPitan/WebAidBox/Navigation/cardinal.js",
+					"ICON" : null
+				}
+			],
+			"Services": [
+				{
+					"TITLE": "Feedback",
+					"HREF": "https://calebpitan.github.io/WebAidBox/feedback.html",
+					"ICON": null
+				},
+				{
+					"TITLE" : "Help",
+					"HREF" : "https://calebpitan.github.io/WebAidBox/help.html",
+					"ICON" : null
+				}
+			]
+		}
+	},
+	"footer" : {
+		"links" : {
+			"Modules": [
+				{
+					"TITLE": "WebAidBox",
+					"HREF": "https://github.com/CalebPitan/WebAidBox/",
+					"ICON": null
+				}
+			]
+		}
+	}
+}
