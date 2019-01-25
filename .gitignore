@@ -1,3 +1,4 @@
 scripts/main/.vs/
 tests/build/
+tests/pages/build/
 *.pyc
