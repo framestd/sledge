@@ -1,5 +1,5 @@
 :: Frame API entry point 
-:: Copyright 2019 Frame Studios
+:: Copyright 2019 Frame Studios. All rights reserved.
 :: This file has been modified by authors of the project at pyframe
 :: to fit for the python language as pyframe is written in python
 :: Licensed under GNU/GPL-2.0
@@ -50,11 +50,11 @@ if %A% == %ADDCMD% (
     if %B% == %PARAM% (
         if not exist %DIR% (
             mkdir %DIR%
-            echo %3>%DIR%%F%
+            echo %C%>%PATHFILE%
             echo %MSG%
             goto END
         ) else (
-            echo %3>%DIR%%F%
+            echo %C%>%PATHFILE%
             echo %MSG%
             goto END
         )
