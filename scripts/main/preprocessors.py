@@ -66,26 +66,35 @@ def processor(tag, attr):
         src = ""
         if rel == "panes":
             src = getAttribute('src', attr)
+            if not os.path.isabs(src):
+                src = realpath(workspace, src)
             pane = dict()
             if os.path.isfile(src):
                 pane.update(loadpane(src))
-            elif os.path.isfile(os.path.join(workspace, src)):
-                pane.update(loadpane(os.path.join(workspace, src)))
             else:
                 __panenotfound__ = True
             FrameInst.storepane(pane)
         elif rel == "dest":
             dest = getAttribute('href', attr)
+            if not os.path.isabs(dest):
+                dest = realpath(workspace, dest)
             if os.path.isdir(dest):
                 pass
             else:
                 try:
-                    os.mkdir(os.path.join(workspace, dest))
-                except OSError:
+                    os.mkdir(dest)
+                except OSError as ex:
                     __destinationunresolved__ = True
             FrameInst.dest = dest
         elif rel == "layout":
-            FrameClass.linkedLayoutFrame = FrameInst.compile(getAttribute('src', attr), 1, 1)
+            src = getAttribute('src', attr)
+            if not os.path.isabs(src):
+                src = realpath(workspace, src)
+            FrameClass.linkedLayoutFrame = FrameInst.compile(src , 1, 1)
         else:
             pass
-        
+
+def realpath(workspace, path):
+    if not os.path.isabs(path):
+        path = os.path.join(workspace, path, '')
+        return os.path.normpath(path)

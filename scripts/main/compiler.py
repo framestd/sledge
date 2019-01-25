@@ -167,12 +167,6 @@ class Frame():
 
         #BEGIN: get things ready
         frameup = None
-        print framefile
-        if not os.path.isabs(framefile):
-            framefile = framefile.split("/")
-            for each in framefile:
-                framefile = os.path.join(os.path.dirname(self.WORKSPACE), each)
-        print framefile, prep.workspace
         prep.workspace = os.path.dirname(framefile)
         self.WORKSPACE = prep.workspace
         framefile = os.path.normpath(framefile)

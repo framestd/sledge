@@ -1,4 +1,4 @@
-@load: rel-"dest" href-"build"
+@load: rel-"dest" href-"../build"
 @load: rel-"layout" src-"../layout.frame"
 <div.main-content>
     ${FRAME::DIRNAME}
