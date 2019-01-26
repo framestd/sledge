@@ -9,6 +9,7 @@
 # which can be found in the LICENSE file.
 # In attribution to Realongman, Inc.
 
+from __future__ import print_function
 import re
 import json
 import os
@@ -34,7 +35,7 @@ def loadpane(src):
         panefile = io.open(src, encoding="utf-8")
         panecontent = panefile.read()
     except IOError:
-        print "Could not open pane at %s"%src
+        print("Could not open pane at %s"%src)
     finally:
         panefile.close()
     return json.loads(panecontent, encoding="utf-8") if not panecontent is None else None

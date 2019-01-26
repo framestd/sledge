@@ -187,7 +187,6 @@ class Frame():
         frameup = None
         prep.workspace = os.path.dirname(framefile)
         self.WORKSPACE = prep.workspace
-        print framefile
         FILE = framefile.split(os.sep)[-1]
         self.CURFILE = re.sub(r"(\..*?)$", "", FILE) if not mode else self.CURFILE
         #END

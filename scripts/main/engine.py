@@ -8,7 +8,7 @@
 # Use of this source code is licensed under the GPL 2.0 LICENSE
 # which can be found in the LICENSE file.
 # In attribution to Realongman, Inc.
-
+from __future__ import print_function
 import os, sys
 from . import compiler
 import re
@@ -119,16 +119,16 @@ def build(basedir, filename, cMainFrame, cLayoutFrame):
             nfc = c
         fileo.write(nfc)
     except IOError as ex:
-        print ex.message
+        print(ex.message)
     except TypeError as ex:
-        print ex.message
+        print(ex.message)
     finally:
         fileo.close()
         check = re.search(_ptrns[4], nfc)
         if check == None:
-            print status[1]
+            print(status[1])
         else:
-            print status[0]
+            print(status[0])
     cleanup()
     return 0
 
