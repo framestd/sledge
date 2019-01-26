@@ -84,8 +84,9 @@ class Frame():
         sessionedPane = ""
         formatted = frameup
         frameup = re.sub(r"%\w+\(.*?\)", "", frameup, 0 ,re.DOTALL) # DO NOT DEAL WITH FUNCTIONS!
-        allFormat = re.findall(r"\$\{(.+?)\}", frameup)
-        for each in allFormat:
+        allFormat = re.findall(r"\x24\x7B(.+?)\x7D(?:\x5B([\d*]+)\x5D)?", frameup)
+        
+        for each, index in allFormat:
             each_ = each.lstrip().split("::")
 
             # Begin Frame constant fields
@@ -93,6 +94,7 @@ class Frame():
                 if each_[1] == Frame.BODY:
                     continue
                 elif each_[1] == Frame.DIRNAME:
+                    self.WORKSPACE = self.WORKSPACE
                     formatted = re.sub(r"\$\{FRAME::DIRNAME\}", self.WORKSPACE, formatted)
                 elif each_[1] == Frame.FILENAME:
                     formatted = re.sub(r"\$\{FRAME::FILENAME\}", self.CURFILE, formatted)
@@ -105,9 +107,25 @@ class Frame():
                 else:
                     pass
             # End Frame constant fields
-
+            
             paneValue = recurseAddress(pane, each_, 0)
-            formatted = re.sub(r"\$\{%s\}"%each, "%s"%paneValue, formatted) if not paneValue is None else re.sub(r"\$\{%s\}"%each, "", formatted) #universal formatting
+            if type(paneValue) is list:
+                index = str(index)
+                index = int(index) if index.isdigit() else index
+                ptrn = u"\x24\x7B%s\x7D\x5B%s\x5D"%(each, index)
+                if index == "*" or index == "":
+                    paneValue = " ".join(paneValue)
+                    formatted = formatted.replace(ptrn, paneValue)
+                else:
+                    ptrn = r"\x24\x7B%s\x7D\x5B%s\x5D"%(each, index)
+                    paneValue = paneValue[index]
+                    formatted = re.sub(ptrn, "%s"%paneValue, 
+                                   formatted) if not paneValue is None else re.sub(r"\x24\x7B%s\x7D(?:\x5B%s\x5D)"%(each, str(index)), 
+                                                                                   "", formatted) #universal formatting
+            else:
+                formatted = re.sub(r"\x24\x7B%s\x7D"%each, "%s"%paneValue, 
+                                   formatted) if not paneValue is None else re.sub(r"\x24\x7B%s\x7D"%each, 
+                                                                                   "", formatted)
         for key, value in pane.items():
             formatted = re.sub(r"%s=\"\{\}\""%key, "%s=\"%s\""%(key,value), formatted) #frame-attribute formatting
         return formatted
@@ -153,7 +171,7 @@ class Frame():
                 functional = functional.replace(old, result.lstrip(n), 1)
             else:
                 result = funcReturnValue
-                old = r"%s"%(cache[i])
+                old = "%s"%(cache[i])
                 functional = functional.replace(old, result, 1)
         return functional
 
@@ -169,7 +187,7 @@ class Frame():
         frameup = None
         prep.workspace = os.path.dirname(framefile)
         self.WORKSPACE = prep.workspace
-        framefile = os.path.normpath(framefile)
+        print framefile
         FILE = framefile.split(os.sep)[-1]
         self.CURFILE = re.sub(r"(\..*?)$", "", FILE) if not mode else self.CURFILE
         #END

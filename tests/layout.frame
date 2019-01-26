@@ -13,7 +13,7 @@
         <div.container>
             <div.navbar>
                 <span>
-                    <a.no.menu-btn.me.us.we href="#menu" data-controls="${control::id}" title="Menu">
+                    <a.no.menu-btn.me.us.we href="#menu" data-controls="${control::id}[]" title="Menu">
                         ${icons::menu-btn}
                     </a>
                 </span>
@@ -36,7 +36,7 @@
         
             <!-- Navigation -->
             <div.backdrop//>
-            <div#${control::id}.main-menu.left data-hash-nav-max-width="${nav::hash-nav-max-width}" data-nav-drawer-max-width="${nav::nav-drawer-max-width}">
+            <div#${control::id}[0].main-menu.left data-hash-nav-max-width="${nav::hash-nav-max-width}" data-nav-drawer-max-width="${nav::nav-drawer-max-width}">
                 <ul.no>
                     <li.exempt.damn#no>
                         <div.head.lead>

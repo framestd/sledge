@@ -20,7 +20,7 @@
         "extras" : null
     },
     "control" :{
-        "id" : "nav-menu"
+        "id" : ["nav-menu", "main"]
     },
     "nav" : {
         "hash-nav-max-width" : 978,

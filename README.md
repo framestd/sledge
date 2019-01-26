@@ -89,12 +89,19 @@ The third specifies the layout to build the page on.
 ```  
 ## Using pyframe  
 Using pyframe, you need to write your python script that uses the engine `engine.py`, the engine simplifies the usage. In this script you call the `buildall` method of `engine` and give it a workspace where you want it to build files from e.g `user/my/workspace/` **_check it out_** [MyBuild script](https://github.com/framestd/pyframe/tree/master/blob/scripts/MyBuild.py). You are meant to override the `TITLE` and `METAS` function of the class `engine.MyFrame` to set specific frames as `${FRAME::TITLE}` or `${FRAME::METAS}` -- `${FRAME::METAS::desc}, ${FRAME::METAS::author}` etc.  
-We also provide a `.cmd` script which we called our **API Entry Point**  
-### Using the `.cmd` script  
+### ..with bash
+We do not provide any shell script yet, but we'll do soon  
+```bash
+cd scripts/bin #from pyframe install location
+python MyBuild path/to/workspace #note the path is relative
+                                 #so when resolved it will be "scripts/bin/path/to/workspace"
+```   
+### Using the `.cmd` script on Windows  
+We provide a `.cmd` script which we called our **API Entry Point** 
 ```cmd
 cd where\frame\cmd\is
 frame script --update path/to/MyBuild.py
-frame start whatever argument MyBuild takes
+frame start whatever-argument-MyBuild-takes
 ```
 # License  
 pyframe is Licensed under GPL-2.0

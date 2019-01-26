@@ -4,7 +4,6 @@ import main
 from main import engine
 
 workspace = os.path.abspath(sys.argv[1])
-print
 titles = dict()
 metas = dict()
 """If your specific frames would be large, you'd better use .json
