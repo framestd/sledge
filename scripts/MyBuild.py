@@ -1,5 +1,6 @@
 import sys
 import os
+sys.path.insert(0, "main")
 import main
 from main import engine
 
