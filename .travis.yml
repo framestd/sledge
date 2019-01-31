@@ -4,4 +4,7 @@ python:
   - "3.4"
   - "3.5"
   - "3.6"
+install: pip install requirements.txt -r
 script: python scripts/MyBuild.py tests/pages/
+notification:
+  email: false
