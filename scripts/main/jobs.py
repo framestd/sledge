@@ -1,6 +1,6 @@
 from __future__ import print_function
 import os
-import _compiler
+from . import _compiler
 from . import console
 nullstr = ""
 workspace = nullstr
