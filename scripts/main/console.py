@@ -7,8 +7,7 @@ try:
 except ImportError:
     print(msg.format("colorama", "will", "all those fancy colors"))
 try:
-    if colorama:
-        from termcolor import cprint
+    from termcolor import cprint
 except ImportError:
     print(msg.format("termcolor", "will", "all those fancy colors"))
 
