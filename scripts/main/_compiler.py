@@ -17,7 +17,6 @@ from . import preprocessors  as prep
 from .framefunctions import *
 from . import escentity as esc
 from . import console
-from . import jobs
 
 __all__ = ["Frame"]
 n = "\n"
@@ -55,6 +54,7 @@ class Frame():
         return self.pane
 
     def inform(self, a, b, c):
+        from . import jobs
         p, n = "positive", "negative"
         self.BASESPACE = a
         self.WORKSPACE = b
