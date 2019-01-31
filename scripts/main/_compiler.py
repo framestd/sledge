@@ -58,8 +58,6 @@ class Frame():
         p, n = "positive", "negative"
         self.BASESPACE = a
         self.WORKSPACE = b
-        path = jobs.path_diff("C:\\a\\b\\c", "C:\\a\\b\\d")
-        CF = path[p] if not path[p] is None else path[n]
         return
     
     def __process(self, frameup, mode):
