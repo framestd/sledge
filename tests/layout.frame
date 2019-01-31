@@ -1,4 +1,5 @@
-@load: rel-"panes" src-"panes.json"
+@load: rel-"panes" src-"layout.yml"
+@import: src-"pages/.filter" as-"indices"
 <!DOCTYPE html>
 <html>
     <head>
@@ -6,6 +7,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
         <meta name="description" content="${FRAME::METAS::desc}"/>
         <meta name="author" content="${FRAME::METAS::author}"/>
+        <meta property="og:title" content="${FRAME::TITLE}"/>
+        <meta property="og:description" content="${FRAME::METAS::desc}"/>
+        <meta property="og:image" content="${FRAME::METAS::image}"/>
+        <meta property="og:url" content="${FRAME::METAS::url}"/>
+        <meta property="twitter:card" content="summary_large_image"/>
         <title>${FRAME::TITLE}</title>
     </head>
 
@@ -13,7 +19,7 @@
         <div.container>
             <div.navbar>
                 <span>
-                    <a.no.menu-btn.me.us.we href="#menu" data-controls="${control::id}[]" title="Menu">
+                    <a.menu-btn href="#menu" data-controls="${control::id}[0]" title="Menu">
                         ${icons::menu-btn}
                     </a>
                 </span>
@@ -30,18 +36,17 @@
                             </li>, navbar::links
                         )
                     </ul>
-                    ${navbar::extras}
                 </div>
             </div><!--navbar-->
         
             <!-- Navigation -->
             <div.backdrop//>
             <div#${control::id}[0].main-menu.left data-hash-nav-max-width="${nav::hash-nav-max-width}" data-nav-drawer-max-width="${nav::nav-drawer-max-width}">
-                <ul.no>
-                    <li.exempt.damn#no>
+                <ul.override>
+                    <li.exempt>
                         <div.head.lead>
                             <a.override.nav-link href="javascript:void(window.history.back());" title="${nav::back-btn-title}">
-                                ${icon-arrow-back}
+                                ${icons::arrow-back}
                             </a>
                             ${nav::header}
                         </div>
@@ -69,24 +74,9 @@
                 </ul>
             </div>    
             ${FRAME::BODY}
-            %htmlspecialchars(
-                <caleb>me&you</caleb>
-            )
             <footer.footer>
-                <ul.override>
-                    %explode(
-                        <li>
-                            <span.group>
-                                ${FRAME::GROUP}
-                            </span>
-                        </li>,
-                        <li>
-                            <a.footer-links href="${HREF}" title="${TITLE}">
-                                ${TITLE}
-                            </a>
-                        </li>, footer::links
-                    )
-                </ul>
+                ${footer::copyright}
+                ${indices}
             </footer>
         </div><!--/container-->
     </body>
