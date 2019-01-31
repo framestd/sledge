@@ -14,7 +14,7 @@ import io
 import os
 from . import framefunctions
 from . import preprocessors  as prep
-from framefunctions import *
+from .framefunctions import *
 from . import escentity as esc
 from . import console
 from . import jobs

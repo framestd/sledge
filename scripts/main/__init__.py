@@ -1,6 +1,6 @@
 from __future__ import print_function
 from . import _compiler as compiler
-import console
+from . import console
 import os, re
 
 __version__ = 1.0
