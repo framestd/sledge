@@ -46,7 +46,7 @@ def explode(options, arg):
     ndata = None
     index = 0
 
-    if type(pane) == list:
+    if type(pane) is list:
         for item in pane:
             ndata = re.sub(r'\x24\x7BICON\x7D', "%s"%item['ICON'], data) if item.has_key("ICON") else re.sub(r'\x24\{ICON\}', '', data)
             ndata = re.sub(r'\x24\x7BTITLE\x7D', "%s"%item['TITLE'], ndata) if item.has_key("TITLE") else re.sub(r'\x24\{TITLE\}', '', ndata)
