@@ -11,12 +11,20 @@
 
 from __future__ import print_function
 import re
-import json
+import yaml
 import os
 import io
+from . import jobs
+from . import console
 
 FrameInst = FrameClass = None
 workspace = dest = ""
+exports = {
+    "pane": None,
+    "layout": None,
+    "dest": None,
+    "specific": None
+}
 
 __panenotfound__ = False
 __destinationunresolved__ = False
@@ -34,51 +42,47 @@ def loadpane(src):
     try:
         panefile = io.open(src, encoding="utf-8")
         panecontent = panefile.read()
+        console.info("status: opening \"{}\"".format(src))
     except IOError:
-        print("Could not open pane at %s"%src)
+        console.error("Could not open pane at \"{}\"".format(src))
     finally:
         panefile.close()
-    return json.loads(panecontent, encoding="utf-8") if not panecontent is None else None
+        console.info("status: parsing \"{}\"".format(src))
+    return yaml.load(panecontent) if not panecontent is None else None
 
-def gen(arg):
-    for i in xrange(len(arg)):
-        yield i
-
-def usegen(arg):
-    for i in gen(arg):
-        load_pp = re.findall(r'^(?:@)(\w+?):\s*?(.*)', arg[i])
-        yield load_pp
-
-def parsepreprocessor(frameup, cb):
-    splitframe = frameup.split('\n') 
-    for pp in usegen(splitframe):
-        for tag, attr in pp:
-            cb(tag, attr.lstrip())
+def parsepreprocessor(frameup, cb, mode):
+    console.info("status: parsing preprocessors")
+    splitframe = frameup.split('\n')
+    for each in splitframe:
+        pp = re.findall(r'^(?:@)(\w+):\s*?(.*)', each)
+        if pp is None: break
+        for tag, attrs in pp:
+            cb(tag, attrs.lstrip(), mode)
+    return (exports["layout"], exports["pane"], exports["specific"], exports["dest"])
 
 def getAttribute(attr, _collection):
     rel = ''
     rel = re.search(r'%s-\"(.*?)\"'%attr, _collection, re.I).group(1)
     return rel
 
-def processor(tag, attr):
+def processor(tag, attr, mode):
     global __panenotfound__, __destinationunresolved__
+    global exports
     if tag.lower() == "load":
         rel = getAttribute('rel', attr).lstrip().lower()
         src = ""
         if rel == "panes":
             src = getAttribute('src', attr)
-            if not os.path.isabs(src):
-                src = realpath(workspace, src)
+            src = realpath(workspace, src)
             pane = dict()
             if os.path.isfile(src):
                 pane.update(loadpane(src))
             else:
                 __panenotfound__ = True
-            FrameInst.storepane(pane)
+            exports["pane"] = pane
         elif rel == "dest":
             dest = getAttribute('href', attr)
-            if not os.path.isabs(dest):
-                dest = realpath(workspace, dest)
+            dest = realpath(workspace, dest)
             if os.path.isdir(dest):
                 pass
             else:
@@ -86,16 +90,38 @@ def processor(tag, attr):
                     os.mkdir(dest)
                 except OSError as ex:
                     __destinationunresolved__ = True
-            FrameInst.dest = dest
+            exports["dest"] = dest
         elif rel == "layout":
+            if mode:
+                console.error("layout cannot have a layout")
+                return
             src = getAttribute('src', attr)
-            if not os.path.isabs(src):
-                src = realpath(workspace, src)
-            FrameClass.linkedLayoutFrame = FrameInst.compile(src , 1, 1)
+            src = realpath(workspace, src)
+            exports["layout"] = src
+        elif rel == "specific":
+            src = getAttribute('src', attr)
+            address = getAttribute('find', attr)
+            src = realpath(workspace, src)
+            pane = dict()
+            if os.path.isfile(src):
+                pane.update(loadpane(src))
+            else:
+                __panenotfound__ = True
+            exports["specific"] = pane[address]
         else:
             pass
+    elif tag.lower() == "import":
+        src = getAttribute('src', attr)
+        src = realpath(workspace, src)
+        assign = getAttribute('as', attr)
+        console.info("status: importing \"{}\" as \"{}\"".format(src, assign))
+        jobs.add(src)
+        FrameInst.getpane()[assign] = jobs.dojob()
+    else:
+        pass
 
 def realpath(workspace, path):
     if not os.path.isabs(path):
         path = os.path.join(workspace, path, '')
         return os.path.normpath(path)
+    else: return path
