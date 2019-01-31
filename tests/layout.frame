@@ -1,5 +1,5 @@
 @load: rel-"panes" src-"layout.yml"
-@import: src-"pages/.filter" as-"indices"
+@import: src-"pages/.filter" as-"filter"
 <!DOCTYPE html>
 <html>
     <head>
@@ -76,7 +76,7 @@
             ${FRAME::BODY}
             <footer.footer>
                 ${footer::copyright}
-                ${indices}
+                ${filter}
             </footer>
         </div><!--/container-->
     </body>
