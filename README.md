@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/framestd/sledge.svg?branch=master)](https://travis-ci.org/framestd/Sledge)
 <p align="center">
-    <img src="https://raw.githubusercontent.com/framestd/Sledge/master/images/frame-text300.png" alt="Frame Logo"/>
+    <img src="https://raw.githubusercontent.com/framestd/sledge/master/images/frame-text300.png" alt="Frame Logo"/>
 </p>
 
 # Sledge  
