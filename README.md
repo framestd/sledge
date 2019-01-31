@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/framestd/sledge.svg?branch=master)](https://travis-ci.org/framestd/Sledge)
+[![Build Status](https://travis-ci.org/framestd/sledge.svg?branch=master)](https://travis-ci.org/framestd/sledge)
 <p align="center">
     <img src="https://raw.githubusercontent.com/framestd/sledge/master/images/frame-text300.png" alt="Frame Logo"/>
 </p>
