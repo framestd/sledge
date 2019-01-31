@@ -1,12 +1,12 @@
-[![Build Status](https://travis-ci.org/framestd/pyframe.svg?branch=master)](https://travis-ci.org/framestd/pyframe)
+[![Build Status](https://travis-ci.org/framestd/sledge.svg?branch=master)](https://travis-ci.org/framestd/Sledge)
 <p align="center">
-    <img src="https://raw.githubusercontent.com/framestd/pyframe/master/images/frame-text300.png" alt="Frame Logo"/>
+    <img src="https://raw.githubusercontent.com/framestd/Sledge/master/images/frame-text300.png" alt="Frame Logo"/>
 </p>
 
-# pyframe  
-pyframe is the python implementation of the Frame Markup and Templating specificatons as defined by [Frame Studios](https://framestd.github.io/).  
+# Sledge  
+Sledge is the python implementation of the Frame Markup and Templating specificatons as defined by [Frame Studios](https://framestd.github.io/).  
 If you are here, you must have been looking for ways to develop websites easily using HTML. Writing static HTML can be stressfull, but after you take your time to write like 10 web pages, you decide you have to change something. This is where the problem comes in, and you have to change that for each of the 10 pages. Think about when your pages grow more than just 10.  
-Yes, you may be thinking this problem is already solved by most templating engines, but **_pyframe_**, using the **Frame Markup and Templating Spec** offers more.  
+Yes, you may be thinking this problem is already solved by most templating engines, but **_Sledge_**, using the **Frame Markup and Templating Spec** offers more.  
 > **Note:** *As from now we shall refer to **Frame Markup and Templating Spec** as **FMTS***  
 > **_Frame Markup_** _as_ **_frameup_**  
 ## What we offer in a nutshell  
@@ -14,12 +14,15 @@ FMTS offers:
 1. Time travel  
 2. Frame  
 3. Panes  
-With pyframe and the FMTS in use:  
+
+With Sledge and the FMTS in use:  
 1. You can add preprocessors to your frameup -- here goes whatever you need to tell the compiler. Preprocessor are denoted with the &commat; operator. Here is an example for a page called `getstarted.frame`  
 ```html
 @load: rel-"panes" src-"path/to/pane.json"
 @load: rel-"dest" href-"this/folder/for/compiled/frameup/"
 @load: rel-"layout" src-"this/page/layout.frame"
+@import: src-"another.frame" as-"anotherframe" 
+<!--then you can use ${anotherframe} -->
 ```  
 The first `load` command relates the page to a pane.  
 The second tells the engine the destination -- the folder where you want your `.html` files compiled from your `.frame` files to go  
@@ -30,23 +33,17 @@ The third specifies the layout to build the page on.
 > Variables are accessed using `$` followed by `{` `the path to the variable` and `}`  
 > Example `${author}`, `${program::license}`  
 > and a pane that looks much like:  
-```json
-{
-    "author": "Caleb Pitan",
-    "program": {
-        "name": "pyframe",
-        "license": "GPL-2.0" 
-    },
-    "nav": {
-        "links": [{
-            "HREF": "https://github.com/framestd/pyframe/",
-            "TITLE": "pyframe"
-        },{
-            "HREF": "https://github.com/framestd/",
-            "TITLE": "Frame Studios"
-        }]
-    }
-}
+```yaml
+- author: Caleb Pitan
+- program:
+    - name: Sledge
+    - license: MIT 
+- nav: 
+    - links:
+        - HREF: https://github.com/framestd/Sledge/
+          TITLE: Sledge
+        - HREF: https://github.com/framestd/
+          TITLE: Frame Studios
 ```  
 ### More  
 > There are also functions that does tedious works, fetch things for you and lots more.  
@@ -78,7 +75,7 @@ The third specifies the layout to build the page on.
     <div class="navlinks">
         <ul>
             <li>
-                <a href="https://github.com/framestd/pyframe/">pyframe</a>
+                <a href="https://github.com/framestd/Sledge/">Sledge</a>
             </li>
             <li>
                 <a href="https://github.com/framestd/">Frame Studios</a>
@@ -87,21 +84,26 @@ The third specifies the layout to build the page on.
     </div>
 </div>
 ```  
-## Using pyframe  
-Using pyframe, you need to write your python script that uses the engine `engine.py`, the engine simplifies the usage. In this script you call the `buildall` method of `engine` and give it a workspace where you want it to build files from e.g `user/my/workspace/` **_check it out_** [MyBuild script](https://github.com/framestd/pyframe/tree/master/scripts/MyBuild.py). You are meant to override the `TITLE` and `METAS` function of the class `engine.MyFrame` to set specific frames as `${FRAME::TITLE}` or `${FRAME::METAS}` -- `${FRAME::METAS::desc}, ${FRAME::METAS::author}` etc.  
+## Using Sledge  
+Sledge has all you need -- we already have a python file `app.py` that does your work for you **_check it out_** [app.py script](https://github.com/framestd/sledge/tree/master/scripts/app.py). You can write your own script if you think you want to have more than the priviledges `app.py` offers. The sledge package exports three methods: 
+* `render(src, mode)` this may return a tuple or a compiled markup. `mode` tells it whether it's a layout file or not `mode=1` for layout files then it returns a compiled markup; `mode=0` default it returns tuple containing compiled page and all other information from the preprocessors.   
+* `hammer(src)` this does the whole build work and returns nothing (void).  
+* a bonus `get_all_files` that can walk directorys recursively and call private `__build` method to do the build job.  
+
 ### ..with bash
 We do not provide any shell script yet, but we'll do soon  
 ```bash
-cd scripts/bin #from pyframe install location
-python MyBuild path/to/workspace #note the path is relative
+cd scripts/bin #from Sledge install location
+python app path/to/workspace #note the path is relative
                                  #so when resolved it will be "scripts/bin/path/to/workspace"
 ```   
 ### Using the `.cmd` script on Windows  
 We provide a `.cmd` script which we called our **API Entry Point** 
 ```cmd
-cd where\frame\cmd\is
-frame script --update path/to/MyBuild.py
-frame start whatever-argument-MyBuild-takes
+cd where\sledge\cmd\is
+sledge script --update path/to/your-script.py
+rem if you'd not use app.py but your own script
+sledge nail path/to/workspace
 ```
 # License  
-pyframe is Licensed under GPL-2.0
+Sledge is Licensed under MIT
