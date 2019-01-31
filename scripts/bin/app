@@ -1,0 +1,12 @@
+#!usr/bin/env python
+import os
+import sys
+try:
+    import sledge
+except ImportError:
+    print("you don't have sledge installed")
+    print("to get sledge on your system")
+    print("run: `pip install Sledge` on your command window")
+    sys.exit(1)
+workspace = os.path.abspath(sys.argv[1])
+sledge.hammer(workspace)
