@@ -26,6 +26,12 @@ def ExportFrameCls(object):
     Frame = object
     return
 
+def sub(pattern, item, where, key):
+    return re.sub(pattern, 
+    "{}".format(item[key]), 
+    where) if key in item else re.sub(pattern, 
+    '', where)
+
 
 def explode(options, arg):
     """The Frame function -- explode:
@@ -49,22 +55,22 @@ def explode(options, arg):
 
     if type(pane) is list:
         for item in pane:
-            ndata = re.sub(r'\x24\x7BICON\x7D', "%s"%item['ICON'], data) if item.has_key("ICON") else re.sub(r'\x24\x7BICON\x7D', '', data)
-            ndata = re.sub(r'\x24\x7BTITLE\x7D', "%s"%item['TITLE'], ndata) if item.has_key("TITLE") else re.sub(r'\x24\x7BTITLE\x7D', '', ndata)
-            ndata = re.sub(r'\x24\x7BHREF\x7D', "%s"%item['HREF'], ndata) if item.has_key("HREF") else re.sub(r'\x24\x7BHREF\x7D', '#', ndata)
+            ndata = sub(r'\x24\x7BICON\x7D', item, data, "ICON")
+            ndata = sub(r'\x24\x7BTITLE\x7D', item, ndata, "TITLE")
+            ndata = sub(r'\x24\x7BHREF\x7D', item, ndata, "HREF")
             datalist.append(ndata)
         return str("".join(datalist))
 
     for item in pane.values():
         group_pane = pane.keys()[index] if cond else ''
         index += 1
-        group_ = re.sub(r'\x24\x7BFRAME::GROUP\}', "%s"%group_pane, group) if cond else ''
+        group_ = re.sub(r'\x24\x7BFRAME::GROUP\x7D', group_pane, group) if cond else ''
         datalist.append(group_)
 
         for i in range(len(item)):
-            ndata = re.sub(r'\x24\x7BICON\x7D', "%s"%item[i]['ICON'], data) if item[i].has_key("ICON") else re.sub(r'\x24\x7BICON\x7D', '', data)
-            ndata = re.sub(r'\x24\x7BTITLE\x7D', "%s"%item[i]['TITLE'], ndata) if item[i].has_key("TITLE") else re.sub(r'\x24\x7BTITLE\x7D', '', ndata)
-            ndata = re.sub(r'\x24\x7BHREF\x7D', "%s"%item[i]['HREF'], ndata) if item[i].has_key("HREF") else re.sub(r'\x24\x7BHREF\x7D', '#', ndata)
+            ndata = sub(r'\x24\x7BICON\x7D', item[i], data, "ICON")
+            ndata = sub(r'\x24\x7BTITLE\x7D', item[i], ndata, "TITLE")
+            ndata = sub(r'\x24\x7BHREF\x7D', item[i], ndata, "HREF")
             datalist.append((datalist.pop() + ndata))
     return str("".join(datalist))
 
