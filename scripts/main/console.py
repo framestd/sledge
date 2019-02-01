@@ -14,7 +14,7 @@ except ImportError:
     print(msg.format("termcolor", "will", "all those fancy colors"))
 
 def log(*msgs):
-    print(msgs)
+    print(*msgs)
 def error(msg):
     cprint("error: {}".format(msg), "red")
 def warn(msg):
