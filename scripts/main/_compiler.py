@@ -178,7 +178,6 @@ class Frame():
                 result = funcReturnValue
                 if tab_diff and not 4 % tab_diff and Frame.__RESTRUCTURE:
                     result = re.sub(r"(?:[ \t]{%s})(?![\s\x00])"%tab_diff, "", result)
-                    print(_t, tab_diff)
                 else:
                     result = self.__doTabs(result, _t)
                 del _t

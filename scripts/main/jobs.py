@@ -26,7 +26,7 @@ def path_diff(path, _path):
         diff for diff in path if not diff in _path
     ])
     if posdiff != nullstr and negdiff != nullstr:
-        raise PathException("The two paths dont follow the same branch")
+        raise PathException("The two paths don't follow the same branch")
         return
     if not posdiff == nullstr:
         print(posdiff, "p")
