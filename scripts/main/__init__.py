@@ -25,7 +25,7 @@ _ptrns = [r"(?:\..+)$", r"([ \t]*)\$\{FRAME::BODY\}",
 
 def render(src, mode=0):
     fr = compiler.Frame()
-    fr.inform(basespace, workshop, src)
+    fr.inform(basespace, workshop)
     return fr.compile(src, mode)
 
 def get_all_files(basedir, ignore=(), _filter=()):

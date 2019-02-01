@@ -1,11 +1,11 @@
 # Copyright 2019 Frame Studios. All rights reserved.
-# Frame v1.0 python implementation by some Pane-in-the-Frame developers.
-# pyFrame v1.0
+# ReMarkup v1.0 python implementation.
+# Sledge v1.0
 # Project Manager: Caleb Adepitan
-# The Frame specifications that govern this implementation can be found at:
-# https://frame.github.io/spec/v1/
+# The ReMarkup specifications that govern this implementation can be found at:
+# https://framestd.github.io/remarkup/spec/v1/
 # Developers Indulgent Program (DIP)
-# Use of this source code is licensed under the GPL 2.0 LICENSE
+# Use of this source code is licensed under the MIT LICENSE
 # which can be found in the LICENSE file.
 # In attribution to Realongman, Inc.
 
@@ -53,7 +53,7 @@ class Frame():
     def getpane(self):
         return self.pane
 
-    def inform(self, a, b, c):
+    def inform(self, a, b):
         from . import jobs
         p, n = "positive", "negative"
         self.BASESPACE = a
@@ -197,6 +197,7 @@ class Frame():
         framefile: path to file to compile
         mode: mode=0 means, normal pages; mode=1, means layout"""
 
+        from . import console
         console.info("status: compiling \"{}\"".format(framefile))
         #BEGIN: get things ready
         frameup = None

@@ -1,15 +1,16 @@
 # Copyright 2019 Frame Studios. All rights reserved.
-# Frame v1.0 python implementation by some Pane-in-the-Frame developers.
-# pyFrame v1.0
+# ReMarkup v1.0 python implementation.
+# Sledge v1.0
 # Project Manager: Caleb Adepitan
-# The Frame specifications that govern this implementation can be found at:
-# https://frame.github.io/spec/v1/
+# The ReMarkup specifications that govern this implementation can be found at:
+# https://framestd.github.io/remarkup/spec/v1/
 # Developers Indulgent Program (DIP)
-# Use of this source code is licensed under the GPL 2.0 LICENSE
+# Use of this source code is licensed under the MIT LICENSE
 # which can be found in the LICENSE file.
 # In attribution to Realongman, Inc.
 
 import re
+from . import console
 
 functions = dict()
 framepane = dict()
@@ -32,7 +33,7 @@ def explode(options, arg):
     It is used for links. For example, navbar links, other navigation links 
     and footer links for an HTML page
     Learn more:
-    https://frame.github.io/spec/v1/frame-functions.html#explode"""
+    https://framestd.github.io/remarkup/spec/v1/frame-functions.html#explode"""
     Frame._Frame__RESTRUCTURE = 1
     cond = len(arg) == 3
     temparg = arg[2] if cond else arg[1]
@@ -48,9 +49,9 @@ def explode(options, arg):
 
     if type(pane) is list:
         for item in pane:
-            ndata = re.sub(r'\x24\x7BICON\x7D', "%s"%item['ICON'], data) if item.has_key("ICON") else re.sub(r'\x24\{ICON\}', '', data)
-            ndata = re.sub(r'\x24\x7BTITLE\x7D', "%s"%item['TITLE'], ndata) if item.has_key("TITLE") else re.sub(r'\x24\{TITLE\}', '', ndata)
-            ndata = re.sub(r'\x24\x7BHREF\x7D', "%s"%item['HREF'], ndata) if item.has_key("HREF") else re.sub(r'\x24\{HREF\}', '#', ndata)
+            ndata = re.sub(r'\x24\x7BICON\x7D', "%s"%item['ICON'], data) if item.has_key("ICON") else re.sub(r'\x24\x7BICON\x7D', '', data)
+            ndata = re.sub(r'\x24\x7BTITLE\x7D', "%s"%item['TITLE'], ndata) if item.has_key("TITLE") else re.sub(r'\x24\x7BTITLE\x7D', '', ndata)
+            ndata = re.sub(r'\x24\x7BHREF\x7D', "%s"%item['HREF'], ndata) if item.has_key("HREF") else re.sub(r'\x24\x7BHREF\x7D', '#', ndata)
             datalist.append(ndata)
         return str("".join(datalist))
 
@@ -69,7 +70,8 @@ def explode(options, arg):
 
 def getf(options, arg):
     Frame._Frame__RESTRUCTURE = 0
-    if len(arg) < 1:
+    if len(arg) != 1:
+        console.error("read function expected 1 argument {} given".format(len(arg)))
         return
     arg[0] = arg[0].lstrip().rstrip()
     with open(arg[0]) as res:
@@ -85,7 +87,7 @@ def invert(options, arg):
         "<": "&lt;",
         ">": "&gt;",
         "\"": "&quot;",
-        "&": "&amp;amp;" # This is so because of the escape call, this has a meaning in frame. Check '/escentity/esc.py'[ln: 14-30]
+        "&": "&amp;amp;" # This is so because of the escape call, this has a meaning in a frame. Check '/escentity/esc.py'[ln: 14-30]
     }
     inv = arg[0].rstrip()
     for char, code in specialchars.items():

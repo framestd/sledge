@@ -1,11 +1,11 @@
 # Copyright 2019 Frame Studios. All rights reserved.
-# Frame v1.0 python implementation by some Pane-in-the-Frame developers.
-# pyFrame v1.0
+# ReMarkup v1.0 python implementation.
+# Sledge v1.0
 # Project Manager: Caleb Adepitan
-# The Frame specifications that govern this implementation can be found at:
-# https://frame.github.io/spec/v1/
+# The ReMarkup specifications that govern this implementation can be found at:
+# https://framestd.github.io/remarkup/spec/v1/
 # Developers Indulgent Program (DIP)
-# Use of this source code is licensed under the GPL 2.0 LICENSE
+# Use of this source code is licensed under the MIT LICENSE
 # which can be found in the LICENSE file.
 # In attribution to Realongman, Inc.
 
@@ -14,9 +14,7 @@ import re
 import yaml
 import os
 import io
-from . import jobs
 from . import console
-
 FrameInst = FrameClass = None
 workspace = dest = ""
 exports = {
@@ -51,6 +49,7 @@ def loadpane(src):
     return yaml.load(panecontent) if not panecontent is None else None
 
 def parsepreprocessor(frameup, cb, mode):
+    
     console.info("status: parsing preprocessors")
     splitframe = frameup.split('\n')
     for each in splitframe:
@@ -115,6 +114,7 @@ def processor(tag, attr, mode):
         src = realpath(workspace, src)
         assign = getAttribute('as', attr)
         console.info("status: importing \"{}\" as \"{}\"".format(src, assign))
+        from . import jobs
         jobs.add(src)
         FrameInst.getpane()[assign] = jobs.dojob()
     else:
