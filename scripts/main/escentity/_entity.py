@@ -51,7 +51,7 @@ ENTITY_MAP = {
     "&amp;": "&"
 }
 
-def esc(text):
+def escape(text):
     for entity, char in ENTITY_MAP.items():
         text = re.sub(entity, char, text)
     return text

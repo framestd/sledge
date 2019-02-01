@@ -1,4 +1,3 @@
-from esc import *
-
+import _entity
 def escape(text):
-    return esc(text)
+    return _entity.escape(text)
