@@ -62,7 +62,7 @@ def explode(options, arg):
         return str("".join(datalist))
 
     for item in pane.values():
-        group_pane = pane.keys()[index] if cond else ''
+        group_pane = list(pane.keys())[index] if cond else ''
         index += 1
         group_ = re.sub(r'\x24\x7BFRAME::GROUP\x7D', group_pane, group) if cond else ''
         datalist.append(group_)
