@@ -90,7 +90,7 @@ def __metas(x, c):
         yield re.sub(_ptrns[6]%(r".+?"), x, c)
         return
     for key, value in x.items():
-        del x[key]
+        # del x[key] #commented out for Py 3 RuntimeError: dictionary changed size during iteration
         if not value:
             yield nullstr
             return
