@@ -152,20 +152,30 @@ class Frame():
             As and If the need arises functions WOULD be added to new releases 
             as UPDATED by the 'Frame Specifications' https://frame.github.io/spec/v1/frame-functions.html"""
         
-        funclist = re.findall(r"%(\w+)\s*\((.*?)\)", frameup, re.DOTALL) 
+        funclist = re.findall(r"([ \t]*)%(\w+)\s*\((.*?)\)", frameup, re.DOTALL) 
         cache = re.findall(r"[ \t]*%\w+\s*\(.*?\)", frameup, re.DOTALL)
         functional = frameup
         funcReturnValue = None
+        i = 0
         
-        for i in range(len(funclist)):
+        #for i in range(len(funclist)):
+        for tab, funcname, args in funclist:
             result = r""
-            console.info("status: executing function \"{}\"".format(funclist[i][0]))
-            funcReturnValue = Frame.funcs[funclist[i][0]](self.getpane(), (funclist[i][1].split(",")))
+            console.info("status: executing function \"{}\"".format(funcname))
+            try:
+                funcReturnValue = Frame.funcs[funcname](self.getpane(), (args.split(",")))
+            except KeyError:
+                import sys
+                msg = "cannot execute function\
+                \nStack trace-> encountered an unknown function \"{}\" in {}".format(funcname, self.CURFILE)
+                console.error(msg+"\nif this is not intended to be a function you can escape the `%` sign with the html"
+                +" entity `&percnt;`") #come back CURFILE recheck
+                sys.exit(1)
 
             if funcReturnValue is not None and type(funcReturnValue) is str:
                 #BEGIN: search tabs before function and before parameter
-                tab = re.search(r"\n?([ \t]*)\x25\w", cache[i]).group(1)
-                atab = re.search(r"\n?([ \t]*)(?![\s\x00])", funclist[i][1].lstrip(n).split(n)[0]).group(1)
+                #tab = re.search(r"\n?([ \t]*)\x25\w", cache[i]).group(1)
+                atab = re.search(r"\n?([ \t]*)(?![\s\x00])", args.lstrip(n).split(n)[0]).group(1)
                 _t = tab
                 tab = tab.count(" ") if tab.count(" ") else tab.count("\t")
                 atab = atab.count(" ") if atab.count(" ") else atab.count("\t")
@@ -180,6 +190,7 @@ class Frame():
                     result = re.sub(r"(?:[ \t]{%s})(?![\s\x00])"%tab_diff, "", result)
                 else:
                     result = self.__doTabs(result, _t)
+                    print(_t, funcname)
                 del _t
                 #END
 
@@ -187,8 +198,9 @@ class Frame():
                 functional = functional.replace(old, result.lstrip(n), 1)
             else:
                 result = funcReturnValue
-                old = "%s"%(cache[i])
+                old = "{}".format(cache[i])
                 functional = functional.replace(old, result, 1)
+            i += 1
         return functional
 
 
