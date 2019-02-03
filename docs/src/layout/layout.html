@@ -13,9 +13,9 @@
     <meta property="twitter:card" content="summary_large_image"/>
     <title>${FRAME::TITLE}</title>
         
-    <link rel="stylesheet" href="${baseuri}res/css/docs.css"/>
-    <link rel="stylesheet" href="${baseuri}res/css/nav.css"/>
-    <link rel="stylesheet" href="${baseuri}res/css/docs-responsive.css"/>
+    <link rel="stylesheet" href="../res/css/docs.css"/>
+    <link rel="stylesheet" href="../res/css/nav.css"/>
+    <link rel="stylesheet" href="../res/css/docs-responsive.css"/>
 
     <link rel="icon" href="${baseuri}${FRAME::METAS::image}"/>
     
@@ -89,14 +89,15 @@
       </div><!--.classic.grid-view-->
       
     </div><!--/container-->
-    <script src="${baseuri}res/js/jquery.min.js"></script>
-    <script src="${baseuri}res/js/cardinal.js"></script>
+    <script src="../res/js/jquery.min.js"></script>
+    <script src="../res/js/cardinal.js"></script>
     <script>
       $(".menu-btn").nav("init",{
         event: "click",
         transition: 500,
         direction: "left",
-        backdrop: true
+        backdrop: true,
+        dataAccessAttribute: "data-controls"
       });
     </script>
   </body>

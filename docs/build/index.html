@@ -12,9 +12,9 @@
     <meta property="twitter:card" content="summary_large_image"/>
     <title>Sledge | Nail it all!</title>
         
-    <link rel="stylesheet" href="https://framestd.github.io/sledge/res/css/docs.css"/>
-    <link rel="stylesheet" href="https://framestd.github.io/sledge/res/css/nav.css"/>
-    <link rel="stylesheet" href="https://framestd.github.io/sledge/res/css/docs-responsive.css"/>
+    <link rel="stylesheet" href="../res/css/docs.css"/>
+    <link rel="stylesheet" href="../res/css/nav.css"/>
+    <link rel="stylesheet" href="../res/css/docs-responsive.css"/>
 
     <link rel="icon" href="https://framestd.github.io/sledge/res/img/frame.png"/>
     
@@ -25,7 +25,7 @@
       <div class="navbar">
         <span>
           <a class="menu-btn" href="#menu" data-controls="nav-menu" title="Menu">
-            menu
+            <svg class="icon" width="25" height="15" version="1.1" viewBox="0 0 6.6145831 3.96875" xmlns="http://www.w3.org/2000/svg"><path d="m0.6621 2.776h5.2917v0.52917h-5.2917zm0-2.117h5.2917v0.52917h-5.2917zm0 1.058h5.2917v0.52917h-5.2917z" fill="#fff" stroke-width="0" style="paint-order:stroke markers fill"/></svg>
           </a>
         </span>
         <div class="site-icon">
@@ -216,14 +216,15 @@
       </div><!--.classic.grid-view-->
       
     </div><!--/container-->
-    <script src="https://framestd.github.io/sledge/res/js/jquery.min.js"></script>
-    <script src="https://framestd.github.io/sledge/res/js/cardinal.js"></script>
+    <script src="../res/js/jquery.min.js"></script>
+    <script src="../res/js/cardinal.js"></script>
     <script>
       $(".menu-btn").nav("init",{
         event: "click",
         transition: 500,
         direction: "left",
-        backdrop: true
+        backdrop: true,
+        dataAccessAttribute: "data-controls"
       });
     </script>
   </body>
