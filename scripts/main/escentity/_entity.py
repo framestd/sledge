@@ -52,6 +52,7 @@ ENTITY_MAP = {
 }
 
 def escape(text):
+    if not text: return
     for entity, char in ENTITY_MAP.items():
         text = re.sub(entity, char, text)
     return text
