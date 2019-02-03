@@ -1,3 +1,4 @@
+baseuri: &Base https://framestd.github.io/sledge/
 index:
   title: Sledge | Nail it all!
   meta:
@@ -7,3 +8,6 @@ index:
       Developer Indulgent Program(DIP). It is optimised to be fast enough.
       Sledge uses markup and templating standards as defined by
       Remarkup X.0. It is meant to make you lazy!
+    home: *Base
+    image: res/img/frame.png
+    url: *Base
