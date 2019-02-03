@@ -1,4 +1,4 @@
-# Contributing to Sledge  
+# Contributing to Sledge (Draft)  
 Sledge is an open source project so we always welcome your ideas, and appreciate your efforts in trying to make Sledge a better project for the community.  
 Before contributing to this repository, you must have discussed the changes you wish to make and things you wish to add, via email, github issue template for our repo or any other effective method, with the administrator or owners of Sledge.  
 You are advised to follow our [CODE-OF-CONDUCT](https://github.com/framestd/sledge/tree/master/CODE-OF-CONDUCT.md) as a guide to any interactions you make with/on this repository.  
