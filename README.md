@@ -4,11 +4,14 @@
 </p>
 
 # Sledge  
-Sledge is the python implementation of the Frame Markup and Templating specificatons as defined by [Frame Studios](https://framestd.github.io/).  
-If you are here, you must have been looking for ways to develop websites easily using HTML. Writing static HTML can be stressfull, but after you take your time to write like 10 web pages, you decide you have to change something. This is where the problem comes in, and you have to change that for each of the 10 pages. Think about when your pages grow more than just 10.  
-Yes, you may be thinking this problem is already solved by most templating engines, but **_Sledge_**, using the **Frame Markup and Templating Spec** offers more.  
-> **Note:** *As from now we shall refer to **Frame Markup and Templating Spec** as **FMTS***  
-> **_Frame Markup_** _as_ **_frameup_**  
+Sledge is a powerful dev-tool for building, but not limited to, webpages. In fact, you can use sledge to build anything you deem suitable. Majorly you'd want to use it for HTML development. It makes the task of writing HTML easier. You may think of sledge as a **markup script**&mdash;a very easy and fast way to write what would be a complex markup in a simple way, and still get the same result.  
+With this tool in your box, you should worry less about your markup and focus more on the functionality of your markup. Spend the time you need to write complex markup on scripting your markup's functionality, and your backend.
+
+## What do I need?
+Sledge is written in python, so you need python installed on your system. If you don't have python installed on your system,  
+
+## Keep your code on the cutting edge
+
 ## What we offer in a nutshell  
 FMTS offers:  
 1. Time travel  
@@ -18,8 +21,8 @@ FMTS offers:
 With Sledge and the FMTS in use:  
 1. You can add preprocessors to your frameup -- here goes whatever you need to tell the compiler. Preprocessor are denoted with the &commat; operator. Here is an example for a page called `getstarted.frame`  
 ```html
-@load: rel-"panes" src-"path/to/pane.json"
-@load: rel-"dest" href-"this/folder/for/compiled/frameup/"
+@load: rel-"panes" src-"path/to/pane.yml"
+@load: rel-"dest" href-"this/folder/for/compiled/markup/"
 @load: rel-"layout" src-"this/page/layout.frame"
 @import: src-"another.frame" as-"anotherframe" 
 <!--then you can use ${anotherframe} -->
