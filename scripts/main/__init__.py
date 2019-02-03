@@ -116,7 +116,7 @@ class Vigilante(PatternMatchingEventHandler):
 
 
 
-def hammer(workspace=os.path.dirname(__file__)):
+def hammer(workspace=os.path.dirname(__file__), watch=False):
     global basespace
     if os.path.isfile(workspace):
         _build(None, os.path.basename(workspace), render(workspace))
@@ -129,18 +129,19 @@ def hammer(workspace=os.path.dirname(__file__)):
     _filter = tuple(_filter)
     get_all_files(workspace, ignore, _filter)
 
-    ob = Observer()
-    ob.schedule(Vigilante(), path=workspace)
-    ob.start()
-    import time
-    try:
-        while True:
-            time.sleep(1)
-            """if os.name == 'nt':
-                os.system('cls')
-            else:
-                os.system('clear')"""
-    except KeyboardInterrupt:
-        ob.stop()
-    ob.join()
+    if watch:
+        ob = Observer()
+        ob.schedule(Vigilante(), path=workspace)
+        ob.start()
+        import time
+        try:
+            while True:
+                time.sleep(1)
+                """if os.name == 'nt':
+                    os.system('cls')
+                else:
+                    os.system('clear')"""
+        except KeyboardInterrupt:
+            ob.stop()
+        ob.join()
 
