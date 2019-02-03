@@ -1,3 +1,4 @@
 PyYAML>=3.13
 termcolor<=1.1.0
-colorama==0.4.0
+colorama>=0.4.0
+watchdog>=0.9.0
