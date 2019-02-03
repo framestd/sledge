@@ -136,10 +136,10 @@ def hammer(workspace=os.path.dirname(__file__)):
     try:
         while True:
             time.sleep(1)
-            if os.name == 'nt':
+            """if os.name == 'nt':
                 os.system('cls')
             else:
-                os.system('clear')
+                os.system('clear')"""
     except KeyboardInterrupt:
         ob.stop()
     ob.join()
