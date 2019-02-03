@@ -1,4 +1,5 @@
 title: Remarkup
+baseuri: https://framestd.github.io/sledge/
 get-sledge: https://github.com/framestd/sledge/releases/
 icons:
   menu-btn: null
