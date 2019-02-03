@@ -4,7 +4,12 @@
     <img src="https://raw.githubusercontent.com/framestd/sledge/master/images/frame-text300.png" alt="Frame Logo"/>
 </p>
 
-# Sledge  
+# Sledge (Draft)  
+
+> Note everything under this repository is still under development.  
+> There are no official releases for the public yet.  
+> To be informed when this repo leaves development and is released click the watch button in the top right corner relative to you, then choose your plan for the watch or you can star it to always remember to come back and check.  
+
 Sledge is a powerful dev-tool for building, but not limited to, webpages. In fact, you can use sledge to build anything you deem suitable. Majorly you'd want to use it for HTML development. It makes the task of writing HTML easier. You may think of sledge as a **markup script**&mdash;a very easy and fast way to write what would be a complex markup in a simple way, and still get the same result.  
 With this tool in your box, you should worry less about your markup and focus more on the functionality of your markup. Spend the time you need to write complex markup on scripting your markup's functionality, and your backend.
 
