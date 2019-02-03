@@ -91,5 +91,13 @@
     </div><!--/container-->
     <script src="${baseuri}res/js/jquery.min.js"></script>
     <script src="${baseuri}res/js/cardinal.js"></script>
+    <script>
+      $(".menu-btn").nav("init",{
+        event: "click",
+        transition: 500,
+        direction: "left",
+        backdrop: true
+      });
+    </script>
   </body>
 </html>

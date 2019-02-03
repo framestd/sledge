@@ -25,7 +25,7 @@
       <div class="navbar">
         <span>
           <a class="menu-btn" href="#menu" data-controls="nav-menu" title="Menu">
-
+            menu
           </a>
         </span>
         <div class="site-icon">
@@ -218,5 +218,13 @@
     </div><!--/container-->
     <script src="https://framestd.github.io/sledge/res/js/jquery.min.js"></script>
     <script src="https://framestd.github.io/sledge/res/js/cardinal.js"></script>
+    <script>
+      $(".menu-btn").nav("init",{
+        event: "click",
+        transition: 500,
+        direction: "left",
+        backdrop: true
+      });
+    </script>
   </body>
 </html>

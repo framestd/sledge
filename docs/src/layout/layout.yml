@@ -2,7 +2,7 @@ title: Remarkup
 baseuri: https://framestd.github.io/sledge/
 get-sledge: https://github.com/framestd/sledge/releases/
 icons:
-  menu-btn: null
+  menu-btn: menu
   site-icon: null
   arrow-back: >-
     <svg width="20" height="20" 
