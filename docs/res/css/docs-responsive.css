@@ -72,4 +72,12 @@
         width: calc(100% - 300px);
         left: 300px;
     }
+
+    .main-menu.left {
+        left: 0 !important;
+    }
+
+    .main-menu.right {
+        right: 0 !important;
+    }
 }
