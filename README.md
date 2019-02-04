@@ -118,20 +118,20 @@ Frame makes use of CSS `class` selector `.` and `id` selector `#` to specify cla
 **compiles to:**  
 ```html
 <div class="container">
-    <div class="page" id="main">
-        <p id="help" class="hide text">some help</p>
-    </div>
-    <span class="nothing goes here"></span>
-    <div class="navlinks">
-        <ul>
-            <li>
-                <a href="https://github.com/framestd/Sledge/">Sledge</a>
-            </li>
-            <li>
-                <a href="https://github.com/framestd/">Frame Studios</a>
-            </li>
-        </ul>
-    </div>
+  <div class="page" id="main">
+    <p id="help" class="hide text">some help</p>
+  </div>
+  <span class="nothing goes here"></span>
+  <div class="navlinks">
+    <ul>
+      <li>
+        <a href="https://github.com/framestd/Sledge/">Sledge</a>
+      </li>
+      <li>
+        <a href="https://github.com/framestd/">Frame Studios</a>
+      </li>
+    </ul>
+  </div>
 </div>
 ```  
 > **Note**: preprocessors should be added at the begining of file, the parser terminates when it reads a token that is not a preprocessor, and never continue or come back to parse later.  
