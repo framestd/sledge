@@ -117,6 +117,8 @@ Frame makes use of CSS `class` selector `.` and `id` selector `#` to specify cla
 ```  
 **compiles to:**  
 ```html
+<!--say: example.frame-->
+<!--using the YAML source above as the pane-->
 <div class="container">
   <div class="page" id="main">
     <p id="help" class="hide text">some help</p>
