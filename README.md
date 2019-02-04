@@ -55,6 +55,7 @@ You can add preprocessors to your markup -- here goes whatever you need to tell 
 > **Note**: attributes and their values are case insensitive, save only values containig path which depends on your file system, and variable addresses.  
 > We could rather say `rel` attributes and their values are case insensitive, but others are case sensitive.
 > [Learn more from the docs](https://framestd.github.io/sledge/build/).  
+
 **it could be**:
 ```html
 @Load: rEl-"PANES" srC-"path/to/pane.yml"
@@ -84,15 +85,15 @@ You can add preprocessors to your markup -- here goes whatever you need to tell 
   - license: MIT 
 - nav: 
   - links:
-      - HREF: https://github.com/framestd/sledge/
-        TITLE: Sledge
-      - HREF: https://github.com/framestd/
-        TITLE: Frame Studios
+    - HREF: https://github.com/framestd/sledge/
+      TITLE: Sledge
+    - HREF: https://github.com/framestd/
+      TITLE: Frame Studios
 ```  
 ### More  
-> There are also functions that do tedious works, fetch things for you and lots more.  
-> Frame makes use of CSS `class` selector `.` and `id` selector `#` to specify class attributes and id attributes respectively. Classes can be chained together by another trailing dot then the classname. ID does not support chaining as one unique id per HTML element is the code.  
-> etc...  
+There are also functions that do tedious works, fetch things for you and lots more.  
+Frame makes use of CSS `class` selector `.` and `id` selector `#` to specify class attributes and id attributes respectively. Classes can be chained together by another trailing dot then the classname. ID does not support chaining as one unique id per HTML element is the code, etc...  
+
 ```html
 @load: rel-"panes" src-"example.yml"
 <!--say: example.frame-->
@@ -137,7 +138,7 @@ You can add preprocessors to your markup -- here goes whatever you need to tell 
 Sledge has all you need -- we already have a python file `app.py` that does your work for you **_check it out_** [app.py script](https://github.com/framestd/sledge/blob/master/scripts/app.py). You can write your own script if you think you want to have more than the priviledges `app.py` offers. The sledge package exports three methods: 
 * `render(src, mode)` this may return a tuple or a compiled markup. `mode` tells it whether it's a layout file or not `mode=1` for layout files then it returns a compiled markup; `mode=0` default it returns tuple containing compiled page and all other information from the preprocessors.   
 * `hammer(src)` this does the whole build work and returns nothing (void).  
-* a bonus `get_all_files` that can walk directorys recursively and call private `__build` method to do the build job.  
+* a bonus `get_all_files` that can walk directorys recursively and call private `_build` method to do the build job.  
 
 You can also automate your build. Using our `Vigilante` class you can watch files, limited to your pages only, i.e if your layout or panes&mdash;`.yml` sources are not in your pages directory then any change to layout or YAML source won't trigger a build. The directory passed from the command line as args to...as in:  
 
@@ -167,7 +168,7 @@ sledge nail -w path/to/workspace
 rem watching path for changes
 ```  
 # Installing Sledge  
-As said [above](#warning) it is not yet production-ready, but when ready you can always install from [PYPI](https://www.pypi.org) using `pip`  
+As said [above](#warning) it is not yet production-ready, but when ready you can always install from [PyPI](https://www.pypi.org) using `pip`  
 ```bash
 pip install <package-name>
 ```  
@@ -176,4 +177,4 @@ package name could be sledge we can't tell that now, depends on name availabilit
 Looking to be a contributor, no problem, you are welcome. Read our guidelines to contributing to sledge. We have a [CONTRIBUTING.md](https://github.com/framestd/sledge/blob/master/CONTRIBUTING.md) for that.  
 
 # License  
-Sledge is Licensed under [MIT](https://github.com/framestd/blob/master/LICENSE)
+Sledge is Licensed under [MIT](https://github.com/framestd/sledge/blob/master/LICENSE)
