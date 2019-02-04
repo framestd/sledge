@@ -72,11 +72,12 @@ You can add preprocessors to your markup -- here goes whatever you need to tell 
 > The third specifies the layout to build the page on. Layouts are shared resources between many pages. Many pages may link to one layout.  
 
 ### What are panes:  
-> As the name suggests, a `pane` is just like a panel that fits into your `frame`. So the `pane` is just a `YAML` source file containing variables that fits the ones your `frame` needs to access. This variables are locked into your `frame` at compile time.  
+As the name suggests, a `pane` is just like a panel that fits into your `frame`. So the `pane` is just a `YAML` source file containing variables that fits the ones your `frame` needs to access. This variables are locked into your `frame` at compile time.  
+
 ### How to access variables  
-> Variables are accessed using `$` followed by `{` `address` `}`  
-> Example `${author}`, `${program::license}`  
-> and a pane that looks much like:  
+Variables are accessed using `$` followed by `{` `address` `}`  
+Example `${author}`, `${program::license}`, and a pane that looks much like:  
+
 ```yaml
 # say: example.yml
 - author: Caleb Pitan
@@ -99,18 +100,19 @@ Frame makes use of CSS `class` selector `.` and `id` selector `#` to specify cla
 <!--say: example.frame-->
 <!--using the YAML source above as the pane-->
 <div.container>
-    <div.page#main>
-        <p#help.hide.text>some help</p>
-    </div>
-    <span.nothing.goes.here//>
-    <div.navlinks>
-        <ul>
-            %explode(
-                <li>
-                    <a href="${HREF}">${TITLE}</a>
-                </li>, nav::links
-            )
-        </ul>
+  <div.page#main>
+    <p#help.hide.text>some help</p>
+  </div>
+  <span.nothing.goes.here//>
+  <div.navlinks>
+    <ul>
+      %explode(
+        <li>
+          <a href="${HREF}">${TITLE}</a>
+        </li>, nav::links
+      )
+    </ul>
+  </div>
 </div>
 ```  
 **compiles to:**  
