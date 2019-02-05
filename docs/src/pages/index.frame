@@ -1,0 +1,45 @@
+@load: rel-"panes" src-"../panes/index.yml"
+@load: rel-"dest" href-"../../build"
+@load: rel-"layout" src-"../layout/layout.html"
+@load: rel-"specific" find-"index" src-"../panes/specific.yml"
+@import: src-"../imports/footer.frame" as-"footer"
+<div.span9>
+  <div.screen.dsk-center.hero>
+    <h1.dsk-center>Sledge</h1>
+    Sledge is a python package for building websites&mdash;it is a very effective tool for site building. The Sledge project is a part of Frame Studios Developer Indulgent Program(DIP) which aims to make works easier for developers. You just have to write once and never again. It is optimised to be fast enough. Sledge uses Frame Remarkup and Templating Standards as defined by <a.override href="${remarkup::url}" target="_blank">Remarkup ${remarkup::version}</a>. It is meant to make you lazy! Grab your sledge we'll teach you how to do the hammering, and holla, voila you've nailed it all at once.
+  </div>
+  <div.screen.grid-view>
+    <div.span4>
+      <div.magic-lady.centered></div>
+    </div>
+    <div.span8>
+      <h2>Have the best relationship with your projects</h2>
+      <div.rule//>
+      Want to keep a cordial relationship with your code? Then you need sledge. Sledge gives you that relationship with your projects that makes you understand the in and out of your code without losing track or getting fed up, and never get bored.
+      <h2>One change triggers a change everywhere</h2>
+      <div.rule//>
+      With variables declared in a YAML file you define your templates&mdash;change your template once and every page linked to that template has the change. No stress at all.
+    </div>
+  </div>
+
+  <div.screen>
+    <h2>Take control</h2>
+    <div.rule//>
+    Separate the part of your code that is likely to change, keep them as variables in your YAML source, link it back to your Remarkup or Frame Markup source and voila "you nailed it all" is what you get.
+    <h2>Do you think we are re-inventing the wheel?</h2>
+    <div.rule//>
+    No. That is not more like it. I know you may think we are creating again what has been created. Nah! it's more like we are modifying or adding advanced and better features to what has been created, in our own way. The only way you can find out we are not, is when you start using sledge.
+  </div>
+
+  <div.screen.overflow>
+    <img.centered src="../res/img/sledge-screenshot.png" alt="Sledge" width="955" height="537"/>
+  </div>
+
+  <div.screen>
+    <h2>You can always do more than mere templating</h2>
+    <div.rule//>
+    Make your work easier you don't have to write the same thing&mdash;even with a slight difference&mdash;on and on. Populate your navbar, navigation and footer links in one statementusing framefunctions <code>&percnt;explode(...)</code> method. When writing codes in pre tags, you don't have to slow down and get tired of %htmlspecialchars(&lt; &gt;, i). We make the task easier: write normal tags inside the <code>&percnt;htmlspecialchars(...)</code> method.
+  </div>
+
+  ${footer}
+</div><!--.span9-->
