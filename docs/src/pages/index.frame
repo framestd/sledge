@@ -32,7 +32,7 @@
   </div>
 
   <div.screen.overflow>
-    <img.centered src="../res/img/sledge-screenshot.png" alt="Sledge" width="955" height="537"/>
+    <img.centered src="./res/img/sledge-screenshot.png" alt="Sledge" width="955" height="537"/>
   </div>
 
   <div.screen>
