@@ -1,0 +1,24 @@
+package:
+  name: Sledge
+  language: Python
+  version: 1.0
+  license: MIT
+  copyright: 2019 Frame Studios
+  authors:
+    - Frame Studios
+    - Caleb Adepitan
+  dependencies:
+    - PyYAML
+    - watchdog
+    - colorama
+    - termcolor
+  description: Build and deploy websites faster than you can blink your eye
+  SCM: Git
+  repository: https://github.com/framestd/sledge
+  tags:
+    - HTML
+    - python
+    - sledge
+    - frame
+    - pane
+  dist: sledge
