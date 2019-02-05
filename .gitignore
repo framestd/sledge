@@ -1,4 +1,5 @@
-scripts/main/.vs/
+**/**/.vs/
+**/**/.vscode/
 tests/build/
 tests/pages/build/
 *.pyc
