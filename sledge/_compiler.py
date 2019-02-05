@@ -14,7 +14,6 @@ import os
 from . import framefunctions
 from . import preprocessors  as prep
 from .framefunctions import *
-from . import escentity as esc
 from . import console
 from . import console
 
@@ -208,7 +207,9 @@ class Frame():
         framefile: path to file to compile
         mode: mode=0 means, normal pages; mode=1, means layout"""
 
+        from . import _entity
         from . import console
+        escape = lambda s: _entity.escape(s)
         console.info("status: compiling \"{}\"".format(framefile))
         #BEGIN: get things ready
         frameup = None
@@ -222,7 +223,7 @@ class Frame():
         layoutFile, self.pane, specific, dest = self.__process(frameup, mode)
         framefunctions.framepane = self.pane# Do not do this and the ff until above __process call
         frameup = re.sub(r"@.+\n*", "", frameup)
-        compiled = esc.escape(self.__parsefunctions(self.__autoclose(self.__parse_id(self.__parse_class(self.__setformating(frameup))))))
+        compiled = escape(self.__parsefunctions(self.__autoclose(self.__parse_id(self.__parse_class(self.__setformating(frameup))))))
         if mode:
             return compiled
         return (layoutFile, compiled, dest, specific)
