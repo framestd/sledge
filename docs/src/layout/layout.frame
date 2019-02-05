@@ -10,12 +10,12 @@
     <meta property="og:description" content="${FRAME::METAS::desc}"/>
     <meta property="og:image" content="${baseuri}${FRAME::METAS::image}"/>
     <meta property="og:url" content="${FRAME::METAS::url}"/>
-    <meta property="twitter:card" content="summary_large_image"/>
+    <meta property="twitter:card" content="summary"/>
     <title>${FRAME::TITLE}</title>
         
-    <link rel="stylesheet" href="../res/css/docs.css"/>
-    <link rel="stylesheet" href="../res/css/nav.css"/>
-    <link rel="stylesheet" href="../res/css/docs-responsive.css"/>
+    <link rel="stylesheet" href="./res/css/docs.css"/>
+    <link rel="stylesheet" href="./res/css/nav.css"/>
+    <link rel="stylesheet" href="./res/css/docs-responsive.css"/>
 
     <link rel="icon" href="${baseuri}${FRAME::METAS::image}"/>
     
@@ -89,8 +89,8 @@
       </div><!--.classic.grid-view-->
       
     </div><!--/container-->
-    <script src="../res/js/jquery.min.js"></script>
-    <script src="../res/js/cardinal.js"></script>
+    <script src="./res/js/jquery.min.js"></script>
+    <script src="./res/js/cardinal.js"></script>
     <script>
       $(".menu-btn").nav("init",{
         event: "click",

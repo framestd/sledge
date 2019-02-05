@@ -1,6 +1,6 @@
 @load: rel-"panes" src-"../panes/index.yml"
 @load: rel-"dest" href-"../../build"
-@load: rel-"layout" src-"../layout/layout.html"
+@load: rel-"layout" src-"../layout/layout.frame"
 @load: rel-"specific" find-"index" src-"../panes/specific.yml"
 @import: src-"../imports/footer.frame" as-"footer"
 <div.span9>

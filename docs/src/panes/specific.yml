@@ -6,8 +6,8 @@ index:
     desc: >-
       Sledge is a site building tool as part of Frame Studios
       Developer Indulgent Program(DIP). It is optimised to be fast enough.
-      Sledge uses markup and templating standards as defined by
-      Remarkup X.0. It is meant to make you lazy!
+      Sledge uses Frame Remarkup standards as defined by
+      Remarkup 1.0. It is meant to make you lazy!
     home: *Base
     image: res/img/frame.png
     url: *Base
