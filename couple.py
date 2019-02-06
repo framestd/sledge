@@ -1,4 +1,4 @@
-import shutil
+from __future__ import print_function
 import yaml
 import os
 import sys
@@ -38,7 +38,7 @@ def get_all_files(path, *ignore):
             get_all_files(os.path.join(path, eachdir), *ignore)
 
 def couple(p, f):
-    print p, f
+    print(p, f)
     src = os.path.join(p,f)
     dest = os.path.join(dist, f)
     fs = open(src)
@@ -51,5 +51,5 @@ def couple(p, f):
 
 absp = os.path.dirname(os.path.abspath(sys.argv[0]))
 path = os.path.join(absp, 'scripts')
-get_all_files(path, '.vs', '.vscode')
-raw_input('hello')
+get_all_files(path, '.vs', '.vscode', '__pycache__'#py3 env)
+raw_input('press return to cancel')
