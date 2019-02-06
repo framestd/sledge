@@ -171,6 +171,10 @@
             </ul>
           </div>
         </div><!--.span3-->
+        @load: rel-"dest" href-"../../build"
+        @load: rel-"layout" src-"../layout/layout.frame"
+        @load: rel-"specific" find-"index" src-"../panes/specific.yml"
+        @import: src-"../imports/footer.frame" as-"footer"
         <div class="span9">
           <div class="screen dsk-center hero">
             <h1 class="dsk-center">Sledge</h1>
@@ -212,7 +216,8 @@
           <footer class="footer">
             <div class="frame"></div>
             Code and documentation, in binaries or in source, copyright 2019 Frame Studios. Code is licensed under <a class="override" href="https://github.com/framestd/sledge/blob/master/LICENSE" target="_blank">MIT</a> and documentation is licensed under Creative Commons <a class="override" href="https://creativecommons.org/licenses/by/3.0/" target="_blank">CC by 3.0.</a><br/> Frame, Frame Studios, Sledge and Remarkup are trademarks of Frame Studios and may be registered.
-            With all the love <a class="override" href="https://github.com/calebpitan"></footer>
+            With all the love <a class="override" href="https://github.com/calebpitan">@calebpitan</a>
+          </footer> 
         </div><!--.span9-->
       </div><!--.classic.grid-view-->
       
