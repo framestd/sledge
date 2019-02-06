@@ -1,5 +1,6 @@
 **/**/.vs/
 **/**/.vscode/
+**/**/__pycache__/
 tests/build/
 tests/pages/build/
 *.pyc
