@@ -44,7 +44,7 @@ So if your version is any of the above, sledge is yours.
 
 ## Keep your code on the cutting edge  
 ### Learn by examples  
-You can add preprocessors to your markup -- here goes whatever you need to tell the compiler. Preprocessor are denoted with the `@` operator. Here is an example for a page called `getstarted.frame`  
+You can add preprocessors to your markup, here goes whatever you need to tell the compiler. Preprocessor are denoted with the `@` operator. Here is an example for a page called `getstarted.frame`  
 ```html
 @load: rel-"panes" src-"path/to/pane.yml"
 @load: rel-"dest" href-"this/folder/for/compiled/markup/"
@@ -139,7 +139,7 @@ Frame makes use of CSS `class` selector `.` and `id` selector `#` to specify cla
 > **Note**: preprocessors should be added at the begining of file, the parser terminates when it reads a token that is not a preprocessor, and never continue or come back to parse later.  
 
 ## Using Sledge  
-Sledge has all you need -- we already have a python file `app.py` that does your work for you **_check it out_** [app.py script](https://github.com/framestd/sledge/blob/master/sledge.py). You can write your own script if you think you want to have more than the priviledges `app.py` offers. The sledge package exports three methods: 
+Sledge has all you need -- we already have a python file `app.py` that does your work for you **_check it out_** [sledge.py script](https://github.com/framestd/sledge/blob/master/sledge.py). You can write your own script if you think you want to have more than the priviledges `app.py` offers. The sledge package exports three methods: 
 * `render(src, mode)` this may return a tuple or a compiled markup. `mode` tells it whether it's a layout file or not `mode=1` for layout files then it returns a compiled markup; `mode=0` default it returns tuple containing compiled page and all other information from the preprocessors.   
 * `hammer(src)` this does the whole build work and returns nothing (void).  
 * a bonus `get_all_files` that can walk directorys recursively and call private `_build` method to do the build job.  
