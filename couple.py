@@ -51,5 +51,8 @@ def couple(p, f):
 
 absp = os.path.dirname(os.path.abspath(sys.argv[0]))
 path = os.path.join(absp, 'scripts')
-get_all_files(path, '.vs', '.vscode', '__pycache__'#py3 env)
-raw_input('press return to cancel')
+get_all_files(path, '.vs', '.vscode', '__pycache__')#py3 env
+try:
+    raw_input('press return to cancel')
+except KeyboardInterrupt:
+    sys.exit(0)
