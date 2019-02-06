@@ -222,7 +222,7 @@ class Frame():
             frameup = f.read()
         layoutFile, self.pane, specific, dest = self.__process(frameup, mode)
         framefunctions.framepane = self.pane# Do not do this and the ff until above __process call
-        frameup = re.sub(r"^@.+\n*", "", frameup, re.M)
+        frameup = re.sub(r"@.+\n*", "", frameup, re.M)
         compiled = escape(self.__parsefunctions(self.__autoclose(self.__parse_id(self.__parse_class(self.__setformating(frameup))))))
         if mode:
             return compiled
