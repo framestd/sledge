@@ -9,6 +9,9 @@
 # which can be found in the LICENSE file.
 
 import re
+import sys
+import base64 as b64
+import urllib2
 from . import console
 
 functions = dict()
@@ -83,6 +86,36 @@ def getf(options, arg):
         return str(res.read())
     return ""
 
+def encodeURI(options, s):
+    Frame._Frame__RESTRUCTURE = 0
+    safe = "/"
+    print(s[1],'t')
+    try:
+        safe = s[1]
+    except IndexError:
+        safe = safe
+    
+    encoded = ""
+    s = s[0]
+    try:
+        import urllib2 as uri
+    except ImportError:
+        try:
+            import urllib.parse as uri3
+        except ImportError:
+            console.error("could not load library urllib")
+            sys.exit(1)
+    if uri:
+        encoded = uri.quote(s, safe=safe)
+    elif uri3:
+        encoded = uri3.quote(s, safe=safe)
+    else:
+        console.error("cannot encode URI")
+        sys.exit(1)
+    return encoded
+
+
+
 def invert(options, arg):
     #useful for writing in <pre> and <code> tags without stress.
     try:
@@ -91,7 +124,6 @@ def invert(options, arg):
         if str(arg[1]).isdigit():
             Frame._Frame__RESTRUCTURE = int(arg[1])
         else:
-            #console.log(arg[1])
             console.warn("expected a number as the second argument")
             Frame._Frame__RESTRUCTURE = 0
     except IndexError:
@@ -102,13 +134,16 @@ def invert(options, arg):
         "<": "&lt;",
         ">": "&gt;",
         "\"": "&quot;",
-        "&": "&amp;amp;" # This is so because of the escape call, this has a meaning in a frame. Check '/escentity/esc.py'[ln: 14-30]
+        "&": "&amp;amp;" # This is so because of the escape call, 
+                         # this has a meaning in a frame. Check 'entity.py'[ln: 14-30]
     }
     inv = arg[0].rstrip()
     for char, code in specialchars.items():
         inv = inv.replace(char, code)
     return str(inv)
 
+# export functions
 functions["explode"] = explode
 functions["read"] = getf
 functions["htmlspecialchars"] = invert
+functions["encodeURI"] = encodeURI
