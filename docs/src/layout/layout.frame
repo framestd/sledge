@@ -6,11 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
     <meta name="description" content="${FRAME::METAS::desc}"/>
     <meta name="author" content="${FRAME::METAS::author}"/>
+    <meta name="keywords" content="${FRAME::METAS::kwd}[*]"/>
     <meta property="og:title" content="${FRAME::TITLE}"/>
     <meta property="og:description" content="${FRAME::METAS::desc}"/>
     <meta property="og:image" content="${baseuri}${FRAME::METAS::image}"/>
     <meta property="og:url" content="${FRAME::METAS::url}"/>
     <meta property="twitter:card" content="summary"/>
+
     <title>${FRAME::TITLE}</title>
         
     <link rel="stylesheet" href="./res/css/docs.css"/>
