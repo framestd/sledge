@@ -38,8 +38,8 @@
   <div.screen>
     <h2>You can always do more than mere templating</h2>
     <div.rule//>
-    Make your work easier you don't have to write the same thing&mdash;even with a slight difference&mdash;on and on. Populate your navbar, navigation and footer links in one statementusing framefunctions <code>&percnt;explode(...)</code> method. When writing codes in pre tags, you don't have to slow down and get tired of %htmlspecialchars(&lt; &gt;, i). We make the task easier: write normal tags inside the <code>&percnt;htmlspecialchars(...)</code> method.
+    Make your work easier you don't have to write the same thing&mdash;even with a slight difference&mdash;on and on. Populate your navbar, navigation and footer links in one statementusing framefunctions <code>&percnt;explode(...)</code> method. When writing codes in pre tags, you don't have to slow down and get tired of %htmlspecialchars(&lt; &gt;, 0). We make the task easier: write normal tags inside the <code>&percnt;htmlspecialchars(...)</code> method.
   </div>
 
-  ${footer}
+  ${footer} 
 </div><!--.span9-->
