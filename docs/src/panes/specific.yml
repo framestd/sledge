@@ -2,14 +2,14 @@ baseuri: &Base https://framestd.github.io/sledge/
 index:
   title: Sledge - nail 'em all!
   meta:
-    author: Caleb Adepitan
+    author: &author Caleb Adepitan
     desc: Build and deploy websites faster than you can blink your eye
     descript: >-
       Sledge is a site building tool as part of Frame Studios
       Developer Indulgent Program(DIP). It is optimised to be fast enough.
       Sledge uses Frame Remarkup standards as defined by
       Remarkup 1.0. It is meant to make you lazy!
-    kwd:
+    kwd: &kwd
       - sledge
       - remarkup
       - python
@@ -22,6 +22,15 @@ index:
       - pane
       - Frame Studios
       - framestd
+    home: *Base
+    image: res/img/frame.png
+    url: *Base
+getstarted:
+  title: Get Started - Sledge
+  meta:
+    author: *author
+    desc: Easily learn remarkup and how to use sledge to build your website.
+    kwd: *kwd
     home: *Base
     image: res/img/frame.png
     url: *Base

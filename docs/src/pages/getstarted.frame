@@ -1,0 +1,15 @@
+@load: rel-"panes" src-"../panes/index.yml"
+@load: rel-"dest" href-"../../build"
+@load: rel-"layout" src-"../layout/layout.frame"
+@load: rel-"specific" find-"getstarted" src-"../panes/specific.yml"
+@import: src-"../imports/footer.frame" as-"footer"
+
+<div.span9>
+  <div.screen.grid-view>
+    <div.screen>
+
+    </div>
+  </div>
+  
+  ${footer}
+</div>
