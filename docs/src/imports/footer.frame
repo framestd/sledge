@@ -1,4 +1,5 @@
 <footer.footer>
   <div.frame//>
   Code and documentation, in binaries or in source, ${footer::copyright}. Code is licensed under <a.override href="https://github.com/framestd/sledge/blob/master/LICENSE" target="_blank">MIT</a> and documentation is licensed under Creative Commons <a.override href="https://creativecommons.org/licenses/by/3.0/" target="_blank">CC by 3.0.</a><br/> Frame, Frame Studios, Sledge and Remarkup are trademarks of Frame Studios and may be registered.
+  With all the love <a.override href="https://github.com/calebpitan">@calebpitan</a.override>
 </footer>

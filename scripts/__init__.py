@@ -1,7 +1,17 @@
+# Copyright 2019 Frame Studios. All rights reserved.
+# Remarkup v1.0 python implementation.
+# Sledge v1.0.
+# Project Manager: Caleb Adepitan.
+# The Remarkup specifications that govern this implementation can be found at:
+# https://framestd.github.io/remarkup/spec/v1/
+# Developers Indulgent Program (DIP)
+# Use of this source code is licensed under the MIT LICENSE
+# which can be found in the LICENSE file.
+
 from __future__ import print_function
 from . import _compiler as compiler
 from . import console
-import os, re
+import os, re, sys
 
 __version__ = 1.0
 __all__ = ["render", "hammer", "get_all_files"]
@@ -24,6 +34,40 @@ _ptrns = [r"(?:\..+)$", r"([ \t]*)\$\{FRAME::BODY\}",
          r"\$\{FRAME::METAS::%s\}"]
 
 
+def recurseAddress(o, x, i=0):
+    try:
+        return o[x[i]] if i == (len(x) - 1) else recurseAddress(o[x[i]], x, i+1)
+    except KeyError:
+        console.error("invalid address {}".format(x))
+
+def specifics(frameup, pane):
+    allFormat = re.findall(r"([ \t]*)\x24\x7B(.+?)\x7D(?:\x5B([\d*]+)\x5D)?", frameup)
+    for tab, each, index in allFormat:
+        each_ = each.lstrip().split("::")
+        if each_[1] != "METAS":
+            each_ = each_[1:]
+        else:
+            each_ = each_[2:]
+        paneValue = recurseAddress(pane, each_, 0)
+        if paneValue is None:
+            print('None')
+        if type(paneValue) is list:
+            index = str(index)
+            index = int(index) if index.isdigit() else index
+            ptrn = u"%s\x24\x7B%s\x7D\x5B%s\x5D"%(tab, each, index)
+            if index == "*" or index == "":
+                paneValue = ", ".join(paneValue)
+                paneValue = _doTabs(paneValue, tab)
+                frameup = frameup.replace(ptrn, paneValue)
+            else:
+                paneValue = paneValue[index]
+                paneValue = _doTabs(paneValue, tab)
+                frameup = frameup.replace(ptrn, paneValue)
+        else:
+            paneValue = _doTabs(paneValue, tab)
+            ptrn = u"%s\x24\x7B%s\x7D"%(tab,each)
+            frameup = frameup.replace(ptrn, paneValue)
+    return frameup
 
 def render(src, mode=0):
     fr = compiler.Frame()
@@ -63,8 +107,8 @@ def _build(basedir, filename, response):
         cMainFrame = _doTabs(cMainFrame, tab)
         nfc = re.sub(_ptrns[2], cMainFrame, cLayoutFrame) #layout body
         nfc = re.sub(_ptrns[3], specific["title"], nfc) #page title
-        for c in _metas(specific["meta"], nfc): #page meta tags
-            nfc = c
+        #for c in _metas(specific["meta"], nfc): #page meta tags
+        nfc = specifics(nfc, specific["meta"])
         fileo.write(nfc)
     except IOError as ex:
         console.error(ex.message)
