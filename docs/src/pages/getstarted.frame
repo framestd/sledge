@@ -7,9 +7,9 @@
 <div.span9>
   <div.screen.grid-view>
     <div.screen>
-
+      <h1>Get Started With sledge.</h1>
     </div>
   </div>
-  
+
   ${footer}
 </div>

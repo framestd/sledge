@@ -17,13 +17,13 @@ icons:
 navbar:
   links:
     - TITLE: Get Started
-      HREF: https://framestd.github.io/remarkup/getstarted.html
+      HREF: https://framestd.github.io/remarkup/getstarted
       ICON: null
     - TITLE: Docs
       HREF: https://framestd.github.io/remarkup/docs/
       ICON: null
     - TITLE: Examples
-      HREF: https://framestd.github.io/remarkup/examples.html
+      HREF: https://framestd.github.io/remarkup/examples
       ICON: null
 control:
   id:
@@ -36,34 +36,34 @@ nav:
   links:
     Get Started:
       - TITLE: What is Remarkup
-        HREF: ./getstarted.html#what-is-remarkup
+        HREF: ./getstarted#what-is-remarkup
       - TITLE: What is a Frame
-        HREF: ./getstarted.html#what-is-a-frame
+        HREF: ./getstarted#what-is-a-frame
       - TITLE: What is a Pane
-        HREF: ./getstarted.html#what-is-a-pane
+        HREF: ./getstarted#what-is-a-pane
     Docs:
       - TITLE: Using variables
-        HREF: ./docs/variables.html
+        HREF: ./docs/variables
       - TITLE: Remarkup functions
-        HREF: ./docs/functions.html
+        HREF: ./docs/functions
       - TITLE: Remarkup data-types
-        HREF: ./docs/data-types.html
+        HREF: ./docs/data-types
       - TITLE: Preprocessors
-        HREF: ./docs/preprocessors.html
+        HREF: ./docs/preprocessors
       - TITLE: class attributes
-        HREF: ./docs/class-attributes.html
+        HREF: ./docs/class-attributes
       - TITLE: id attributes
-        HREF: ./docs/id-attributes.html
+        HREF: ./docs/id-attributes
       - TITLE: Fields
-        HREF: ./docs/fields.html
+        HREF: ./docs/fields
       - TITLE: Wrap ups
-        HREF: ./docs/wrap-up.html
+        HREF: ./docs/wrap-up
     Services:
       - TITLE: Help
-        HREF: ./services/help.html
+        HREF: ./services/help
         ICON: null
       - TITLE: Donate
-        HREF: ./services/donate.html
+        HREF: ./services/donate
         ICON: null
       - TITLE: CODE_OF_CONDUCT
         HREF: ./CODE_OF_CONDUCT.md
