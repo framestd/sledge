@@ -11,6 +11,7 @@
     <meta property="og:image" content="${baseuri}${FRAME::METAS::image}"/>
     <meta property="og:url" content="${FRAME::METAS::url}"/>
     <meta property="twitter:card" content="summary"/>
+    
     <title>${FRAME::TITLE}</title>
         
     <link rel="stylesheet" href="./res/css/docs.css"/>
