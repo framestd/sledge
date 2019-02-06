@@ -6,7 +6,7 @@
 # https://framestd.github.io/remarkup/spec/v1/
 # Developers Indulgent Program (DIP)
 # Use of this source code is licensed under the MIT LICENSE
-# which can be found in the LICENSE file. 
+# which can be found in the LICENSE file.
 
 from __future__ import print_function
 import os
