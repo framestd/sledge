@@ -1,0 +1,104 @@
+.main-menu {
+    background: #F9F9F9;
+    width: 300px;
+    height: 100%;
+    position: relative;
+    position: fixed;
+    overflow: auto;
+    z-index: 40;
+    top: 0;
+    overflow-x: hidden;
+    border: solid 1px rgba(0,0,0,.05);
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+   
+.main-menu.right {
+    right: 0;
+}
+   
+.main-menu.left {
+    left: 0;
+}
+   
+.main-menu.offset {
+    top: 55px;
+    height: calc(100% - 56px);
+}
+   
+.main-menu ul.no:first-child {
+    margin-top: 0px;
+}
+   
+::-webkit-scrollbar {
+    width: 3px;
+    position: absolute;
+    left: -10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ccc;
+}
+   
+.backdrop.offset {
+    top: 55px;
+}
+
+.main-menu ul li:not(.exempt) a {
+    color: #21A1DE;
+    text-decoration: none;
+    padding: 5px 10px 5px 40px;
+    line-height: 30px;
+    display: block;
+}
+
+.main-menu ul li:not(.exempt) a:hover {
+    background: #f1f1f1;
+}
+
+.main-menu ul {
+    width: 100%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.main-menu ul li {
+    margin-left: -40px;
+    width: auto;
+}
+
+.main-menu .head.lead {
+    *background: #f3f8fe;
+    padding: 10px 15px;
+    font-size: 18px;
+    color: #5eb98e;
+    height: 150px;
+    width: 100%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.main-menu ul li .group {
+    padding-left: 20px;
+    color: #888888;
+}
+
+.menu-desc {
+    font-size: 14px;
+    color: #999;
+    padding: 20px 20px 0;
+}
+
+div.frame-text {
+    background: url(../img/frame-text128.png) no-repeat;
+    max-width: 128px;
+    height: 63px;
+    margin: 30px 5px;
+}
