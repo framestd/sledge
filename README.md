@@ -54,7 +54,7 @@ You can add preprocessors to your markup -- here goes whatever you need to tell 
 ```  
 > **Note**: attributes and their values are case insensitive, save only values containig path which depends on your file system, and variable addresses.  
 > We could rather say `rel` attributes and their values are case insensitive, but others are case sensitive.
-> [Learn more from the docs](https://framestd.github.io/sledge/build/).  
+> [Learn more from the docs](https://framestd.github.io/sledge/).  
 
 **it could be**:
 ```html
@@ -139,7 +139,7 @@ Frame makes use of CSS `class` selector `.` and `id` selector `#` to specify cla
 > **Note**: preprocessors should be added at the begining of file, the parser terminates when it reads a token that is not a preprocessor, and never continue or come back to parse later.  
 
 ## Using Sledge  
-Sledge has all you need -- we already have a python file `app.py` that does your work for you **_check it out_** [app.py script](https://github.com/framestd/sledge/blob/master/scripts/app.py). You can write your own script if you think you want to have more than the priviledges `app.py` offers. The sledge package exports three methods: 
+Sledge has all you need -- we already have a python file `app.py` that does your work for you **_check it out_** [app.py script](https://github.com/framestd/sledge/blob/master/sledge.py). You can write your own script if you think you want to have more than the priviledges `app.py` offers. The sledge package exports three methods: 
 * `render(src, mode)` this may return a tuple or a compiled markup. `mode` tells it whether it's a layout file or not `mode=1` for layout files then it returns a compiled markup; `mode=0` default it returns tuple containing compiled page and all other information from the preprocessors.   
 * `hammer(src)` this does the whole build work and returns nothing (void).  
 * a bonus `get_all_files` that can walk directorys recursively and call private `_build` method to do the build job.  
@@ -147,27 +147,26 @@ Sledge has all you need -- we already have a python file `app.py` that does your
 You can also automate your build. Using our `Vigilante` class you can watch files, limited to your pages only, i.e if your layout or panes&mdash;`.yml` sources are not in your pages directory then any change to layout or YAML source won't trigger a build. The directory passed from the command line as args to...as in:  
 
 ```bash
-python scripts/app.py -w ../tests/pages 
+python sledge.py -w ../tests/pages 
 # everything under this dir is watched
 # [-w|--watch] will watch
-python scripts/app.py ../tests/pages
-# nothing is watched
+python sledge.py ../tests/pages
+# nothing is being watched
 ```  
 
 ### ..with bash
 We do not provide any shell script yet, but we'll do soon  
 ```bash
-cd scripts/bin # from Sledge install location
-python app path/to/workspace 
-# note the path is relative
-# so when resolved it will be "scripts/bin/path/to/workspace"
+python sledge.py --watch path/to/workspace 
+# watching [-w|--watch]
 ```   
 ### ...with cmd  
 We provide a `.cmd` script which we called our **API Entry Point** and idealy this should be used 
-```cmd
+
+```batch
 cd where\sledge\cmd\is
 rem sledge script --update path/to/your-script.py
-rem if you'll not use app.py but your own script
+rem if you'll not use sledge.py but your own script
 sledge nail -w path/to/workspace
 rem watching path for changes
 ```  
