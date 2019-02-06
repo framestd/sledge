@@ -1,6 +1,6 @@
 baseuri: &Base https://framestd.github.io/sledge/
 index:
-  title: Sledge &mdash; Nail 'em all!
+  title: Sledge - nail 'em all!
   meta:
     author: Caleb Adepitan
     desc: Build and deploy websites faster than you can blink your eye
