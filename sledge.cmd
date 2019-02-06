@@ -4,7 +4,7 @@
 :: Licensed under MIT
 @ECHO OFF
 title Frame - Sledge
-
+setlocal
 set ADDCMD=script
 set PARAM=--update
 set BUILDCMD=nail
@@ -26,7 +26,7 @@ set B=%2
 set C=%3
 
 if "%1" == "" (
-    more description.txt
+    more %~dp0description.txt
     goto END
 )
 if not %1 == %ADDCMD% (

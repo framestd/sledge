@@ -1,4 +1,5 @@
 @ECHO OFF
+setlocal
 set SPECURL=https://framestd.github.io/remarkup/spec/x/
 set RMH=https://framestd.github.io/sledge/
 set SPECMD=-spec
@@ -11,7 +12,7 @@ set SLU=-u
 set SLC=contact
 set SLI=issue
 set RMV=Remarkup version X.0
-set SLV=Sledge v1.0
+set SLV=Sledge 1.0
 set CONTACT=framestd@gmail.com
 set ISSUEURL=https://github.com/framestd/sledge/issues
 
@@ -47,10 +48,10 @@ for /F "tokens=1-4" %%G in ("%*") do (
         )
     ) else if %%G == %SLL% (
         if "%%H" == "" (
-            more LICENSE
+            more %~dp0LICENSE
             goto END
         ) else if %%H == %SLU% (
-            more LICENSE
+            more %~dp0LICENSE
         ) else (
             goto SLF
         )

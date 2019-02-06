@@ -27,6 +27,7 @@ def get_all_files(path, *ignore):
     dirsOnly = os.listdir(path)
     temp = []
     for eachfile in allfiles:
+        if eachfile.endswith('.pyc'): continue
         if os.path.isfile(os.path.join(path, eachfile)):
             temp.append(eachfile)
             dirsOnly.remove(eachfile)
@@ -49,6 +50,6 @@ def couple(p, f):
     fd.close()
 
 absp = os.path.dirname(os.path.abspath(sys.argv[0]))
-path = os.path.join(absp, 'scripts', 'main')
+path = os.path.join(absp, 'scripts')
 get_all_files(path, '.vs', '.vscode')
 raw_input('hello')
