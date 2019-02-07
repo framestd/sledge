@@ -1,0 +1,19 @@
+pre {
+  background: #252e30;
+  border-radius: 3px;
+  padding: 10px;
+  color: #f8f8ff;;
+  line-height: 20px;
+}
+.attr {
+  color: #8abaf8; 
+}
+.attrv {
+  color: #e7a139;
+}
+.sign {
+  color: #c1c1c1;
+}
+.tag {
+  color: #6466ec;
+}
