@@ -124,10 +124,24 @@ def _build(basedir, filename, response):
     return 0
 
 def _doTabs(context=nullstr, tab=nullstr):
+    codeframe = False
     lctx = context.split(n)
     nctx = r''
     for each in lctx:
-        nctx += "%s%s\n"%(tab,each)
+        check = each.lstrip().rstrip()
+        codecheck = check.startswith("<pre")
+        ncodecheck = check.startswith("</pre") or check.endswith("</pre")
+        if not codeframe:
+            nctx += "%s%s\n"%(tab,each)
+        else:
+            nctx += "%s\n"%(each)
+        if codecheck:
+            print(each)
+            codeframe = True
+        if ncodecheck:
+            print(each)
+            codeframe = False
+        
     return nctx.rstrip()
 
 def _metas(x, c):

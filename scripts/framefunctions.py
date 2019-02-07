@@ -109,7 +109,6 @@ def encodeURI(options, s):
 def invert(options, arg):
     #useful for writing in <pre> and <code> tags without stress.
     try:
-        
         arg[1] = arg[1].lstrip().rstrip()
         if str(arg[1]).isdigit():
             Frame._Frame__RESTRUCTURE = int(arg[1])
@@ -135,5 +134,5 @@ def invert(options, arg):
 # export functions
 functions["explode"] = explode
 functions["read"] = getf
-functions["htmlspecialchars"] = invert
+functions["code"] = invert
 functions["encodeURI"] = encodeURI
