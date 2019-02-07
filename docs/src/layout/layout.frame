@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="./res/css/docs.css"/>
     <link rel="stylesheet" href="./res/css/nav.css"/>
     <link rel="stylesheet" href="./res/css/docs-responsive.css"/>
+    <link rel="stylesheet" href="./res/css/code.css"/>
 
     <link rel="icon" href="${baseuri}${FRAME::METAS::image}"/>
     
@@ -92,6 +93,7 @@
     </div><!--/container-->
     <script src="./res/js/jquery.min.js"></script>
     <script src="./res/js/cardinal.js"></script>
+    <script src="./res/js/remarkup.js"></script>
     <script>
       $(".menu-btn").nav("init",{
         event: "click",

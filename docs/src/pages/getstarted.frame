@@ -6,8 +6,22 @@
 
 <div.span9>
   <div.screen.grid-view>
+    <div.screen.intro>
+      <h1>Introduction</h1>
+      Blink Your Eyes!<br/>
+      When I said; "Build and deploy website faster than you can blink your eyes", I meant it. This site was built even before you could blink your eyes <span.blink></span>.
+    </div>
     <div.screen>
-      <h1>Get Started With sledge.</h1>
+      <h2>Let's get you started</h2>
+      First things first&mdash;to use sledge you need python on your computer, so if you don't have python, head to the <a.override href="https://www.python.org/downloads/windows" target="_blank">python download page</a> or read this <a.override href="https://docs.python-guide.org/starting/install3/linux/" target="_blank">guide for installing on linux</a>.
+      If you have python installed, great, what are we waiting for lets get you started.
+      You need to install sledge using this command:
+      <pre.frame>%code(
+<name>
+  <address name="goat" gang="guru">
+    Colorado USA
+  </address>
+</name>)</pre> 
     </div>
   </div>
 
