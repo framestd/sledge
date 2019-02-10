@@ -93,6 +93,7 @@
     </div><!--/container-->
     <script src="./res/js/jquery.min.js"></script>
     <script src="./res/js/cardinal.js"></script>
+    <script src="./res/js/codebrush.js"></script>
     <script src="./res/js/remarkup.js"></script>
     <script>
       $(".menu-btn").nav("init",{

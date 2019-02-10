@@ -23,7 +23,7 @@ index:
       - Frame Studios
       - framestd
     home: *Base
-    image: res/img/frame.png
+    image: res/img/frame_white192.png
     url: *Base
 getstarted:
   title: Get Started - Sledge
