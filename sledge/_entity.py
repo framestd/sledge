@@ -38,20 +38,20 @@ as they may be parsed with respect to their meanings in a frame.
         but
         `&quot;` remains as `&quot;` 
         It is not frame's business."""
-ENTITY_MAP = {
-    "&num;": "#",
-    "&period;": ".",
-    "&dollar;": "$",
-    "&colon;": ":",
-    "&dblcln;": "::",
-    "&excl;": "!",
-    "&percnt;": "%",
-    "&commat;": "@",
-    "&amp;": "&"
-}
+ENTITY_MAP = [
+    ("&num;", "#"),
+    ("&period;", "."),
+    ("&dollar;", "$"),
+    ("&colon;", ":"),
+    ("&dblcln;", "::"),
+    ("&excl;", "!"),
+    ("&percnt;", "%"),
+    ("&commat;", "@"),
+    ("&amp;", "&")
+]
 
 def escape(text):
     if not text: return
-    for entity, char in ENTITY_MAP.items():
-        text = re.sub(entity, char, text)
+    for entity, char in ENTITY_MAP:
+        text = text.replace(entity, char)
     return text

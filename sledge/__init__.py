@@ -136,10 +136,8 @@ def _doTabs(context=nullstr, tab=nullstr):
         else:
             nctx += "%s\n"%(each)
         if codecheck:
-            print(each)
             codeframe = True
         if ncodecheck:
-            print(each)
             codeframe = False
         
     return nctx.rstrip()

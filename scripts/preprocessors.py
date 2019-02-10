@@ -38,12 +38,19 @@ def loadpane(src):
     return yaml.load(panecontent) if not panecontent is None else None
 
 def parsepreprocessor(frameup, cb, mode):
-    
+    import sys
     console.info("status: parsing preprocessors")
     splitframe = frameup.split('\n')
     for each in splitframe:
-        pp = re.findall(r'^(?:@)(\w+):\s*?(.*)', each)
-        if pp is None: break
+        pp = []
+        pp = re.findall(r'^(?:@)(\w+):\s*(.*)', each)
+        check = re.match(r"^\s*<![\w-]+", each)
+        if check is not None and len(pp) == 0:
+            continue
+        elif check is None and len(pp) == 0:
+            break
+        else:
+            pass
         for tag, attrs in pp:
             cb(tag, attrs.lstrip(), mode)
     return (exports["layout"], exports["pane"], exports["specific"], exports["dest"])

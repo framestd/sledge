@@ -89,29 +89,22 @@ def getf(options, arg):
 def encodeURI(options, s):
     Frame._Frame__RESTRUCTURE = 0
     safe = "/"
-    print(s[1],'t')
     try:
         safe = s[1]
     except IndexError:
         safe = safe
-    
     encoded = ""
     s = s[0]
     try:
-        import urllib2 as uri
+        from urllib import parse # for Python 3
     except ImportError:
         try:
-            import urllib.parse as uri3
+            import urllib as parse # for Python 2
         except ImportError:
-            console.error("could not load library urllib")
+            console.error("could not load library \"urllib\"")
+            console.error("cannot encode URI")
             sys.exit(1)
-    if uri:
-        encoded = uri.quote(s, safe=safe)
-    elif uri3:
-        encoded = uri3.quote(s, safe=safe)
-    else:
-        console.error("cannot encode URI")
-        sys.exit(1)
+    encoded = parse.quote_plus(s, safe=safe)
     return encoded
 
 
@@ -133,7 +126,7 @@ def invert(options, arg):
         "<": "&lt;",
         ">": "&gt;",
         "\"": "&quot;",
-        "&": "&amp;amp;" # This is so because of the escape call, 
+        "&": "&amp;amp;" # This is so because of the escape call in _compiler.py, 
                          # this has a meaning in a frame. Check 'entity.py'[ln: 14-30]
     }
     inv = arg[0].rstrip()

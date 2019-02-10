@@ -26,14 +26,15 @@ class Frame():
     __RESTRUCTURE = 0
 
     # BEGIN DECLARATION: Frame global object and constant fields
-    FRAME = "FRAME"    # GLOBAL INHERITABLE OBJECT
+    FRAME = "FRAME"    # GLOBAL INHERITABLE NAMESPACE FIELD
     BODY = "BODY"    # CONSTANT FIELD, PROPERTY OF `FRAME`
     DIRNAME = "DIRNAME"    # CONSTANT FIELD, PROPERTY OF `FRAME`
     FILENAME = "FILENAME"    # CONSTANT FIELD, PROPERTY OF `FRAME`
     TITLE = "TITLE"    # CONSTANT FIELD, PROPERTY OF `FRAME`
-    METAS = "METAS"    # CONSTANT FIELD, PROPERTY OF `FRAME`
+    METAS = "METAS"    # NAMESPACE FIELD, PROPERTY OF `FRAME`
     GROUP = "GROUP"    # DEPENDENT CONSTANT FIELD, PROPERTY OF `FRAME`
     LAST_MODIFIED = "LASTMOD"    # CONSTANT FIELD, PROPERTY OF `FRAME`
+    TIME = "TIME"
     # END
 
     def storepane(self, pane):
@@ -48,6 +49,19 @@ class Frame():
         self.BASESPACE = a
         self.WORKSPACE = b
         return
+
+    def __escape(self, context, all=False):
+        try:
+            check = r"\x5C([\x28\x29])" if not all else r"\x5C([\x2C\x28\x29])"
+            context = re.sub(r"\x5C\x5C", "\x3C\x7Eslash\x7E\x3E", context)
+            context = re.sub(check, "\\1", context) # do not escape \x5C\x2C this is a label to
+                                                    # spilt args around `__parsefunctions` where
+                                                    # args will be split at the point where they 
+                                                    # do not have a \x5C preceeding \x2C.
+            context = context.replace(u"\x3C\x7Eslash\x7E\x3E", "\\\\")
+        except re.error as ree:
+            console.error(ree.message)
+        return context
     
     def __process(self, frameup, mode):
         return prep.parsepreprocessor(frameup, prep.processor, mode)
@@ -97,14 +111,18 @@ class Frame():
                     formatted = re.sub(r"\$\{FRAME::DIRNAME\}", self.WORKSPACE, formatted)
                 elif each_[1] == Frame.FILENAME:
                     formatted = re.sub(r"\$\{FRAME::FILENAME\}", self.CURFILE, formatted)
-                elif each_[1] == Frame.LAST_MODIFIED:
-                    continue
+                elif each_[1] == Frame.LAST_MODIFIED or each_[1] == Frame.TIME:
+                    import datetime
+                    date = datetime.datetime.now().strftime("%w %b, %Y %H:%M:%S")
+                    formatted = re.sub(r"\$\{FRAME::LASTMOD\}", date, formatted)
+                    date = datetime.datetime.now().strftime("%Y-%m-%wT%H:%M:%S.%f")
+                    formatted = re.sub(r"\$\{FRAME::TIME\}", date, formatted)
                 elif each_[1] == Frame.TITLE:
                     continue
                 elif each_[1] == Frame.METAS:
                     continue
                 else:
-                    pass
+                    pass #or continue
             # End Frame constant fields
             
             paneValue = recurseAddress(pane, each_, 0)
@@ -141,8 +159,8 @@ class Frame():
             as UPDATED by the 'Frame Specifications' 
             https://framestd.github.io/remarkup/spec/v1/frame-functions.html"""
         
-        funclist = re.findall(r"([ \t]*)%(\w+)\s*\((.*?)\)", frameup, re.DOTALL) 
-        cache = re.findall(r"[ \t]*%\w+\s*\(.*?\)", frameup, re.DOTALL)
+        funclist = re.findall(r"([ \t]*)%(\w+)\s*\x28(.*?)(?<!\x5c)\x29", frameup, re.DOTALL) 
+        cache = re.findall(r"[ \t]*%\w+\s*\x28.*?(?<!\x5c)\x29", frameup, re.DOTALL)
         functional = frameup
         funcReturnValue = None
         i = 0
@@ -150,9 +168,12 @@ class Frame():
         #for i in range(len(funclist)):
         for tab, funcname, args in funclist:
             result = r""
+            args = self.__escape(args)
+            _args_ = re.split(r"(?<!\x5C)\x2C", args)
             console.info("status: executing function \"{}\"".format(funcname))
             try:
-                funcReturnValue = Frame.funcs[funcname](self.getpane(), (args.split(",")))
+                funcReturnValue = Frame.funcs[funcname](self.getpane(), _args_)
+                funcReturnValue = self.__escape(funcReturnValue, all=True)
             except KeyError:
                 import sys
                 msg = "cannot execute function\
