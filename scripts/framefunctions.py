@@ -1,7 +1,6 @@
 import re
 import sys
 import base64 as b64
-import urllib2
 from . import console
 
 functions = dict()
