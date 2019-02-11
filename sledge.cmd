@@ -1,4 +1,4 @@
-:: Frame API entry point 
+:: Sledge API MAIN ENTRY POINT 
 :: Copyright 2019 Frame Studios. All rights reserved.
 :: Author(s): Caleb Adepitan
 :: Licensed under MIT
@@ -17,7 +17,7 @@ set SP=
 if exist %PATHFILE% (
     set /p SP=<%PATHFILE%
 ) else (
-    set SP=%~dp0scripts\app.py
+    set SP=%~dp0sledge.py
 )
 
 rem store these before shifting
