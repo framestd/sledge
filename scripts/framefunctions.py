@@ -1,6 +1,5 @@
 import re
 import sys
-import base64 as b64
 from . import console
 
 functions = dict()
@@ -96,6 +95,41 @@ def encodeURI(options, s):
     encoded = parse.quote_plus(s, safe=safe)
     return encoded
 
+def encodeBase64(options, s):
+    import base64 as b64
+    try:
+        urlsafe = s[1]
+    except IndexError:
+        urlsafe = False
+    try:
+        s = s[0]
+    except IndexError:
+        console.error("expected a string as first argument got null string")
+        sys.exit(1)
+    encoded = ""
+    if urlsafe:
+        encoded = b64.urlsafe_b64encode(s[0])
+    else:
+        encoded = b64.b64encode(s[0])
+    return encoded
+
+def decodeBase64(options, s):
+    import base64 as b64
+    try:
+        urlsafe = s[1]
+    except IndexError:
+        urlsafe = False
+    try:
+        s = s[0]
+    except IndexError:
+        console.error("expected a string as first argument got null string")
+        sys.exit(1)
+    decoded = ""
+    if urlsafe:
+        decoded = b64.urlsafe_b64decode(s[0])
+    else:
+        decoded = b64.b64decode(s[0])
+    return decoded
 
 
 def invert(options, arg):
@@ -111,20 +145,21 @@ def invert(options, arg):
         Frame._Frame__RESTRUCTURE = 1
     if len(arg) < 1:
         return
-    specialchars = {
-        "<": "&lt;",
-        ">": "&gt;",
-        "\"": "&quot;",
-        "&": "&amp;amp;" # This is so because of the escape call in _compiler.py, 
-                         # this has a meaning in a frame. Check 'entity.py'[ln: 14-30]
-    }
+    specialchars = [
+        ("&", "&amp;"),
+        ("<", "&lt;"),
+        (">", "&gt;"),
+        ("\"", "&quot;")
+    ]
     inv = arg[0].rstrip()
-    for char, code in specialchars.items():
+    for char, code in specialchars:
         inv = inv.replace(char, code)
-    return str(inv)
+    return str(inv).lstrip()
 
 # export functions
 functions["explode"] = explode
 functions["read"] = getf
 functions["code"] = invert
 functions["encodeURI"] = encodeURI
+functions["encodeB64"] = encodeBase64
+functions["decodeB64"] = decodeBase64
