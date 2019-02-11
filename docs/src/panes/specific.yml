@@ -2,7 +2,7 @@ baseuri: &Base https://framestd.github.io/sledge/
 index:
   title: Sledge - nail 'em all!
   meta:
-    author: &author Caleb Adepitan
+    author: &author Caleb Pitan
     desc: Build and deploy websites faster than you can blink your eyes
     descript: >-
       Sledge is a site building tool as part of Frame Studios
