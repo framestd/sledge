@@ -40,7 +40,8 @@ def specifics(frameup, pane):
             each_ = each_[2:]
         paneValue = recurseAddress(pane, each_, 0)
         if paneValue is None:
-            print('None')
+            console.error("could not resolve the address \"{}\"".format(each_))
+            sys.exit(1)
         if type(paneValue) is list:
             index = str(index)
             index = int(index) if index.isdigit() else index
@@ -97,8 +98,7 @@ def _build(basedir, filename, response):
         cMainFrame = _doTabs(cMainFrame, tab)
         nfc = re.sub(_ptrns[2], cMainFrame, cLayoutFrame) #layout body
         nfc = re.sub(_ptrns[3], specific["title"], nfc) #page title
-        #for c in _metas(specific["meta"], nfc): #page meta tags
-        nfc = specifics(nfc, specific["meta"])
+        nfc = specifics(nfc, specific["meta"]) #page meta tags
         fileo.write(nfc)
     except IOError as ex:
         console.error(ex.message)
@@ -109,6 +109,7 @@ def _build(basedir, filename, response):
         check = re.search(_ptrns[4], nfc)
         if check == None:
             console.success(status[1])
+            sys.stdout.flush()
         else:
             console.error(status[0])
     return 0
@@ -182,11 +183,8 @@ def hammer(workspace=os.path.dirname(__file__), watch=False):
         try:
             while True:
                 time.sleep(1)
-                """if os.name == 'nt':
-                    os.system('cls')
-                else:
-                    os.system('clear')"""
         except KeyboardInterrupt:
             ob.stop()
+            sys.exit(1)
         ob.join()
 
