@@ -19,9 +19,11 @@
       <pre.frame>%code(
 <name>
   <address name="goat" gang="guru">
-    Colorado USA
+    Colorado\, USA &quot; &#23435;
+    \${FRAME::METAS::gook}
   </address>
-</name>)</pre> 
+</name>)
+</pre> 
     </div>
   </div>
 

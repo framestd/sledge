@@ -22,7 +22,7 @@ nullstr = ""
 basespace = workshop = nullstr
 ignore = ()
 _filter = ()
-ig = ".rmignore"
+conf = ".framerc"
 fl = ".filter"
 ext = ".html"
 n = "\n"
@@ -32,6 +32,9 @@ _ptrns = [r"(?:\..+)$", r"([ \t]*)\$\{FRAME::BODY\}",
          r"[ \t]*\$\{FRAME::BODY\}", r"\$\{FRAME::TITLE\}", 
          r"\$\{FRAME::BODY\}", r"\$\{FRAME::LASTMOD\}", 
          r"\$\{FRAME::METAS::%s\}"]
+
+
+feedout = nullstr
 
 
 def recurseAddress(o, x, i=0):
@@ -50,7 +53,8 @@ def specifics(frameup, pane):
             each_ = each_[2:]
         paneValue = recurseAddress(pane, each_, 0)
         if paneValue is None:
-            print('None')
+            console.error("could not resolve the address \"{}\"".format(each_))
+            sys.exit(1)
         if type(paneValue) is list:
             index = str(index)
             index = int(index) if index.isdigit() else index
@@ -74,8 +78,8 @@ def render(src, mode=0):
     fr.inform(basespace, workshop)
     return fr.compile(src, mode)
 
-def get_all_files(basedir, ignore=(), _filter=()):
-    global workshop
+def get_all_files(basedir, ignore=(), _filter=(), ret=False):
+    global workshop, feedout
     allfiles = os.listdir(basedir)
     dirsOnly = os.listdir(basedir)
     temp = []
@@ -87,28 +91,39 @@ def get_all_files(basedir, ignore=(), _filter=()):
     for i in range(len(_filter)):
         for each in temp:
             if each.endswith(_filter[i]):
-                _build(basedir, each, render(os.path.join(basedir, each)))
+                feedout = _build(each, render(os.path.join(basedir, each)), ret)
     for eachdir in dirsOnly:
         if os.path.isdir(os.path.join(basedir, eachdir)) and not eachdir in ignore:
-            get_all_files(os.path.join(basedir, eachdir), ignore, filter)
+            get_all_files(os.path.join(basedir, eachdir), ignore, filter, ret)
     del allfiles, temp
 
-def _build(basedir, filename, response):
+def _build(filename, response, ret=False):
     cLayoutFrame = render(response[0], 1)
     cMainFrame = response[1]
     dest = response[2]
     specific = response[3]
+
     fname = re.sub(_ptrns[0], ext, filename)
     genHTMLFile = os.path.join(workshop, dest, fname)
-    tab = re.search(_ptrns[1], cLayoutFrame).group(1)
+
+    tab = re.search(_ptrns[1], cLayoutFrame).group(1) #search the current tab order
     fileo = nfc = None
-    try:
-        fileo = open(genHTMLFile, 'w')
-        cMainFrame = _doTabs(cMainFrame, tab)
+
+    cMainFrame = _doTabs(cMainFrame, tab) #pad tabs according to tab order
+    if cLayoutFrame:
         nfc = re.sub(_ptrns[2], cMainFrame, cLayoutFrame) #layout body
         nfc = re.sub(_ptrns[3], specific["title"], nfc) #page title
-        #for c in _metas(specific["meta"], nfc): #page meta tags
-        nfc = specifics(nfc, specific["meta"])
+        nfc = specifics(nfc, specific["meta"]) #page meta tags
+    else:
+        nfc = cMainFrame
+
+    if ret:
+        # if yo ain't meant to
+        # write out just feed out
+        return nfc
+
+    try:
+        fileo = open(genHTMLFile, 'w')
         fileo.write(nfc)
     except IOError as ex:
         console.error(ex.message)
@@ -119,6 +134,7 @@ def _build(basedir, filename, response):
         check = re.search(_ptrns[4], nfc)
         if check == None:
             console.success(status[1])
+            sys.stdout.flush()
         else:
             console.error(status[0])
     return 0
@@ -161,7 +177,7 @@ class Vigilante(PatternMatchingEventHandler):
     patterns = list(_filter).append("*.yml")
 
     def vigil(self, event):
-        _build(None, os.path.basename(event.src_path), render(event.src_path))
+        feedout = _build(None, os.path.basename(event.src_path), render(event.src_path))
     
     def on_modified(self, event):
         self.vigil(event)
@@ -171,18 +187,19 @@ class Vigilante(PatternMatchingEventHandler):
 
 
 
-def hammer(workspace=os.path.dirname(__file__), watch=False):
+def hammer(workspace=os.path.dirname(__file__), watch=False, ret=False):
     global basespace
     if os.path.isfile(workspace):
-        _build(None, os.path.basename(workspace), render(workspace))
-        return
+        feedout = _build(os.path.basename(workspace), render(workspace), ret)
+        
     basespace = workspace
-    igpath, flpath = os.path.join(workspace,ig), os.path.join(workspace,fl)
-    ignore = open(igpath).read().split(n) if os.path.exists(igpath) else ()
-    _filter = open(flpath).read().split(n) if os.path.exists(flpath) else ()
-    ignore = tuple(ignore)
-    _filter = tuple(_filter)
-    get_all_files(workspace, ignore, _filter)
+    import json
+    framerc = os.path.join(workspace,conf)
+    framerc = open(igpath).read() if os.path.exists(igpath) else '{}'
+    framerc = json.loads(framerc)
+    ignore = (framerc['ignore'])
+    _filter = (framerc['filter'])
+    get_all_files(workspace, ignore, _filter, ret)
 
     if watch:
         ob = Observer()
@@ -192,11 +209,12 @@ def hammer(workspace=os.path.dirname(__file__), watch=False):
         try:
             while True:
                 time.sleep(1)
-                """if os.name == 'nt':
-                    os.system('cls')
-                else:
-                    os.system('clear')"""
         except KeyboardInterrupt:
             ob.stop()
+            sys.exit(1)
         ob.join()
+
+def get_build_output():
+    """ returns the output of the build as text instead of writing out to file"""
+    return feedout
 

@@ -41,13 +41,13 @@ as they may be parsed with respect to their meanings in a frame.
 ENTITY_MAP = [
     ("&num;", "#"),
     ("&period;", "."),
-    ("&dollar;", "$"),
+    #("&dollar;", "$"),
     ("&colon;", ":"),
     ("&dblcln;", "::"),
     ("&excl;", "!"),
     ("&percnt;", "%"),
     ("&commat;", "@"),
-    ("&amp;", "&")
+    #("&amp;", "&")
 ]
 
 def escape(text):
