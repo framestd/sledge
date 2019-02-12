@@ -5,9 +5,10 @@
 test for sledge
 using './lab_rat'
 """
+import sys, os
 import unittest
 import sledge
-
+sys.path.insert(0, '..')
 var = "<div>\n  hello world\n</div>"
 explode = """<ul>
   <li>
