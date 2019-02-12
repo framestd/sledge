@@ -10,7 +10,7 @@ requirements = [
     'termcolor<=1.1.0'
 ]
 test_requirements = [
-
+    'tox'
 ]
 
 setup(
