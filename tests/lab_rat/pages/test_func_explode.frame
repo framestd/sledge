@@ -1,0 +1,13 @@
+@load: rel-"panes" src-"../panes/var_for_all.yml"
+<ul>
+  %explode(
+    <li>
+      ${GROUP}
+    </li>,
+    <li>
+      <span>${ICON}</span>
+      <a href="${HREF}">${TITLE}</a>
+    </li>,
+    explode::links
+  )
+</ul>

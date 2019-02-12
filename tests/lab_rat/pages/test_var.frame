@@ -1,0 +1,4 @@
+@load: rel-"panes" src-"../panes/var_for_all.yml"
+<div>
+  ${message}
+</div>

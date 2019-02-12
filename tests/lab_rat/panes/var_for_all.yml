@@ -1,0 +1,10 @@
+message: hello world
+explode:
+  links:
+    Test:
+      - TITLE: explode
+        HREF: explode
+        ICON: svg
+      - TITLE: links
+        HREF: links
+        ICON: ico
