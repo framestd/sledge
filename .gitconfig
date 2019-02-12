@@ -1,2 +1,0 @@
-[alias]
-    pagecut = checkout master && git subtree push --prefix docs/build upstream
