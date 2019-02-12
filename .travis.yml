@@ -7,7 +7,8 @@ python:
 cache: pip
 install:
   - pip install -r requirements.txt
+  - python setup.py test
 script:
-  - python sledge.py tests/pages/
+  - python bin/sledge tests/pages/
 notifications:
   email: false
