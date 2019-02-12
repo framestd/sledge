@@ -1,0 +1,15 @@
+@load: rel-"panes" src-"layout.yml"
+@import: src-"pages/.filter" as-"filter"
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="description" content="${FRAME::METAS::desc}"/>
+    <meta name="author" content="${FRAME::METAS::author}"/>
+    <meta property="og:title" content="${FRAME::TITLE}"/>
+    <title>${FRAME::TITLE}</title>
+  </head>
+  <body>
+    ${FRAME::BODY}
+    ${title}
+  </body>
+</html>
