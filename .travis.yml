@@ -9,6 +9,6 @@ install:
   - pip install -r requirements.txt
   - python setup.py test
 script:
-  - python bin/sledge tests/pages/
+  - tox
 notifications:
   email: false
