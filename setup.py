@@ -32,7 +32,7 @@ setup(
     keywords='sledge remarkup frame pane',
     classifiers=[
         'Development Status :: pre-release',
-        'Intended Audience :: devvelopers',
+        'Intended Audience :: developers',
         'License :: OSI Aproved :: MIT License',
         'Natural Language :: English',
         'Programming Language :: Python :: 2',
