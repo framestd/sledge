@@ -9,7 +9,6 @@ import sys, os
 import unittest
 import yaml
 import sledge
-sys.path.append('../sledge')
 
 exp = yaml.load(open('tests/expected.yml').read())
 
