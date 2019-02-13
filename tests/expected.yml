@@ -1,0 +1,20 @@
+var: "<div>\n  hello world\n</div>"
+explode: >-
+  <ul>
+    <li>
+      Test
+    </li>
+    <li>
+      <span>svg</span>
+      <a href="explode">explode</a>
+    </li>
+    <li>
+      <span>ico</span>
+      <a href="links">links</a>
+    </li>
+  </ul>
+encuri: "<!--safe -default='/'-->\nhttps%3A//framestd.github.io/sledge\n<!--safe='' [nullstr]-->\nhttps%3A%2F%2Fframestd.github.io%2Fsledge%3Fv%3D1.0%26status%3Dpre+release"
+b64: "Z2hvc3QoKQ==\nghost()"
+read: hello programmers
+code: "&lt;p&gt;&quot;hello &amp; hi&quot;&lt;/p&gt;"
+id_class: "<p class=\"hide\"></p>\n<a class=\"hi to yo\"></a>\n<em id=\"for\" class=\"smart minds\"></em>\n<b class=\"for smart\" id=\"minds\"></b>\n<details id=\"info\"></details>"
