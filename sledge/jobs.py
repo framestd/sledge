@@ -54,6 +54,6 @@ def add( filename):
 
 def dojob():
     fr = _compiler.Frame()
-    return fr.compile(job[1]["tocompile"], 1)
+    return fr.compile(job[1]["tocompile"], _compiler.Frame.FILE_MODE) # build imports.
     
 #path_diff("C:\\Users\\Adepitan", "C:\\Users\\Adepitan\\MyPrograms\\WebAidBox")['positive']

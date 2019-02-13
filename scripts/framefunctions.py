@@ -1,19 +1,22 @@
 import re
 import sys
 from . import console
+from .preprocessors import realpath
 
 functions = dict()
 framepane = dict()
-Frame = None
+Frame = object()
+workspace = ''
+
 def recurseAddress(o, x, i=0):
     try:
         return o[x[i]] if i == (len(x) - 1) else recurseAddress(o[x[i]], x, i+1)
     except KeyError:
         pass
 
-def ExportFrameCls(object):
-    global Frame
-    Frame = object
+def Export(cls):
+    global Frame, workspace
+    Frame = cls
     return
 
 def sub(pattern, item, where, key):
@@ -22,6 +25,7 @@ def sub(pattern, item, where, key):
     where) if key in item else re.sub(pattern, 
     '', where)
 
+#########               BEGIN FRAME FUNCTIONS                   ##########
 
 def explode(options, arg):
     """The Frame function -- explode:
@@ -64,13 +68,16 @@ def explode(options, arg):
             datalist.append((datalist.pop() + ndata))
     return str("".join(datalist))
 
-def getf(options, arg):
-    Frame._Frame__RESTRUCTURE = 0
-    if len(arg) != 1:
-        console.error("read function expected 1 argument {} given".format(len(arg)))
+def getf(options, filepath):
+    Frame._Frame__RESTRUCTURE = 0 # do not restructure tabs, pad them
+
+
+    if type(filepath) is list and len(filepath) != 1:
+        console.error("read function expected 1 argument {} given".format(len(filepath)))
         return
-    arg[0] = arg[0].lstrip().rstrip()
-    with open(arg[0]) as res:
+    filepath = filepath[0]
+    filepath = filepath.lstrip().rstrip()
+    with open(realpath(workspace, filepath)) as res:
         return str(res.read())
     return ""
 
@@ -98,41 +105,50 @@ def encodeURI(options, s):
 def encodeBase64(options, s):
     import base64 as b64
     try:
-        urlsafe = s[1]
+        urlsafe = int(s[1]) if type(s) is list else False
     except IndexError:
         urlsafe = False
     try:
-        s = s[0]
+        s = s[0] if type(s) is list else s
     except IndexError:
         console.error("expected a string as first argument got null string")
         sys.exit(1)
+
+    s = Frame.escape(s)
+
     encoded = ""
+
     if urlsafe:
-        encoded = b64.urlsafe_b64encode(s[0])
+        encoded = b64.urlsafe_b64encode(s)
     else:
-        encoded = b64.b64encode(s[0])
+        encoded = b64.b64encode(s)
+        console.log(encoded)
     return encoded
 
 def decodeBase64(options, s):
     import base64 as b64
     try:
-        urlsafe = s[1]
+        urlsafe = int(s[1]) if type(s) is list else False
     except IndexError:
         urlsafe = False
     try:
-        s = s[0]
+        s = s[0] if type(s) is list else s
     except IndexError:
         console.error("expected a string as first argument got null string")
         sys.exit(1)
+
+    s = Frame.escape(s)
+
     decoded = ""
+
     if urlsafe:
-        decoded = b64.urlsafe_b64decode(s[0])
+        decoded = b64.urlsafe_b64decode(s)
     else:
-        decoded = b64.b64decode(s[0])
+        decoded = b64.b64decode(s)
     return decoded
 
 
-def invert(options, arg):
+def htmlchars(options, arg):
     #useful for writing in <pre> and <code> tags without stress.
     try:
         arg[1] = arg[1].lstrip().rstrip()
@@ -159,7 +175,7 @@ def invert(options, arg):
 # export functions
 functions["explode"] = explode
 functions["read"] = getf
-functions["code"] = invert
+functions["code"] = htmlchars
 functions["encodeURI"] = encodeURI
 functions["encodeB64"] = encodeBase64
 functions["decodeB64"] = decodeBase64

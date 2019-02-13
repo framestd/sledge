@@ -4,20 +4,27 @@ from . import console
 import os, re, sys
 
 __version__ = 1.0
-__all__ = ["render", "hammer", "get_all_files"]
-__remarkup_version__ = 'Remarkup X.0'
+__all__ = ["render", "hammer", "get_all_files", "get_build_output"]
+
+__remarkup_version__ = 'Remarkup 1.0'
+
 console.aware("SLEDGE -- NAIL IT ALL!")
 
 nullstr = ""
+
 basespace = workshop = nullstr
+
 ignore = ()
 _filter = ()
 conf = ".framerc"
-fl = ".filter"
 ext = ".html"
+
 n = "\n"
+
 status = ["I'm sorry it failed. Check to see if you left \
 some nails in your pocket", "you nailed it all!"]
+
+
 _ptrns = [r"(?:\..+)$", r"([ \t]*)\$\{FRAME::BODY\}", 
          r"[ \t]*\$\{FRAME::BODY\}", r"\$\{FRAME::TITLE\}", 
          r"\$\{FRAME::BODY\}", r"\$\{FRAME::LASTMOD\}", 
@@ -25,6 +32,14 @@ _ptrns = [r"(?:\..+)$", r"([ \t]*)\$\{FRAME::BODY\}",
 
 
 feedout = nullstr
+
+
+class Mode:
+    def __init__(self):
+        pass
+    DIR_MODE = 0 #compiler.Frame.DIR_MODE
+    FILE_MODE = 1 #compiler.Frame.FILE_MODE
+    LAYOUT_MODE = 2 #compiler.Frame.LAYOUT_MODE
 
 
 def recurseAddress(o, x, i=0):
@@ -63,7 +78,9 @@ def specifics(frameup, pane):
             frameup = frameup.replace(ptrn, paneValue)
     return frameup
 
-def render(src, mode=0):
+def render(src, mode=Mode.DIR_MODE):
+    if src is None or src == nullstr:
+        return nullstr
     fr = compiler.Frame()
     fr.inform(basespace, workshop)
     return fr.compile(src, mode)
@@ -88,19 +105,22 @@ def get_all_files(basedir, ignore=(), _filter=(), ret=False):
     del allfiles, temp
 
 def _build(filename, response, ret=False):
-    cLayoutFrame = render(response[0], 1)
+    fileo = nfc = None
+
+    cLayoutFrame = render(response[0], Mode.LAYOUT_MODE)
     cMainFrame = response[1]
     dest = response[2]
     specific = response[3]
-
     fname = re.sub(_ptrns[0], ext, filename)
-    genHTMLFile = os.path.join(workshop, dest, fname)
 
-    tab = re.search(_ptrns[1], cLayoutFrame).group(1) #search the current tab order
-    fileo = nfc = None
-
-    cMainFrame = _doTabs(cMainFrame, tab) #pad tabs according to tab order
-    if cLayoutFrame:
+    if not ret:
+        genHTMLFile = os.path.join(workshop, dest, fname)
+    if not cLayoutFrame == nullstr:
+        tab = re.search(_ptrns[1], cLayoutFrame).group(1) #search the current tab order
+        cMainFrame = _doTabs(cMainFrame, tab) #pad tabs according to tab order
+    
+    
+    if not cLayoutFrame == nullstr:
         nfc = re.sub(_ptrns[2], cMainFrame, cLayoutFrame) #layout body
         nfc = re.sub(_ptrns[3], specific["title"], nfc) #page title
         nfc = specifics(nfc, specific["meta"]) #page meta tags
@@ -178,17 +198,23 @@ class Vigilante(PatternMatchingEventHandler):
 
 
 def hammer(workspace=os.path.dirname(__file__), watch=False, ret=False):
-    global basespace
+    global basespace, feedout
+
     if os.path.isfile(workspace):
-        feedout = _build(os.path.basename(workspace), render(workspace), ret)
-        
+        feedout = _build(os.path.basename(workspace), render(workspace, mode=Mode.FILE_MODE), ret)
+        return
+
     basespace = workspace
+
     import json
-    framerc = os.path.join(workspace,conf)
-    framerc = open(igpath).read() if os.path.exists(igpath) else '{}'
+    default_conf = '{"ignore":[],"filter":[".frame"]}'
+    confile = os.path.join(workspace, conf)
+
+    framerc = open(confile).read() if os.path.exists(confile) else default_conf
     framerc = json.loads(framerc)
     ignore = (framerc['ignore'])
     _filter = (framerc['filter'])
+
     get_all_files(workspace, ignore, _filter, ret)
 
     if watch:
@@ -205,6 +231,8 @@ def hammer(workspace=os.path.dirname(__file__), watch=False, ret=False):
         ob.join()
 
 def get_build_output():
-    """ returns the output of the build as text instead of writing out to file"""
+    """ returns the output of the build as text instead of writing out to file
+    after calling `sledge.hammer(..., ret=True)`
+    then `my_page = sledge.get_build_output()`"""
     return feedout
 

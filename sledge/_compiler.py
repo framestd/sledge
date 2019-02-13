@@ -28,19 +28,29 @@ def _rep(s, o, n):
 
 class Frame():
     def __init__(self):
+
         self.pane = {}
         self.specific = {}
         self.dest = ""
-        self.WORKSPACE = self.CURFILE = None
+        self.WORKSPACE = self.CURFILE = ""
         self.BASESPACE = ""
-        prep.setFrameInst(self)
-        prep.ExportFrameCls(Frame)
-        framefunctions.ExportFrameCls(Frame)
 
-    linkedLayoutFrame = None
+        prep.Initialize(self, Frame)
+
+        framefunctions.Export(Frame)
+
+
     funcs = framefunctions.functions
+
     #FrameFunctions option
     __RESTRUCTURE = 0
+
+    # enum MODES
+    
+    DIR_MODE = 0 # all files in dir
+    FILE_MODE = 1 # single file
+    LAYOUT_MODE = 2 # dependent file layout file
+
 
     # BEGIN DECLARATION: Frame global object and constant fields
     FRAME = "FRAME"    # GLOBAL INHERITABLE NAMESPACE FIELD
@@ -67,9 +77,12 @@ class Frame():
         self.WORKSPACE = b
         return
 
+    @staticmethod
+    def escape(context, all=True):
+        return Frame().__escape(context, all)
+
     def __escape(self, context, all=False):
         try:
-            #check = r"\x5C([\x28\x29])" if not all else 
             escapable = r"\x5C([\x23(?#don't esc \x24)\x25\x28\x29\x2C\x2E\x40])" # escapable chars: [#$%(),.@] 
                                                                                   # sq. bracks. not included
             if not all:
@@ -253,15 +266,26 @@ class Frame():
         mode: mode=0 means, normal pages; mode=1, means layout"""
 
         from . import console
-        escape = lambda s: _entity.escape(s)
         console.info("status: compiling \"{}\"".format(framefile))
+
         #BEGIN: get things ready
         frameup = None
+        if mode == Frame.LAYOUT_MODE:
+            prep.workspace = os.path.dirname(framefile)
+            self.WORKSPACE = prep.workspace
+        elif mode == Frame.FILE_MODE:
+            FILE = framefile.split(os.sep)[-1]
+            self.CURFILE = re.sub(r"(\..*?)$", "", FILE)
+        elif mode == Frame.DIR_MODE:
+            FILE = framefile.split(os.sep)[-1]
+            self.CURFILE = re.sub(r"(\..*?)$", "", FILE)
+        else:
+            pass
         prep.workspace = os.path.dirname(framefile)
         self.WORKSPACE = prep.workspace
-        FILE = framefile.split(os.sep)[-1]
-        self.CURFILE = re.sub(r"(\..*?)$", "", FILE) if not mode else self.CURFILE
+        framefunctions.workspace = self.WORKSPACE
         #END
+
         with io.open(framefile, encoding="utf-8") as f:
             frameup = f.read()
         if frameup is None: sys.exit(1)
@@ -285,7 +309,7 @@ class Frame():
             )
         )
         compiled = self.__escape(compiled, all=True)
-        if mode:
+        if mode == Frame.LAYOUT_MODE:
             return compiled
         return (layoutFile, compiled, dest, specific)
         

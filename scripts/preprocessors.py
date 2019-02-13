@@ -7,22 +7,19 @@ from . import console
 FrameInst = FrameClass = None
 workspace = dest = ""
 exports = {
-    "pane": None,
+    "pane": {},
     "layout": None,
     "dest": None,
-    "specific": None
+    "specific": {}
 }
 
 __panenotfound__ = False
 __destinationunresolved__ = False
 
-def setFrameInst(object):
-    global FrameInst
-    FrameInst = object
-
-def ExportFrameCls(object):
-    global FrameClass
-    FrameClass = object
+def Initialize(inst, cls):
+    global FrameInst, FrameClass
+    FrameInst = inst
+    FrameClass = cls
 
 def loadpane(src):
     panefile = panecontent = None
@@ -87,7 +84,7 @@ def processor(tag, attr, mode):
                     __destinationunresolved__ = True
             exports["dest"] = dest
         elif rel == "layout":
-            if mode:
+            if mode == FrameClass.LAYOUT_MODE:
                 console.error("layout cannot have a layout")
                 return
             src = getAttribute('src', attr)

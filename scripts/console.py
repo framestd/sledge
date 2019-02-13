@@ -29,7 +29,7 @@ def warn(msg):
     sys.stdout.write('\x1b[2K')
 def info(msg):
     cprint(msg, "blue", attrs=["bold"])
-    time.sleep(0.5)
+    #time.sleep(0.5)
     sys.stdout.write('\x1b[1A')
     sys.stdout.write('\x1b[2K')
 def success(msg):
