@@ -2,7 +2,7 @@
 <ul>
   %explode(
     <li>
-      ${GROUP}
+      ${FRAME::GROUP}
     </li>,
     <li>
       <span>${ICON}</span>
