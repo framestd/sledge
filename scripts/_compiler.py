@@ -22,7 +22,7 @@ class Frame():
         self.pane = {}
         self.specific = {}
         self.dest = ""
-        self.WORKSPACE = self.CURFILE = ""
+        self.WORKSPACE = self.PAGESFILE = self.CURFILE = ""
         self.BASESPACE = ""
 
         prep.Initialize(self, Frame)
@@ -68,17 +68,32 @@ class Frame():
         return
 
     @staticmethod
-    def escape(context, all=True):
-        return Frame().__escape(context, all)
+    def unescape(context, all=True):
+        """This is used with framefunctions to compile escape for args"""
+        return Frame().__unescape(context, all)
+    @staticmethod
+    def escape(context):
+        """This is used with framefunctions to escape strings returned from functions like `read(...)`"""
+        return Frame().__escape(context)
 
-    def __escape(self, context, all=False):
+    def __escape(self, context):
+        context = re.sub(r"\\", r"\\\\", context)
+        context = re.sub(r"([\x23\x24\x25\x28\x29\x2C\x2E\x40])", u"\x5C\x5C\\1", context)
+        return context
+    
+    def __unescape(self, context, all=False):
+        """escape frame escapable chars when `all=True`
+        else: only every '\\\\' when `all=false`.
+        others will be used as tokens to identify part of strings
+        differently from programs to prevent a clash, as strings ain't enclosed in any quotes.
+        After compilation escapeable chars are escaped. """
         try:
             escapable = r"\x5C([\x23(?#don't esc \x24)\x25\x28\x29\x2C\x2E\x40])" # escapable chars: [#$%(),.@] 
                                                                                   # sq. bracks. not included
             if not all:
                 context = re.sub(r"\\\\", r"\\//~~\\//", context)
             if all:
-                context = _rep(context, '\\$', '&dollar;') # variables can still be active, not only
+                context = _rep(context, '\\$', '&dollar;') # variables could still be active, not only
                                                            # at compile time, but also at build time.
                 context = re.sub(escapable, "\\1", context) 
                 context = context.replace("\\//~~\\//", r"\\")
@@ -104,15 +119,17 @@ class Frame():
 
     def __parse_class(self, frameup):
         """Handles the parsing, to real HTML, of class-frame of a Frame markup"""
-        classframe = re.sub(r"(<[\d\w#-]+)(?<!\x5C)\.([\d\w.-]+)(#|>|/|\s)", "\\1 class=\x22\\2\x22\\3", frameup)
+        classframe = re.sub(r"(<[\d\w#-]+)(?<!\x5C)\.([\d\w.-]+)(#|>|/|\s)", 
+                            "\\1 class=\x22\\2\x22\\3", frameup)
         parsed = re.findall(r"class=\x22.+?\x22", classframe)
         for each in parsed:
-            each_ = re.sub(r"\.", " ", each)
+            each_ = re.sub(r"(?<!\x5C)\.", " ", each)
             classframe = re.sub(r"%s"%each, each_, classframe)
         return classframe
 
     def __parse_id(self, frameup):
-        idframe = re.sub(r"(<.+?)(?<!(?:[\x5C\s\x3D]\x22))#([\w\d-]+)(?!\x22)", "\\1 id=\"\\2\"", frameup) 
+        idframe = re.sub(r"(<.+?)(?<!(?:[\x5C\s\x3D]\x22))#([\w\d-]+)(?!\x22)", 
+                         "\\1 id=\"\\2\"", frameup) 
         return idframe
 
     def __autoclose(self, frameup):
@@ -124,6 +141,8 @@ class Frame():
         formatted = frameup
         frameup = re.sub(r"(?<!\x5C)%\w+\(.*?(?<!\x5C)\)", "", frameup, 0 ,re.DOTALL) # DO NOT DEAL WITH FUNCTIONS!
         allFormat = re.findall(r"([ \t]*)(?<!\x5C)\x24\x7B(.+?)\x7D(?:\x5B([\d*]+)\x5D)?", frameup)
+
+        if len(allFormat) < 1 or allFormat is None: return formatted
 
         for tab, each, index in allFormat:
             each_ = each.lstrip().split("::")
@@ -139,13 +158,14 @@ class Frame():
                 elif each_[1] == Frame.DIRNAME:
                     formatted = _rep(formatted, ptrn[0], self.WORKSPACE)
                 elif each_[1] == Frame.FILENAME:
-                    formatted = _rep(formattedr, ptrn[1], self.CURFILE)
+                    formatted = _rep(formattedr, ptrn[1], self.PAGESFILE)
                 elif each_[1] == Frame.LAST_MODIFIED or each_[1] == Frame.TIME:
                     import datetime
                     date = datetime.datetime.now().strftime("%d %b, %Y %H:%M:%S")
                     formatted = _rep(formatted, ptrn[2], date)
-                    date = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%f%Z")
+                    date = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f%Z")
                     formatted = _rep(formatted, ptrn[3], date)
+                    del datetime
                 elif each_[1] == Frame.TITLE:
                     continue
                 elif each_[1] == Frame.METAS:
@@ -155,6 +175,14 @@ class Frame():
             # End Frame constant fields
             
             paneValue = recurseAddress(pane, each_, 0)
+            try:
+                if type(paneValue) is dict:
+                    raise TypeError()
+            except TypeError:
+                console.error('TypeError: cannot handle type "Map" in this context')
+                console.error('\tunsupported type "Map" instead of String or List')
+                sys.exit(1)
+
             if type(paneValue) is list:
                 index = str(index)
                 index = int(index) if index.isdigit() else index
@@ -202,21 +230,26 @@ class Frame():
         funcReturnValue = None
         i = 0
         
+        if len(funclist) < 1 or funclist is None: return frameup 
+
         for tab, funcname, args in funclist:
             result = r""
+            
+            _args_ = re.split(r"(?<!\x5C)\x2C", args) # split at the point where there is no "\" before ","
+                                                      # if "," follows "\" then it's an escaped string within function
 
-            _args_ = re.split(r"(?<!\x5C)\x2C", args) # split at the point where there is no "\" following ","
-                                                      # if "\" follows "," then it's escaped string within function
             console.info("status: executing function \"{}\"".format(funcname))
             try:
                 funcReturnValue = Frame.funcs[funcname](self.getpane(), _args_)
-                funcReturnValue = self.__escape(funcReturnValue, all=True)
+                funcReturnValue = self.__unescape(funcReturnValue, all=True)
+                funcReturnValue = str(funcReturnValue) if type (funcReturnValue) is unicode else funcReturnValue #check compat py3
+
             except KeyError:
                 import sys
                 msg = "cannot execute function\
-                \nStack trace-> encountered an unknown function \"{}\" in {}".format(funcname, self.CURFILE)
-                console.error(msg+"\nif this is not intended to be a function you can escape the `%` sign with the html"
-                +" entity `&percnt;`") # come back CURFILE recheck
+                \nTrace-> encountered an unknown function \"{}\" in {}".format(funcname, self.CURFILE)
+                console.error(msg+"\nif this is not intended to be a function you can escape the `%` using"
+                +" a reverse solidus `\%`") # come back CURFILE recheck
                 sys.exit(1)
 
             if funcReturnValue is not None and type(funcReturnValue) is str:
@@ -239,7 +272,7 @@ class Frame():
                     result = self.__doTabs(result, _t)
                 del _t
                 #END
-
+                
                 old = "{}".format(cache[i])
                 functional = functional.replace(old, result.lstrip(n), 1)
             else:
@@ -259,16 +292,17 @@ class Frame():
         console.info("status: compiling \"{}\"".format(framefile))
 
         #BEGIN: get things ready
+        self.CURFILE = framefile
         frameup = None
         if mode == Frame.LAYOUT_MODE:
             prep.workspace = os.path.dirname(framefile)
             self.WORKSPACE = prep.workspace
         elif mode == Frame.FILE_MODE:
             FILE = framefile.split(os.sep)[-1]
-            self.CURFILE = re.sub(r"(\..*?)$", "", FILE)
+            self.PAGESFILE = re.sub(r"(\..*?)$", "", FILE)
         elif mode == Frame.DIR_MODE:
             FILE = framefile.split(os.sep)[-1]
-            self.CURFILE = re.sub(r"(\..*?)$", "", FILE)
+            self.PAGESFILE = re.sub(r"(\..*?)$", "", FILE)
         else:
             pass
         prep.workspace = os.path.dirname(framefile)
@@ -280,7 +314,7 @@ class Frame():
             frameup = f.read()
         if frameup is None: sys.exit(1)
 
-        frameup = self.__escape(frameup)
+        frameup = self.__unescape(frameup)
 
         layoutFile, self.pane, specific, dest = self.__process(frameup, mode)
         framefunctions.framepane = self.pane # Do not do this and the ff until above __process call
@@ -298,7 +332,7 @@ class Frame():
                 )
             )
         )
-        compiled = self.__escape(compiled, all=True)
+        compiled = self.__unescape(compiled, all=True)
         if mode == Frame.LAYOUT_MODE:
             return compiled
         return (layoutFile, compiled, dest, specific)
