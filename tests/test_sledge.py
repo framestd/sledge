@@ -20,6 +20,8 @@ test_read = os.path.abspath('tests/lab_rat/pages/test_func_read.frame')
 test_code = os.path.abspath('tests/lab_rat/pages/test_func_code.frame')
 test_nullstr = os.path.abspath('tests/lab_rat/pages/test_nullstring.frame')
 test_id_class = os.path.abspath('tests/lab_rat/pages/test_id_class.frame')
+test_import = os.path.abspath('tests/lab_rat/pages/test_import.frame')
+test_list = os.path.abspath('tests/lab_rat/pages/test_list.frame')
 
 class TestOnLabRats(unittest.TestCase):
     def test_vars(self):
@@ -54,6 +56,14 @@ class TestOnLabRats(unittest.TestCase):
         sledge.hammer(test_id_class, ret=True)
         result = sledge.get_build_output()
         self.assertEqual(result, exp['id_class'])
+    def test_import_processor(self):
+        sledge.hammer(test_import, ret=True)
+        result = sledge.get_build_output()
+        self.assertEqual(result, exp['import'])
+    def test_list_indexing(self):
+        sledge.hammer(test_list, ret=True)
+        result = sledge.get_build_output()
+        self.assertEqual(result, exp['list'])
 
 if __name__ == '__main__':
 	unittest.main()
