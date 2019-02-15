@@ -25,7 +25,7 @@ setup(
         'sledge'
     ],
     package_dir={'sledge': 'sledge'},
-    scripts=['bin/sledge'],
+    scripts=['bin/sledge_cli'],
     install_requires=requirements,
     license='MIT license',
     zip_safe=False,
@@ -42,6 +42,6 @@ setup(
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6'
     ],
-    test_suites='tests',
+    test_suite='tests',
     test_require=test_requirements
 )
