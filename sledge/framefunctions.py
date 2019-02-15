@@ -130,14 +130,17 @@ def encodeBase64(options, s):
         sys.exit(1)
 
     s = Frame.unescape(s)
-
+    try:
+        s = s.encode("utf-8")
+    except TypeError:
+        console.error('Internal error')
+        sys.exit(1)
     encoded = ""
 
     if urlsafe:
-        encoded = b64.urlsafe_b64encode(s)
+        encoded = b64.urlsafe_b64encode(s).decode("ascii")
     else:
         encoded = b64.b64encode(s)
-        console.log(encoded)
     return encoded
 
 def decodeBase64(options, s):
@@ -153,13 +156,17 @@ def decodeBase64(options, s):
         sys.exit(1)
 
     s = Frame.unescape(s)
-
+    try:
+        s = s.encode("utf-8")
+    except TypeError:
+        console.error('Internal error')
+        sys.exit(1)
     decoded = ""
 
     if urlsafe:
-        decoded = b64.urlsafe_b64decode(s)
+        decoded = b64.urlsafe_b64decode(s).decode("ascii")
     else:
-        decoded = b64.b64decode(s)
+        decoded = b64.b64decode(s).decode("ascii")
     return decoded
 
 
