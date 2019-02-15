@@ -1,7 +1,7 @@
 # Copyright 2019 Frame Studios. All rights reserved.
 # Remarkup v1.0 python implementation.
 # Sledge v1.0.
-# Project Manager: Caleb Adepitan.
+# Project Manager: Caleb Pitan.
 # The Remarkup specifications that govern this implementation can be found at:
 # https://framestd.github.io/remarkup/spec/v1/
 # Developers Indulgent Program (DIP)
@@ -10,6 +10,7 @@
 
 from __future__ import print_function
 import re
+import sys
 import yaml
 import os
 import io
@@ -17,22 +18,19 @@ from . import console
 FrameInst = FrameClass = None
 workspace = dest = ""
 exports = {
-    "pane": None,
+    "pane": {},
     "layout": None,
     "dest": None,
-    "specific": None
+    "specific": {}
 }
 
 __panenotfound__ = False
 __destinationunresolved__ = False
 
-def setFrameInst(object):
-    global FrameInst
-    FrameInst = object
-
-def ExportFrameCls(object):
-    global FrameClass
-    FrameClass = object
+def Initialize(inst, cls):
+    global FrameInst, FrameClass
+    FrameInst = inst
+    FrameClass = cls
 
 def loadpane(src):
     panefile = panecontent = None
@@ -67,7 +65,11 @@ def parsepreprocessor(frameup, cb, mode):
 
 def getAttribute(attr, _collection):
     rel = ''
-    rel = re.search(r'%s-\"(.*?)\"'%attr, _collection, re.I).group(1)
+    try:
+        rel = re.search(r'%s-\"(.*?)\"'%attr, _collection, re.I).group(1)
+    except AttributeError:
+            console.error("unassigned attribute \"{}\" around \"{}\"".format(attr, _collection))
+            sys.exit(1)
     return rel
 
 def processor(tag, attr, mode):
@@ -97,7 +99,7 @@ def processor(tag, attr, mode):
                     __destinationunresolved__ = True
             exports["dest"] = dest
         elif rel == "layout":
-            if mode:
+            if mode == FrameClass.LAYOUT_MODE:
                 console.error("layout cannot have a layout")
                 return
             src = getAttribute('src', attr)

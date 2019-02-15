@@ -1,5 +1,6 @@
 from __future__ import print_function
 import re
+import sys
 import yaml
 import os
 import io
@@ -54,7 +55,11 @@ def parsepreprocessor(frameup, cb, mode):
 
 def getAttribute(attr, _collection):
     rel = ''
-    rel = re.search(r'%s-\"(.*?)\"'%attr, _collection, re.I).group(1)
+    try:
+        rel = re.search(r'%s-\"(.*?)\"'%attr, _collection, re.I).group(1)
+    except AttributeError:
+            console.error("unassigned attribute \"{}\" around \"{}\"".format(attr, _collection))
+            sys.exit(1)
     return rel
 
 def processor(tag, attr, mode):
