@@ -1,7 +1,7 @@
 # Copyright 2019 Frame Studios. All rights reserved.
 # Remarkup v1.0 python implementation.
 # Sledge v1.0.
-# Project Manager: Caleb Adepitan.
+# Project Manager: Caleb Pitan.
 # The Remarkup specifications that govern this implementation can be found at:
 # https://framestd.github.io/remarkup/spec/v1/
 # Developers Indulgent Program (DIP)
@@ -29,7 +29,7 @@ def log(*msgs):
     print(*msgs)
 def error(msg):
     cprint("error: {}".format(msg), "red")
-    time.sleep(1.0)
+    time.sleep(2.0)
     sys.stdout.write('\x1b[1A')
     sys.stdout.write('\x1b[2K')
 def warn(msg):

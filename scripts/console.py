@@ -19,7 +19,7 @@ def log(*msgs):
     print(*msgs)
 def error(msg):
     cprint("error: {}".format(msg), "red")
-    time.sleep(1.0)
+    time.sleep(2.0)
     sys.stdout.write('\x1b[1A')
     sys.stdout.write('\x1b[2K')
 def warn(msg):
