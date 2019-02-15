@@ -1,6 +1,7 @@
 from setuptools import setup
+import os
 
-with open('README.md') as rm:
+with open(os.path.abspath('README.md')) as rm:
     readme = rm.read()
 
 requirements = [
