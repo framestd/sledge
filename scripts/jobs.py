@@ -44,6 +44,9 @@ def add( filename):
 
 def dojob():
     fr = _compiler.Frame()
-    return fr.compile(job[1]["tocompile"], _compiler.Frame.FILE_MODE) # build imports.
+    # compile imports
+    # imports should have the same mode as layout
+    # imports are considered to be a part of the page's layout
+    return fr.compile(job[1]["tocompile"], _compiler.Frame.LAYOUT_MODE) # build imports.
     
 #path_diff("C:\\Users\\Adepitan", "C:\\Users\\Adepitan\\MyPrograms\\WebAidBox")['positive']
