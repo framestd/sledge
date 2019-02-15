@@ -1,7 +1,7 @@
 # Copyright 2019 Frame Studios. All rights reserved.
 # Remarkup v1.0 python implementation.
 # Sledge v1.0.
-# Project Manager: Caleb Adepitan.
+# Project Manager: Caleb Pitan.
 # The Remarkup specifications that govern this implementation can be found at:
 # https://framestd.github.io/remarkup/spec/v1/
 # Developers Indulgent Program (DIP)
@@ -88,7 +88,11 @@ def getf(options, filepath):
     filepath = filepath[0]
     filepath = filepath.lstrip().rstrip()
     with open(realpath(workspace, filepath)) as res:
-        return str(res.read())
+        return Frame.escape(
+            str(
+                res.read()
+            )
+        )
     return ""
 
 def encodeURI(options, s):
@@ -100,6 +104,7 @@ def encodeURI(options, s):
         safe = safe
     encoded = ""
     s = s[0]
+    s = Frame.unescape(s)
     try:
         from urllib import parse # for Python 3
     except ImportError:
@@ -124,7 +129,7 @@ def encodeBase64(options, s):
         console.error("expected a string as first argument got null string")
         sys.exit(1)
 
-    s = Frame.escape(s)
+    s = Frame.unescape(s)
 
     encoded = ""
 
@@ -147,7 +152,7 @@ def decodeBase64(options, s):
         console.error("expected a string as first argument got null string")
         sys.exit(1)
 
-    s = Frame.escape(s)
+    s = Frame.unescape(s)
 
     decoded = ""
 
