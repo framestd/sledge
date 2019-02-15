@@ -242,7 +242,7 @@ class Frame():
             try:
                 funcReturnValue = Frame.funcs[funcname](self.getpane(), _args_)
                 funcReturnValue = self.__unescape(funcReturnValue, all=True)
-                funcReturnValue = str(funcReturnValue) if type (funcReturnValue) is unicode else funcReturnValue #check compat py3
+                funcReturnValue = str(funcReturnValue)
 
             except KeyError:
                 import sys
