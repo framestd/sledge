@@ -3,12 +3,15 @@ from . import _compiler as compiler
 from . import console
 import os, re, sys
 
-__version__ = 1.0
-__all__ = ["render", "hammer", "get_all_files", "get_build_output"]
+__version__ = (1, 0)
+__all__ = ["render", "hammer", "get_all_files", "get_build_output", "Mode", "Remarkup"]
 
-__remarkup_version__ = 'Remarkup 1.0'
+class Remarkup:
+    def __init__(self):
+        pass
+    __version__ = (1, 0)
 
-console.aware("SLEDGE -- NAIL IT ALL!")
+console.aware("SLEDGE -- NAIL 'EM ALL!")
 
 nullstr = ""
 
@@ -22,7 +25,7 @@ ext = ".html"
 n = "\n"
 
 status = ["I'm sorry it failed. Check to see if you left \
-some nails in your pocket", "you nailed it all!"]
+some nails in your pocket", "you nailed 'em all!"]
 
 
 _ptrns = [r"(?:\..+)$", r"([ \t]*)\$\{FRAME::BODY\}", 
@@ -37,9 +40,9 @@ feedout = nullstr
 class Mode:
     def __init__(self):
         pass
-    DIR_MODE = 0 #compiler.Frame.DIR_MODE
-    FILE_MODE = 1 #compiler.Frame.FILE_MODE
-    LAYOUT_MODE = 2 #compiler.Frame.LAYOUT_MODE
+    DIR_MODE = compiler.Frame.DIR_MODE
+    FILE_MODE = compiler.Frame.FILE_MODE
+    LAYOUT_MODE = compiler.Frame.LAYOUT_MODE
 
 
 def recurseAddress(o, x, i=0):
@@ -137,8 +140,6 @@ def _build(filename, response, ret=False):
         fileo.write(nfc)
     except IOError as ex:
         console.error(ex.message)
-    except TypeError as ex:
-        console.error(ex.message)
     finally:
         fileo.close()
         check = re.search(_ptrns[4], nfc)
@@ -156,7 +157,7 @@ def _doTabs(context=nullstr, tab=nullstr):
     for each in lctx:
         check = each.lstrip().rstrip()
         codecheck = check.startswith("<pre")
-        ncodecheck = check.startswith("</pre") or check.endswith("</pre")
+        ncodecheck = check.startswith("</pre>") or check.endswith("</pre>")
         if not codeframe:
             nctx += "%s%s\n"%(tab,each)
         else:
