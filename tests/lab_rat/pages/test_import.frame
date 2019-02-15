@@ -1,0 +1,2 @@
+@import: src-"test_var.frame" as-"myvar"
+<p>${myvar}</p>

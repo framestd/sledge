@@ -1,0 +1,4 @@
+@load: rel-"panes" src-"../panes/var_for_all.yml"
+${test::list}[0]
+${test::list}[5]
+${test::list}[*]

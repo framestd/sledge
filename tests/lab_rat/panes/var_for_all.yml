@@ -1,10 +1,20 @@
 message: hello world
 explode:
   links:
-    Test:
+    Test: # This is ${FRAME::GROUP}
       - TITLE: explode
         HREF: explode
         ICON: svg
       - TITLE: links
         HREF: links
         ICON: ico
+    # if you won't use ${FRAME::GROUP}, then `links` 
+    # should be a list of maps
+test:
+  list:
+    - this
+    - is a list
+    - they can be indexed
+    - or
+    - concatenated
+    - with spaces

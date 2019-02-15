@@ -18,3 +18,5 @@ b64: "Z2hvc3QoKQ==\nghost()"
 read: hello programmers
 code: "&lt;p&gt;&quot;hello &amp; hi&quot;&lt;/p&gt;"
 id_class: "<p class=\"hide\"></p>\n<a class=\"hi to yo\"></a>\n<em id=\"for\" class=\"smart minds\"></em>\n<b class=\"for smart\" id=\"minds\"></b>\n<details id=\"info\"></details>"
+import: "<p><div>\n  hello world\n</div></p>"
+list: "this\nwith spaces\nthis is a list they can be indexed or concatenated with spaces"
