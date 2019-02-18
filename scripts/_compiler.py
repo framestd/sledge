@@ -128,7 +128,7 @@ class Frame():
         return classframe
 
     def __parse_id(self, frameup):
-        idframe = re.sub(r"(<[\w\d:.-]+)(?<!(?:[\x5C\s\x3D]\x22))#([\w\d:-]+)(?!\x22)", 
+        idframe = re.sub(r"(<.+?)(?<!(?:[\x5C\x3D\x3E]\x22))#([\w\d:-]+)(?!\x22)", 
                          "\\1 id=\"\\2\"", frameup) 
         return idframe
 
