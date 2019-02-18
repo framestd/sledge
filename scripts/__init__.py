@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from __future__ import print_function
 from . import _compiler as compiler
 from . import console
@@ -82,20 +84,27 @@ def specifics(frameup, pane):
     return frameup
 
 def render(src, mode=Mode.DIR_MODE):
+
     if src is None or src == nullstr:
-        return nullstr
+        console.warn("nothing to build")
+        return None
     fr = compiler.Frame()
     fr.inform(basespace, workshop)
     return fr.compile(src, mode)
 
 def get_all_files(basedir, ignore=(), _filter=(), ret=False):
-    global workshop, feedout
+    global workshop, feedout, basespace
+
+    ignore = [os.path.join(basespace,d) for d in ignore]
+
     allfiles = os.listdir(basedir)
     dirsOnly = os.listdir(basedir)
     temp = []
     workshop = basedir
+
     for eachfile in allfiles:
-        if os.path.isfile(os.path.join(basedir, eachfile)) and not eachfile in ignore:
+        abs_eachfile = os.path.join(basedir, eachfile)
+        if os.path.isfile(abs_eachfile) and not abs_eachfile in ignore:
             temp.append(eachfile)
             dirsOnly.remove(eachfile)
     for i in range(len(_filter)):
@@ -103,34 +112,39 @@ def get_all_files(basedir, ignore=(), _filter=(), ret=False):
             if each.endswith(_filter[i]):
                 feedout = _build(each, render(os.path.join(basedir, each)), ret)
     for eachdir in dirsOnly:
-        if os.path.isdir(os.path.join(basedir, eachdir)) and not eachdir in ignore:
-            get_all_files(os.path.join(basedir, eachdir), ignore, filter, ret)
+        abs_eachdir = os.path.join(basedir, eachdir)
+        if os.path.isdir(abs_eachdir) and not abs_eachdir in ignore:
+            get_all_files(os.path.join(basedir, eachdir), ignore, _filter, ret)
     del allfiles, temp
 
 def _build(filename, response, ret=False):
-    fileo = nfc = None
+    if response is None:
+        return
 
-    cLayoutFrame = render(response[0], Mode.LAYOUT_MODE)
+    fileo = nfc = None
+    dest = cLayoutFrame = genHTMLFile = None
+
     cMainFrame = response[1]
+
+    if not response[0] is None:
+        cLayoutFrame = render(response[0], Mode.LAYOUT_MODE)
     dest = response[2]
     specific = response[3]
     fname = re.sub(_ptrns[0], ext, filename)
 
-    if not ret:
+    if not ret and not dest is None:
         genHTMLFile = os.path.join(workshop, dest, fname)
-    if not cLayoutFrame == nullstr:
+    if not cLayoutFrame is None:
         tab = re.search(_ptrns[1], cLayoutFrame).group(1) #search the current tab order
         cMainFrame = _doTabs(cMainFrame, tab) #pad tabs according to tab order
     
-    
-    if not cLayoutFrame == nullstr:
         nfc = re.sub(_ptrns[2], cMainFrame, cLayoutFrame) #layout body
         nfc = re.sub(_ptrns[3], specific["title"], nfc) #page title
         nfc = specifics(nfc, specific["meta"]) #page meta tags
     else:
         nfc = cMainFrame
 
-    if ret:
+    if ret or not genHTMLFile:
         # if yo ain't meant to
         # write out just feed out
         return nfc
@@ -158,14 +172,15 @@ def _doTabs(context=nullstr, tab=nullstr):
         check = each.lstrip().rstrip()
         codecheck = check.startswith("<pre")
         ncodecheck = check.startswith("</pre>") or check.endswith("</pre>")
+        if ncodecheck:
+            codeframe = False
         if not codeframe:
             nctx += "%s%s\n"%(tab,each)
         else:
             nctx += "%s\n"%(each)
         if codecheck:
             codeframe = True
-        if ncodecheck:
-            codeframe = False
+        
         
     return nctx.rstrip()
 
@@ -188,7 +203,7 @@ class Vigilante(PatternMatchingEventHandler):
     patterns = list(_filter).append("*.yml")
 
     def vigil(self, event):
-        feedout = _build(None, os.path.basename(event.src_path), render(event.src_path))
+        feedout = _build(os.path.basename(event.src_path), render(event.src_path, Mode.FILE_MODE))
     
     def on_modified(self, event):
         self.vigil(event)
@@ -213,8 +228,8 @@ def hammer(workspace=os.path.dirname(__file__), watch=False, ret=False):
 
     framerc = open(confile).read() if os.path.exists(confile) else default_conf
     framerc = json.loads(framerc)
-    ignore = (framerc['ignore'])
-    _filter = (framerc['filter'])
+    ignore = tuple(framerc['ignore'])
+    _filter = tuple(framerc['filter'])
 
     get_all_files(workspace, ignore, _filter, ret)
 

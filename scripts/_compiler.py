@@ -88,7 +88,7 @@ class Frame():
         differently from programs to prevent a clash, as strings ain't enclosed in any quotes.
         After compilation escapeable chars are escaped. """
         try:
-            escapable = r"\x5C([\x23(?#don't esc \x24)\x25\x28\x29\x2C\x2E\x40])" # escapable chars: [#$%(),.@] 
+            escapable = r"\x5C([\x23\x25\x28\x29\x2C\x2E\x40])" # escapable chars: [#$%(),.@] 
                                                                                   # sq. bracks. not included
             if not all:
                 context = re.sub(r"\\\\", r"\\//~~\\//", context)
@@ -128,7 +128,7 @@ class Frame():
         return classframe
 
     def __parse_id(self, frameup):
-        idframe = re.sub(r"(<.+?)(?<!(?:[\x5C\s\x3D]\x22))#([\w\d-]+)(?!\x22)", 
+        idframe = re.sub(r"(<[\w\d:.-]+)(?<!(?:[\x5C\s\x3D]\x22))#([\w\d:-]+)(?!\x22)", 
                          "\\1 id=\"\\2\"", frameup) 
         return idframe
 
@@ -283,11 +283,11 @@ class Frame():
         return functional
 
 
-    def compile(self, framefile, mode=0):
+    def compile(self, framefile, mode=DIR_MODE):
         """compiles a frame to standard HTML
         framefile: path to file to compile
         mode: mode=0 means, normal pages; mode=1, means layout"""
-
+        
         from . import console
         console.info("status: compiling \"{}\"".format(framefile))
 

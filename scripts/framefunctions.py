@@ -5,7 +5,7 @@ from .preprocessors import realpath
 
 functions = dict()
 framepane = dict()
-Frame = object()
+Framecls = object()
 workspace = ''
 
 def recurseAddress(o, x, i=0):
@@ -15,8 +15,8 @@ def recurseAddress(o, x, i=0):
         pass
 
 def Export(cls):
-    global Frame, workspace
-    Frame = cls
+    global Framecls, workspace
+    Framecls = cls
     return
 
 def sub(pattern, item, where, key):
@@ -34,7 +34,7 @@ def explode(options, arg):
     and footer links for an HTML page
     Learn more:
     https://framestd.github.io/remarkup/spec/v1/frame-functions.html#explode"""
-    Frame._Frame__RESTRUCTURE = 1
+    Framecls._Frame__RESTRUCTURE = 1
     cond = len(arg) == 3
     temparg = arg[2] if cond else arg[1]
     templateAddress = str(temparg).lstrip().rstrip().split("::")
@@ -69,7 +69,7 @@ def explode(options, arg):
     return str("".join(datalist))
 
 def getf(options, filepath):
-    Frame._Frame__RESTRUCTURE = 0 # do not restructure tabs, pad them
+    Framecls._Frame__RESTRUCTURE = 0 # do not restructure tabs, pad them
 
 
     if type(filepath) is list and len(filepath) != 1:
@@ -78,7 +78,7 @@ def getf(options, filepath):
     filepath = filepath[0]
     filepath = filepath.lstrip().rstrip()
     with open(realpath(workspace, filepath)) as res:
-        return Frame.escape(
+        return Framecls.escape(
             str(
                 res.read()
             )
@@ -86,7 +86,7 @@ def getf(options, filepath):
     return ""
 
 def encodeURI(options, s):
-    Frame._Frame__RESTRUCTURE = 0
+    Framecls._Frame__RESTRUCTURE = 0
     safe = "/"
     try:
         safe = s[1]
@@ -94,7 +94,7 @@ def encodeURI(options, s):
         safe = safe
     encoded = ""
     s = s[0]
-    s = Frame.unescape(s)
+    s = Framecls.unescape(s)
     try:
         from urllib import parse # for Python 3
     except ImportError:
@@ -119,7 +119,7 @@ def encodeBase64(options, s):
         console.error("expected a string as first argument got null string")
         sys.exit(1)
 
-    s = Frame.unescape(s)
+    s = Framecls.unescape(s)
     try:
         s = s.encode("utf-8")
     except TypeError:
@@ -145,7 +145,7 @@ def decodeBase64(options, s):
         console.error("expected a string as first argument got null string")
         sys.exit(1)
 
-    s = Frame.unescape(s)
+    s = Framecls.unescape(s)
     try:
         s = s.encode("utf-8")
     except TypeError:
@@ -165,12 +165,12 @@ def htmlchars(options, arg):
     try:
         arg[1] = arg[1].lstrip().rstrip()
         if str(arg[1]).isdigit():
-            Frame._Frame__RESTRUCTURE = int(arg[1])
+            Framecls._Frame__RESTRUCTURE = int(arg[1])
         else:
             console.warn("expected a number as the second argument")
-            Frame._Frame__RESTRUCTURE = 0
+            Framecls._Frame__RESTRUCTURE = 0
     except IndexError:
-        Frame._Frame__RESTRUCTURE = 1
+        Framecls._Frame__RESTRUCTURE = 1
     if len(arg) < 1:
         return
     specialchars = [
