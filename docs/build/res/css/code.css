@@ -2,8 +2,16 @@ pre {
   background: #252e30;
   border-radius: 3px;
   padding: 10px;
-  color: #f8f8ff;;
+  color: #dedefc;
   line-height: 20px;
+  overflow: auto;
+}
+pre::-webkit-scrollbar {
+  display: none;
+}
+pre li {
+  border-left: 1px solid #dedefc;
+  padding: 0 10px;
 }
 .attr {
   color: #c1e2fd; 
