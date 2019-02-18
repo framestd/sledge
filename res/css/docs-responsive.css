@@ -63,6 +63,10 @@
     
 }
 
+@media (max-width: 979px) {
+    
+}
+
 @media (min-width: 768px) {
     
 }
@@ -79,5 +83,9 @@
 
     .main-menu.right {
         right: 0 !important;
+    }
+
+    a.menu-btn {
+        visibility: hidden;
     }
 }
