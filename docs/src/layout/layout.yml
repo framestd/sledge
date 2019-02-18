@@ -3,7 +3,7 @@ baseuri: https://framestd.github.io/sledge/
 get-sledge: https://github.com/framestd/sledge/releases/
 icons:
   menu-btn: >-
-    <svg.icon width="25" height="15" version="1.1" viewBox="0 0 6.6145831 3.96875" xmlns="http://www.w3.org/2000/svg"><path d="m0.6621 2.776h5.2917v0.52917h-5.2917zm0-2.117h5.2917v0.52917h-5.2917zm0 1.058h5.2917v0.52917h-5.2917z" fill="#fff" stroke-width="0" style="paint-order:stroke markers fill"/></svg>
+    <svg.icon width="25" height="15" version="1.1" viewBox="0 0 6.6145831 3.96875" xmlns="http://www.w3.org/2000/svg"><path d="m0.6621 2.776h5.2917v0.52917h-5.2917zm0-2.117h5.2917v0.52917h-5.2917zm0 1.058h5.2917v0.52917h-5.2917z" fill="#666" stroke-width="0" style="paint-order:stroke markers fill"/></svg>
   site-icon: null
   arrow-back: >-
     <svg width="20" height="20" 
@@ -35,40 +35,42 @@ nav:
   description: Remarkup
   links:
     Get Started:
+      - TITLE: Get Started
+        HREF: ./getstarted.html
       - TITLE: What is Remarkup
-        HREF: ./getstarted#what-is-remarkup
+        HREF: ./getstarted.html#sec:what-is-remarkup
       - TITLE: What is a Frame
-        HREF: ./getstarted#what-is-a-frame
+        HREF: ./getstarted.html#sec:what-is-a-frame
       - TITLE: What is a Pane
-        HREF: ./getstarted#what-is-a-pane
+        HREF: ./getstarted.html#sec:what-is-a-pane
     Docs:
       - TITLE: Using variables
-        HREF: ./docs/variables
+        HREF: ./docs/variables.html
       - TITLE: Remarkup functions
-        HREF: ./docs/functions
+        HREF: ./docs/functions.html
       - TITLE: Remarkup data-types
-        HREF: ./docs/data-types
+        HREF: ./docs/data-types.html
       - TITLE: Preprocessors
-        HREF: ./docs/preprocessors
+        HREF: ./docs/preprocessors.html
       - TITLE: class attributes
-        HREF: ./docs/class-attributes
+        HREF: ./docs/class-attributes.html
       - TITLE: id attributes
-        HREF: ./docs/id-attributes
+        HREF: ./docs/id-attributes.html
       - TITLE: Fields
-        HREF: ./docs/fields
+        HREF: ./docs/fields.html
       - TITLE: Wrap ups
-        HREF: ./docs/wrap-up
+        HREF: ./docs/wrap-up.html
     Services:
       - TITLE: Help
-        HREF: ./services/help
+        HREF: https://framestd.github.io/services/help
         ICON: null
       - TITLE: Donate
-        HREF: ./services/donate
+        HREF: https://framestd.github.io/services/donate
         ICON: null
-      - TITLE: CODE_OF_CONDUCT
-        HREF: ./CODE_OF_CONDUCT.md
-      - TITLE: CONTRIBUTING
-        HREF: ./CONTRIBUTING.md
+      - TITLE: CODE-OF-CONDUCT.md
+        HREF: https://github.com/framestd/sledge/CODE_OF_CONDUCT.md
+      - TITLE: CONTRIBUTING.md
+        HREF: https://github.com/framestd/sledge/CONTRIBUTING.md
 footer:
   copyright: Copyright 2019 Frame Studios
 

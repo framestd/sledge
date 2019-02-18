@@ -1,6 +1,20 @@
-name: indixes
+name: index
 remarkup:
   url: https://framestd.github.io/remarkup/spec/v1/
   version: 1.0
 footer:
   copyright: copyright 2019 Frame Studios
+icons:
+  link: >-
+    <svg.icon#link-icon width="20" height="20" 
+    version="1.1" viewBox="0 0 6.6145832 6.6145834">
+    <path d="m3.59 3.67c0.24357-0.1953 0.39866-0.49328 
+    0.39866-0.82826 0-0.59104-0.48281-1.0669-1.0825-1.0669h-1.4931c-0.59972 
+    0-1.0825 0.47582-1.0825 1.0669 0 0.59105 0.48281 
+    1.0669 1.0825 1.0669h0.47111m1.1403-0.8535c-0.24357 
+    0.1953-0.39866 0.49328-0.39866 0.82826 0 0.59104 0.48281 1.0669 
+    1.0825 1.0669h1.4931c0.59972 0 1.0825-0.47582 1.0825-1.0669 
+    0-0.59105-0.48281-1.0669-1.0825-1.0669h-0.47111" 
+    fill="none" stroke="#777" stroke-linecap="square" 
+    stroke-linejoin="bevel" stroke-width=".59653" 
+    style="paint-order:stroke markers fill"/></svg>

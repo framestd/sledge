@@ -3,8 +3,8 @@ index:
   title: Sledge - nail 'em all!
   meta:
     author: &author Caleb Pitan
-    desc: Build and deploy websites faster than you can blink your eyes
-    descript: >-
+    descript: Build and deploy websites faster than you can blink your eyes
+    desc: >-
       Sledge is a site building tool as part of Frame Studios
       Developer Indulgent Program(DIP). It is optimised to be fast enough.
       Sledge uses Frame Remarkup standards as defined by
@@ -22,6 +22,7 @@ index:
       - pane
       - Frame Studios
       - framestd
+    ext-kwd: []
     home: *Base
     image: res/img/frame_white192.png
     url: *Base
@@ -31,6 +32,10 @@ getstarted:
     author: *author
     desc: Easily learn remarkup and how to use sledge to build your website.
     kwd: *kwd
+    ext-kwd:
+      - get started
+      - lock
+      - key
     home: *Base
     image: res/img/frame.png
     url: *Base
