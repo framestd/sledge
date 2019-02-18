@@ -179,12 +179,12 @@
         </div><!--.span3-->
         <div class="span9">
           <div class="screen grid-view">
-            <div class="screen intro">
+            <div class="intro">
               <h1>Introduction</h1>
               Blink Your Eyes!<br/>
               When I said; &#8220;Build and deploy websites faster than you can blink your eyes&#8221;, I meant it. This site was built even before you could blink your eyes <span class="blink"></span>.
             </div>
-            <div class="screen">
+            <div>
               <h2>Let's get you started</h2>
               First things first&mdash;to use sledge you need python on your computer, so if you don't have python, head to the <a class="override" href="https://www.python.org/downloads/windows" target="_blank">python download page</a> or read this <a class="override" href="https://docs.python-guide.org/starting/install3/linux/" target="_blank">guide for installing on linux</a>.
               If you have python installed, great, what are we waiting for lets get you started.
@@ -230,7 +230,8 @@ project/
                 The <code>pages</code> folder is where all your webpage should be. They may contain subfolders, and these subfolders can contain <code>.frame</code> files. The <code>pages</code> folder may also contain other files and subfolders that may not be part of your webpage, but you'd want to let sledge know that those files and folders should be ignored.
               </p>
             </div>
-            <div class="screen">
+        
+            <div>
               <h2>Ignoring directory junks</h2>
               <div class="rule"></div>
               To ignore junk files and folders in your main directory which is the <code>pages</code> dir, a <code>.framerc</code> file will be initialised. This file must be a <code>json</code> file. Here is an example:
@@ -245,7 +246,7 @@ project/
               <p>The fiter property also helps ignore junks, that is, if you had other files with extensions say <code>.xml</code>, you could ignore this file by using a filter, adding only the extensions of the files you want to build to this filter. The filter by default is as written above.</p>
             </div>
         
-            <div class="screen">
+            <div>
               <h2>Sledge in details.</h2>
               <div class="rule"></div>
               Ok. We've spoken about sledge and I know you have a vague idea of what sledge is about. The only thing you can think of is that I said &#8220;Build and deploy websites faster than you can blink your eyes&#8221;, but how?
@@ -284,7 +285,7 @@ project/
                 A pane as said earlier is the part of remarkup that adds fluidity to your frame. Without panes, your frame would be completely static, but panes can alter, modify and make your frame lit. Consider panes as where you store variables. So instead of searching for a specific text or a part in your markup, and then things can get messy for you, no, you just have to go to your pane and change whatever thing. Changing anything in your pane causes a change in every one of your frame files that links to that pane. Panes are YAML source files, so you need to have basic knowledge of yaml.
               </p>
             </div>
-            <div class="screen">
+            <div>
               I sure hope all you know about sledge and remarkup is very clear to you now, and your state at the beginning of this document is nomore your current state. If you still think this document doesn't tackle what you have in mind, and doesn't answer your questions, or isn't detailed enough, you may <a class="override" href="https://github.com/framestd/sledge/issues"> submit an issue </a> to the repository on github.
             </div>
           </div>

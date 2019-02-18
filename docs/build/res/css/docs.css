@@ -234,12 +234,12 @@ div.screen {
     line-height: 30px;
 }
 
-div.screen.intro {
+div.intro {
     font-size: 18px;
     font-weight: 100;
 }
 
-div.screen.intro h1 {
+div.intro h1 {
     font-weight: 100;
 }
 
