@@ -39,7 +39,6 @@ class Frame():
 
         framefunctions.Export(Frame)
 
-
     funcs = framefunctions.functions
 
     #FrameFunctions option
@@ -128,17 +127,17 @@ class Frame():
         return nctx.rstrip(n)
 
     def __parse_class(self, frameup):
-        """Handles the parsing, to real HTML, of class-frame of a Frame markup"""
-        classframe = re.sub(r"(<[\d\w#-]+)(?<!\x5C)\.([\d\w.-]+)(#|>|/|\s)", 
+        """Handles the parsing to real HTML, of class-frame of a Frame markup"""
+        classframe = re.sub(r"(<[\d\w#-]+)(?<!\x5C)\.([\d\w.\x5C-]+)(#|>|/|\s)", 
                             "\\1 class=\x22\\2\x22\\3", frameup)
         parsed = re.findall(r"class=\x22.+?\x22", classframe)
         for each in parsed:
             each_ = re.sub(r"(?<!\x5C)\.", " ", each)
-            classframe = re.sub(r"%s"%each, each_, classframe)
+            classframe = classframe.replace(r"%s"%each, each_)
         return classframe
 
     def __parse_id(self, frameup):
-        idframe = re.sub(r"(<.+?)(?<!(?:[\x5C\x3D\x3E]\x22))#([\w\d:-]+)(?!\x22)", 
+        idframe = re.sub(r"(<.+?)(?<!(?:[\x5C\x3D\x3E]\x22))#([\w\d.:-]+)(?!\x22)", 
                          "\\1 id=\"\\2\"", frameup) 
         return idframe
 
@@ -206,7 +205,7 @@ class Frame():
                     paneValue = self.__doTabs(paneValue, tab)
                     formatted = formatted.replace(ptrn, paneValue)
             else:
-                paneValue = self.__doTabs(paneValue, tab)
+                paneValue = self.__doTabs(paneValue, tab) # if paneValue is `None` will return nullstring
                 #BEGIN: one statement
                 formatted = re.sub(r"%s\x24\x7B%s\x7D"%(tab,each), 
                     "%s"%paneValue, 
@@ -325,8 +324,9 @@ class Frame():
         if frameup is None: sys.exit(1)
 
         frameup = self.__unescape(frameup)
-
+        
         layoutFile, self.pane, specific, dest = self.__process(frameup, mode)
+        
         framefunctions.framepane = self.pane # Do not do this and the ff until above __process call
         
         frameup = re.sub(r"^(?:@[\w\d\s:\"\'./-]+)+", "", frameup, re.M) # remove preprocessors
