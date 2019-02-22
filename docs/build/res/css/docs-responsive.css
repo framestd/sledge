@@ -71,6 +71,10 @@
     }
     .navbar-cover {
         height: 350px;
+        border-bottom-left-radius: 250px;
+    }
+    .navbar-cover > .inner-cover {
+        border-bottom-left-radius: 250px;
     }
 }
 
