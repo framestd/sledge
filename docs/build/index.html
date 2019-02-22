@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="./res/css/code.css"/>
 
     <link rel="icon" href="https://framestd.github.io/sledge/res/img/frame_white192.png"/>
+    <link rel="shortcut icon" type="image/x-icon" href="https://framestd.github.io/sledge/res/img/frame_white192.ico"/>
+    <link rel="manifest" href="./res/manifest.json" crossorigin="anonymous"/>
     
   </head>
 
@@ -56,6 +58,11 @@
           <a class="btn getsledge override" href="https://github.com/framestd/sledge/releases/" target="_blank">GET SLEDGE</a>
         </div>
       </div><!--navbar-->
+      <div class="navbar-cover">
+        <div class="inner-cover">
+          <img src="./res/img/use-sledge.svg"/>
+        </div>
+      </div>
             
       <div class="classic grid-view" >
         <div class="span3">
@@ -73,7 +80,7 @@
               </li>
               <li>
                 <div class="menu-desc">
-                  Remarkup
+                  Sledge
                 </div>
               </li>
               <li>
@@ -110,42 +117,57 @@
                 </span>
               </li>
               <li>
-                <a class="override nav-link" href="./docs/variables.html" title="Using variables">
+                <a class="override nav-link" href="./docs/how-to-use.html" title="How to use">
+                  How to use
+                </a>
+              </li>
+              <li>
+                <span class="group">
+                  Learn
+                </span>
+              </li>
+              <li>
+                <a class="override nav-link" href="./docs/how-to-use.html" title="How to use">
+                  How to use
+                </a>
+              </li>
+              <li>
+                <a class="override nav-link" href="./learn/variables.html" title="Using variables">
                   Using variables
                 </a>
               </li>
               <li>
-                <a class="override nav-link" href="./docs/functions.html" title="Remarkup functions">
+                <a class="override nav-link" href="./learn/functions.html" title="Remarkup functions">
                   Remarkup functions
                 </a>
               </li>
               <li>
-                <a class="override nav-link" href="./docs/data-types.html" title="Remarkup data-types">
+                <a class="override nav-link" href="./learn/data-types.html" title="Remarkup data-types">
                   Remarkup data-types
                 </a>
               </li>
               <li>
-                <a class="override nav-link" href="./docs/preprocessors.html" title="Preprocessors">
+                <a class="override nav-link" href="./learn/preprocessors.html" title="Preprocessors">
                   Preprocessors
                 </a>
               </li>
               <li>
-                <a class="override nav-link" href="./docs/class-attributes.html" title="class attributes">
+                <a class="override nav-link" href="./learn/class-attributes.html" title="class attributes">
                   class attributes
                 </a>
               </li>
               <li>
-                <a class="override nav-link" href="./docs/id-attributes.html" title="id attributes">
+                <a class="override nav-link" href="./learn/id-attributes.html" title="id attributes">
                   id attributes
                 </a>
               </li>
               <li>
-                <a class="override nav-link" href="./docs/fields.html" title="Fields">
+                <a class="override nav-link" href="./learn/fields.html" title="Fields">
                   Fields
                 </a>
               </li>
               <li>
-                <a class="override nav-link" href="./docs/wrap-up.html" title="Wrap ups">
+                <a class="override nav-link" href="./learn/wrap-up.html" title="Wrap ups">
                   Wrap ups
                 </a>
               </li>
@@ -165,12 +187,12 @@
                 </a>
               </li>
               <li>
-                <a class="override nav-link" href="https://github.com/framestd/sledge/CODE_OF_CONDUCT.md" title="CODE-OF-CONDUCT.md">
+                <a class="override nav-link" href="https://github.com/framestd/sledge/blob/master/CODE_OF_CONDUCT.md" title="CODE-OF-CONDUCT.md">
                   CODE-OF-CONDUCT.md
                 </a>
               </li>
               <li>
-                <a class="override nav-link" href="https://github.com/framestd/sledge/CONTRIBUTING.md" title="CONTRIBUTING.md">
+                <a class="override nav-link" href="https://github.com/framestd/sledge/blob/master/CONTRIBUTING.md" title="CONTRIBUTING.md">
                   CONTRIBUTING.md
                 </a>
               </li>
@@ -178,47 +200,51 @@
           </div>
         </div><!--.span3-->
         <div class="span9">
-          <div class="screen dsk-center hero">
-            <h1 class="dsk-center">Sledge</h1>
+          <div class="screen hero">
+            <h1 class="priority">Sledge</h1>
             Sledge is a python package for building websites&mdash;it is a very effective tool for site building. The Sledge project is a part of Frame Studios Developer Indulgent Program(DIP) which aims to make works easier for developers. You just have to write once and never again. It is optimised to be fast enough. Sledge uses Frame Remarkup and Templating Standards as defined by <a class="override" href="https://framestd.github.io/remarkup/spec/v1/" target="_blank">Remarkup 1.0</a>. It is meant to make you lazy! Grab your sledge we'll teach you how to do the hammering, and holla, voila you've nailed it all at once.
           </div>
-          <div class="screen grid-view">
-            <div class="span4">
-              <div class="magic-lady centered"></div>
-            </div>
-            <div class="span8">
+        
+            <div class="magic-lady centered"></div>
+            <div class="screen">
               <h2>Have the best relationship with your projects</h2>
-              <div class="rule"></div>
               Want to keep a cordial relationship with your code? Then you need sledge. Sledge gives you that relationship with your projects that makes you understand the in and out of your code without losing track or getting fed up, and never get bored.
-              <h2>One change triggers a change everywhere</h2>
-              <div class="rule"></div>
-              With variables declared in a YAML file you define your templates&mdash;change your template once and every page linked to that template has the change. No stress at all.
             </div>
-          </div>
         
-          <div class="screen">
-            <h2>Take control</h2>
-            <div class="rule"></div>
-            Separate the part of your code that is likely to change, keep them as variables in your YAML source, link it back to your Remarkup or Frame Markup source and voila "you nailed it all" is what you get.
-            <h2>Do you think we are re-inventing the wheel?</h2>
-            <div class="rule"></div>
-            No. That is not more like it. I know you may think we are creating again what has been created. Nah! it's more like we are modifying or adding advanced and better features to what has been created, in our own way. The only way you can find out we are not, is when you start using sledge.
-          </div>
+          <div class="screen grid-view">
+            <div class="span6">
+              <h4>Never easier</h4>
+              <div class="rule"></div>
+              With variables declared in a YAML file you define your markup&mdash;alter a variable once and every page that uses the variable has the change. No stress at all.
+            </div>
+            <div class="span6">
+              <h4>Take control</h4>
+              <div class="rule"></div>
+              Separate the part of your code that is likely to change, keep them as variables in your YAML source, link it back to your markup source and voila "you nailed it all" is what you get.
+            </div>
+          </div><!--.grid-view-->
         
-          <div class="screen overflow">
+          <div class="screen grid-view">
+            <div class="span6">
+              <h4>Do you think we are re-inventing the wheel?</h4>
+              <div class="rule"></div>
+              No. That is not more like it. I know you may think we are creating again what has been created. Nah! it's more like we are modifying or adding advanced and better features to what has been created, in our own way. The only way you can find out we are not, is when you start using sledge.
+            </div>
+            <div class="span6">
+              <h4>You can always do more than mere templating</h4>
+              <div class="rule"></div>
+              Make your work easier you don't have to write the same thing&mdash;even with a slight difference&mdash;on and on. Populate your navbar, navigation and footer links in one statement using framefunctions <code>%explode(...)</code> method. When writing codes in pre tags, you don't have to slow down and get tired of <code>&amp;lt; &amp;gt;</code>. We make the task easier: write normal tags inside the <code>%code(...)</code> method.
+            </div>
+          </div><!--.grid-view---->
+        
+          <!---div.screen.overflow>
             <img class="centered" src="./res/img/sledge-screenshot.png" alt="Sledge" width="955" height="537"/>
-          </div>
-        
-          <div class="screen">
-            <h2>You can always do more than mere templating</h2>
-            <div class="rule"></div>
-            Make your work easier you don't have to write the same thing&mdash;even with a slight difference&mdash;on and on. Populate your navbar, navigation and footer links in one statement using framefunctions <code>%explode(...)</code> method. When writing codes in pre tags, you don't have to slow down and get tired of <code>&amp;lt; &amp;gt;</code>. We make the task easier: write normal tags inside the <code>%code(...)</code> method.
-          </div>
+          </div-->
         
           <footer class="footer">
             <div class="frame"></div>
             Code and documentation, in binaries or in source, copyright 2019 Frame Studios. Code is licensed under <a class="override" href="https://github.com/framestd/sledge/blob/master/LICENSE" target="_blank">MIT</a> and documentation is licensed under Creative Commons <a class="override" href="https://creativecommons.org/licenses/by/3.0/" target="_blank">CC by 3.0.</a><br/> Frame, Frame Studios, Sledge and Remarkup are trademarks of Frame Studios and may be registered.
-            With all the love <a class="override" href="https://github.com/calebpitan">&commat;calebpitan</a>
+            With all the love <a class="override" href="https://github.com/calebpitan">&commat;calebpitan</a>.
           </footer> 
         </div><!--.span9-->
       </div><!--.classic.grid-view-->
