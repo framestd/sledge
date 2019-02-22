@@ -17,16 +17,18 @@ console.aware("SLEDGE -- NAIL 'EM ALL!")
 
 nullstr = ""
 
+should_return = False
+# root      # curdir
 basespace = workshop = nullstr
 
 ignore = ()
 _filter = ()
+
 conf = ".framerc"
 ext = ".html"
-
 n = "\n"
 
-status = ["I'm sorry it failed. Check to see if you left \
+status = ["sorry it failed. Check to see if you left \
 some nails in your pocket", "you nailed 'em all!"]
 
 
@@ -52,6 +54,7 @@ def recurseAddress(o, x, i=0):
         return o[x[i]] if i == (len(x) - 1) else recurseAddress(o[x[i]], x, i+1)
     except KeyError:
         console.error("invalid address {}".format(x))
+        return None
 
 def specifics(frameup, pane):
     allFormat = re.findall(r"([ \t]*)\x24\x7B(.+?)\x7D(?:\x5B([\d*]+)\x5D)?", frameup)
@@ -63,7 +66,7 @@ def specifics(frameup, pane):
             each_ = each_[2:]
         paneValue = recurseAddress(pane, each_, 0)
         if paneValue is None:
-            console.error("could not resolve the address \"{}\"".format(each_))
+            console.error("could not resolve address \"{}\"".format(each))
             sys.exit(1)
         if type(paneValue) is list:
             index = str(index)
@@ -92,7 +95,7 @@ def render(src, mode=Mode.DIR_MODE):
     fr.inform(basespace, workshop)
     return fr.compile(src, mode)
 
-def get_all_files(basedir, ignore=(), _filter=(), ret=False):
+def get_all_files(basedir, ignore=(), _filter=()):
     global workshop, feedout, basespace
 
     ignore = [os.path.join(basespace,d) for d in ignore]
@@ -110,14 +113,14 @@ def get_all_files(basedir, ignore=(), _filter=(), ret=False):
     for i in range(len(_filter)):
         for each in temp:
             if each.endswith(_filter[i]):
-                feedout = _build(each, render(os.path.join(basedir, each)), ret)
+                feedout = _build(each, render(os.path.join(basedir, each)))
     for eachdir in dirsOnly:
         abs_eachdir = os.path.join(basedir, eachdir)
         if os.path.isdir(abs_eachdir) and not abs_eachdir in ignore:
-            get_all_files(os.path.join(basedir, eachdir), ignore, _filter, ret)
+            get_all_files(os.path.join(basedir, eachdir), ignore, _filter)
     del allfiles, temp
 
-def _build(filename, response, ret=False):
+def _build(filename, response):
     if response is None:
         return
 
@@ -132,23 +135,30 @@ def _build(filename, response, ret=False):
     specific = response[3]
     fname = re.sub(_ptrns[0], ext, filename)
 
-    if not ret and not dest is None:
+    if not should_return and not dest is None:
         genHTMLFile = os.path.join(workshop, dest, fname)
     if not cLayoutFrame is None:
         tab = re.search(_ptrns[1], cLayoutFrame).group(1) #search the current tab order
         cMainFrame = _doTabs(cMainFrame, tab) #pad tabs according to tab order
     
-        nfc = re.sub(_ptrns[2], cMainFrame, cLayoutFrame) #layout body
-        nfc = re.sub(_ptrns[3], specific["title"], nfc) #page title
-        nfc = specifics(nfc, specific["meta"]) #page meta tags
+        nfc = re.sub(_ptrns[2], cMainFrame, cLayoutFrame) # layout body
+        nfc = re.sub(_ptrns[3], specific["title"], nfc) # page title
+        nfc = specifics(nfc, specific["meta"]) # page meta tags
     else:
         nfc = cMainFrame
 
-    if ret or not genHTMLFile:
-        # if yo ain't meant to
-        # write out just feed out
+    if should_return or not genHTMLFile or not cLayoutFrame:
+        """if not meant to write out just feed out
+        Three cases: if should_return is true, return
+                     if no build destination specified, return
+                     if no layout specified, return
+        so you know sledge won't write to a file if there is no layout 
+        or no destination specified"""
         return nfc
-
+    """# nfc: New Frame Content
+    # specific: a frame pane containing variables unique to
+              # each frame file. They are defered and are used during build time, 
+              # and are different from those used during compile time."""
     try:
         fileo = open(genHTMLFile, 'w')
         fileo.write(nfc)
@@ -200,6 +210,11 @@ def _metas(x, c):
 from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler
 class Vigilante(PatternMatchingEventHandler):
+    """Note: directory watching is experimental and not standard yet.
+To watch, make sure you watch from the `pages` dir; the directory 
+where your `webpage` files are and not from the `src` dir.
+Watching from the `src` dir causes undesired effects. Due
+to the fact that the API is not yet fully implemented."""
     patterns = list(_filter).append("*.yml")
 
     def vigil(self, event):
@@ -214,10 +229,12 @@ class Vigilante(PatternMatchingEventHandler):
 
 
 def hammer(workspace=os.path.dirname(__file__), watch=False, ret=False):
-    global basespace, feedout
+    global basespace, feedout, should_return
+
+    should_return = ret
 
     if os.path.isfile(workspace):
-        feedout = _build(os.path.basename(workspace), render(workspace, mode=Mode.FILE_MODE), ret)
+        feedout = _build(os.path.basename(workspace), render(workspace, mode=Mode.FILE_MODE))
         return
 
     basespace = workspace
@@ -231,7 +248,7 @@ def hammer(workspace=os.path.dirname(__file__), watch=False, ret=False):
     ignore = tuple(framerc['ignore'])
     _filter = tuple(framerc['filter'])
 
-    get_all_files(workspace, ignore, _filter, ret)
+    get_all_files(workspace, ignore, _filter)
 
     if watch:
         ob = Observer()
