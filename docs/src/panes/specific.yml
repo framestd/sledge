@@ -24,18 +24,18 @@ index:
       - framestd
     ext-kwd: []
     home: *Base
-    image: res/img/frame_white192.png
+    image: &icon res/img/frame_white192
     url: *Base
 getstarted:
   title: Get Started - Sledge
   meta:
     author: *author
-    desc: Easily learn remarkup and how to use sledge to build your website.
+    desc: Build and deploy websites faster than ever using Remarkup and Sledge as your build tool.
     kwd: *kwd
     ext-kwd:
       - get started
       - lock
       - key
     home: *Base
-    image: res/img/frame.png
+    image: *icon
     url: *Base

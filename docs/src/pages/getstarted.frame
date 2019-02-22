@@ -25,7 +25,7 @@ bash: pip: command not found
 operable program or batch file.
 # on windows
       </pre>
-      Then you don't have pip in your path environment variable. This is what you should do; go to where you have python installed on your file explorer, for example on Windows <code>C:\Users\Python27\</code>, then navigate to the <code>Scripts</code> dir. Now you should see <code>pip.exe</code>, <code>pip&lt;version-major&gt;.exe</code>.
+      Then you don't have pip in your PATH environment variable. This is what you should do; go to where you have python installed on your file explorer, for example on Windows <code>C:\Python27\</code>, then navigate to the <code>Scripts</code> dir. Now you should see <code>pip.exe</code>, <code>pip&lt;version-major&gt;.exe</code> (where &lt;version-major&gt; is the major version of python).
       Two things you may decide to do:
       <ul>
         <li>Add this directory to your PATH environment variable.</li>
@@ -68,7 +68,7 @@ project/
   "filter": [".frame"]
 }
       </pre>
-      <p>Every one of the paths specified in your ignore must be relative to the root, which is the pages directory, and glob patterns are not supported yet.
+      <p>Every one of the paths specified in your ignore must be relative to the root, which is the pages directory, and <strong>glob patterns are not supported yet</strong>.
       By default, if your root dir doesn't contain a <code>.framerc</code> file, an abstract one is created and the default value is <code>"ignore": []</code>.</p>
       <p>The fiter property also helps ignore junks, that is, if you had other files with extensions say <code>.xml</code>, you could ignore this file by using a filter, adding only the extensions of the files you want to build to this filter. The filter by default is as written above.</p>
     </div>
@@ -94,14 +94,14 @@ project/
 
         <h3>Lock &amp; Key Model</h3>
         <div.rule//>
-        Remarkup proposes a model which serves better, the lock and key model! This is the best model for writing your markup. A model with which you can split your markup into manageable chunks, and even, markups can behave as modules.
+        Remarkup proposes a model which serves better, the lock and key model! This is the best model for writing your markup. A model with which you can split your markup into manageable bits, and even, markups can behave as modules.
         
         <h3#sec:what-is-a-frame>Frame&mdash;The lock
           <a.override.section href="#sec:what-is-a-frame">
             <span.icon>${icons::link}</span>
           </a>
         </h3>
-        Frame is the lock here. A frame is the part of your markup that is unlikely to change over time. They can be static yet portable. A frame does not necessarily have to be static, it can be made dynamic by giving it a key which fits perfectly into the frame. Let me get ahead of myself here: This part of dynamics in a frame which gives fluidity&mdash;the key&mdash;is called a <strong>Pane</strong>. Think of it as a frame metaphorically, as in the real sense; a frame is a part of something bigger waiting for the other part, say, a <strong>pane</strong>l, to be fixed into it so it can be whole. <em>I hope I hit it here.</em>
+        Frame is the lock here. A frame is the part of your markup that is unlikely to change over time. It can be static yet portable. A frame does not necessarily have to be static, it can be made dynamic by giving it a key which fits perfectly into the frame. Let me get ahead of myself here: This part of dynamics in a frame which gives fluidity&mdash;the key&mdash;is called a <strong>Pane</strong>. Think of it as a frame metaphorically, as in the real sense; a frame is a part of something bigger waiting for the other part, say, a <strong>pane</strong>l, to be fixed into it so it can be whole. <em>I hope I hit it here.</em>
 
         <h3#sec:what-is-a-pane>Pane&mdash;The key
           <a.override.section href="#sec:what-is-a-pane">
@@ -113,7 +113,9 @@ project/
       </p>
     </div>
     <div>
-      I sure hope all you know about sledge and remarkup is very clear to you now, and your state at the beginning of this document is nomore your current state. If you still think this document doesn't tackle what you have in mind, and doesn't answer your questions, or isn't detailed enough, you may <a.override href="https://github.com/framestd/sledge/issues"> submit an issue </a> to the repository on github.
+      <h4.em>Do you have a problem?</h4>
+      <div.rule//>
+      <em>I sure hope all you know about sledge and remarkup is very clear to you now, and your state at the beginning of this document is nomore your current state. If you still think this document doesn't tackle what you have in mind, or doesn't answer your questions, or isn't detailed enough, you may <a.override href="https://github.com/framestd/sledge/issues"> submit an issue </a> to the repository on github.</em>
     </div>
   </div>
 
