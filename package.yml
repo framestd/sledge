@@ -6,13 +6,13 @@ package:
   copyright: 2019 Frame Studios
   authors:
     - Frame Studios
-    - Caleb Adepitan
+    - Caleb Pitan
   dependencies:
     - PyYAML
     - watchdog
     - colorama
     - termcolor
-  description: Build and deploy websites faster than you can blink your eye
+  description: Build and deploy websites faster than you can blink your eyes
   SCM: Git
   repository: https://github.com/framestd/sledge
   tags:
