@@ -65,7 +65,13 @@
 }
 
 @media (min-width: 768px) {
-    
+    .navbar-cover img {
+        min-width: 400px;
+        height: 300px;
+    }
+    .navbar-cover {
+        height: 350px;
+    }
 }
 
 @media (min-width: 1100px) { /*formerly: 980*/
