@@ -9,7 +9,7 @@
     <meta name="keywords" content="${FRAME::METAS::kwd}[*], ${FRAME::METAS::ext-kwd}[*]"/>
     <meta property="og:title" content="${FRAME::TITLE}"/>
     <meta property="og:description" content="${FRAME::METAS::desc}"/>
-    <meta property="og:image" content="${baseuri}${FRAME::METAS::image}"/>
+    <meta property="og:image" content="${baseuri}${FRAME::METAS::image}.png"/>
     <meta property="og:url" content="${FRAME::METAS::url}"/>
     <meta property="twitter:card" content="summary"/>
     <title>${FRAME::TITLE}</title>
@@ -19,7 +19,9 @@
     <link rel="stylesheet" href="./res/css/docs-responsive.css"/>
     <link rel="stylesheet" href="./res/css/code.css"/>
 
-    <link rel="icon" href="${baseuri}${FRAME::METAS::image}"/>
+    <link rel="icon" href="${baseuri}${FRAME::METAS::image}.png"/>
+    <link rel="shortcut icon" type="image/x-icon" href="${baseuri}${FRAME::METAS::image}.ico"/>
+    <link rel="manifest" href="./res/manifest.json" crossorigin="anonymous"/>
     
   </head>
 
@@ -49,6 +51,11 @@
           <a.btn.getsledge.override href="${get-sledge}" target="_blank">GET SLEDGE</a>
         </div>
       </div><!--navbar-->
+      <div.navbar-cover>
+        <div.inner-cover>
+          <img src="./res/img/use-sledge.svg"/>
+        </div>
+      </div>
             
       <div.classic.grid-view >
         <div.span3>

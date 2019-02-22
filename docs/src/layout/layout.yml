@@ -1,4 +1,4 @@
-title: Remarkup
+title: &title Sledge
 baseuri: https://framestd.github.io/sledge/
 get-sledge: https://github.com/framestd/sledge/releases/
 icons:
@@ -32,7 +32,7 @@ control:
 nav:
   hash-nav-max-width: 978
   nav-drawer-max-width: 767
-  description: Remarkup
+  description: *title
   links:
     Get Started:
       - TITLE: Get Started
@@ -43,23 +43,28 @@ nav:
         HREF: ./getstarted.html#sec:what-is-a-frame
       - TITLE: What is a Pane
         HREF: ./getstarted.html#sec:what-is-a-pane
-    Docs:
+    Learn:
+      - TITLE: How to use
+        HREF: ./docs/how-to-use.html
       - TITLE: Using variables
-        HREF: ./docs/variables.html
+        HREF: ./learn/variables.html
       - TITLE: Remarkup functions
-        HREF: ./docs/functions.html
+        HREF: ./learn/functions.html
       - TITLE: Remarkup data-types
-        HREF: ./docs/data-types.html
+        HREF: ./learn/data-types.html
       - TITLE: Preprocessors
-        HREF: ./docs/preprocessors.html
+        HREF: ./learn/preprocessors.html
       - TITLE: class attributes
-        HREF: ./docs/class-attributes.html
+        HREF: ./learn/class-attributes.html
       - TITLE: id attributes
-        HREF: ./docs/id-attributes.html
+        HREF: ./learn/id-attributes.html
       - TITLE: Fields
-        HREF: ./docs/fields.html
+        HREF: ./learn/fields.html
       - TITLE: Wrap ups
-        HREF: ./docs/wrap-up.html
+        HREF: ./learn/wrap-up.html
+    Docs:
+      - TITLE: How to use
+        HREF: ./docs/how-to-use.html
     Services:
       - TITLE: Help
         HREF: https://framestd.github.io/services/help
@@ -68,9 +73,9 @@ nav:
         HREF: https://framestd.github.io/services/donate
         ICON: null
       - TITLE: CODE-OF-CONDUCT.md
-        HREF: https://github.com/framestd/sledge/CODE_OF_CONDUCT.md
+        HREF: https://github.com/framestd/sledge/blob/master/CODE_OF_CONDUCT.md
       - TITLE: CONTRIBUTING.md
-        HREF: https://github.com/framestd/sledge/CONTRIBUTING.md
+        HREF: https://github.com/framestd/sledge/blob/master/CONTRIBUTING.md
 footer:
   copyright: Copyright 2019 Frame Studios
 
