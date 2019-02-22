@@ -6,12 +6,9 @@
     div.header-text {
         margin-top: 50px;
     }
-    .dsk-center {
-        text-align: center;
-    }
 }
 
-@media (max-width: 979px) {
+@media (max-width: 1099px) { /*formerly: 979*/
     .grid-view [class*="span"] {
         float: none;
         width: 100%;
@@ -71,8 +68,9 @@
     
 }
 
-@media (min-width: 980px) {
-    .navbar {
+@media (min-width: 1100px) { /*formerly: 980*/
+    .navbar,
+    .navbar-cover {
         width: calc(100% - 300px);
         left: 300px;
     }

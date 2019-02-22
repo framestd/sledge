@@ -33,10 +33,18 @@ h5,
 h6 {
     font-weight: 500;
     font-size: 2rem;
+    line-height: 40px;
 }
 
 h3 {
     font-size: 1.5rem;
+}
+
+h4,
+h5,
+h6 {
+    margin: 20px auto 10px;
+    font-weight: bold;
 }
 
 h4 {
@@ -53,11 +61,30 @@ h6 {
     font-weight: 600;
 }
 
+h4.em {
+    margin: 100px auto 10px;
+    font-style: oblique;
+}
+
+h1.priority {
+    background: #666;
+    background: -webkit-linear-gradient(50deg, #ff7300, #fafa04);
+    background: -moz-linear-gradient(50deg, #ff7300, #fafa04);
+    background: -o-linear-gradient(50deg, #ff7300, #fafa04);
+    background: linear-gradient(50deg, #ff7300, #fafa04);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    max-width: 250px;
+}
+
 code {
     color: #fa5a5a;
     background: #eee;
     padding: 1px 5px;
     border-radius: 2px;
+    font-family: monospace;
 }
 
 .menu-btn {
@@ -104,19 +131,60 @@ span.icon {
     background-repeat: no-repeat;
     background-size: cover;
     height: 340px;
-    width: 300px;
+    max-width: 300px;
+    margin: auto;
+}
+
+.sledge-image {
+    background-image: url(../img/sledge48.png) no-repeat;
+    height: 48px;
+    width: 48px;
+    display: inline-block;
 }
 
 .after-float {
     margin: 10px;
 }
 
-.hero {
+div.screen {
+    padding: 15px 15px;
+    font-size: 15px;
+    color: #666666;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    line-height: 30px;
+}
+
+div.intro {
+    font-size: 18px;
+    font-weight: 100;
+}
+
+div.intro h1 {
+    font-weight: 100;
+}
+
+div.screen.overflow {
+    overflow: scroll;
+}
+
+div.rule {
+    background: rgba(0,0,0,.1);
+    height: 1px;
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+div.hero {
     font-size: inherit;
-    background: #F9F9f9;
+    background: #040e31;
     font-family: 'Mont', 'K2D';
-    margin: 0 10px 0 10px;
+    margin: -44px 10px 80px 10px;
     width: auto;
+    color: #ffffff;
+    border-radius: 3px;
 }
 
 .screen.hero {
@@ -224,36 +292,6 @@ span.blink:before {
     content: '\1f609';
 }
 
-div.screen {
-    padding: 15px 15px;
-    font-size: 15px;
-    color: #666666;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    line-height: 30px;
-}
-
-div.intro {
-    font-size: 18px;
-    font-weight: 100;
-}
-
-div.intro h1 {
-    font-weight: 100;
-}
-
-div.screen.overflow {
-    overflow: scroll;
-}
-
-div.rule {
-    background: rgba(0,0,0,.1);
-    height: 1px;
-    display: block;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
 
 img {
     width: 100%;
@@ -265,22 +303,38 @@ img {
  */
 
 .navbar {
-    background: rgb(218, 19, 175);
-    background: linear-gradient(60deg,rgb(218, 19, 175), rgb(142, 218, 19));
-    background: -webkit-linear-gradient(60deg, rgb(218, 19, 175), rgb(142, 218, 19));
-    background: -moz-linear-gradient(60deg, rgb(218, 19, 175), rgb(142, 218, 19));
-    background: -o-linear-gradient(60deg, rgb(218, 19, 175), rgb(142, 218, 19));
     background: #fff;
     padding: 13px 10px;
     position: relative;
     box-sizing: border-box;
     font-weight: 500;
-    box-shadow: 0 2px 6px rgba(0,0,0,.2);
+    *box-shadow: 0 2px 6px rgba(0,0,0,.2);
+}
+
+.navbar-cover {
+    background: #040e31;
+    position: relative;
+    height: 350px;
+    border-bottom-left-radius: 150px;
+}
+
+.navbar-cover > .inner-cover {
+    background: #fff;
+    border-bottom-left-radius: 150px;
+    *max-width: 600px;
+    margin: auto;
+}
+
+.navbar-cover img {
+    min-width: 405px;
+    height: 300px;
+    margin: auto;
 }
 
 div.primary-navlinks {
     position: absolute;
-    top: 0;
+    top: 14px;
+    left: 70px;
 }
 
 .override {
@@ -299,9 +353,13 @@ a:focus:not(.navbar-link):not(.nav-link):not(.btn) {
     text-decoration: underline #8260cf;
 }
 
+.navbar ul.override {
+    padding: 0;
+}
+
 ul.override {
     display: inline-block;
-    margin-right: 0;
+    margin: auto 0 auto 0;
 }
 
 .navbar ul.override li a {
@@ -321,19 +379,22 @@ ul.override li a:hover {
 }
 
 a.btn {
-    padding: 10px 25px;
-    color: #777;
-    background: rgba(255,255,255,.4);
-    border-radius: 2px;
-    box-shadow: 1px 0 3px rgba(0,0,0,.2);
+    padding: 8px 20px;
+    color: #fff;
+    background: rgba(18, 96, 141, 0.4);
+    background: -webkit-linear-gradient(bottom, #ff7300, #fafa04);
+    background: -moz-linear-gradient(50deg, #ff7300, #fafa04);
+    background: -o-linear-gradient(bottom, #ff7300, #fafa04);
+    background: linear-gradient(to top, #ff7300, #fafa04);
+    text-shadow: 0 0.08rem rgba(0,0,0,0.25);
+    border: 1px solid #fafa04;
+    border-radius: 5px;
     font-weight: 600;
-    font-family:  'Mont', 'Roboto', sans-serif;
 }
 
 a.btn:hover {
-    background: #fff;
-    box-shadow: 0 3px 4px rgba(0,0,0,.4);
     transition: all ease .7s;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
 }
 
 *:focus {
@@ -445,4 +506,10 @@ footer div.frame {
     width: 64px;
     height: 64px;
     margin: 15px;
+}
+
+::selection {
+    background: #ff730081;
+    color: #fff;
+    width: 10%;
 }
