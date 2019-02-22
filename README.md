@@ -80,12 +80,12 @@ Example `${author}`, `${program::license}`, and a pane that looks much like:
 
 ```yaml
 # say: example.yml
-- author: Caleb Pitan
-- program:
+author: Caleb Pitan
+program:
   - name: Sledge
   - license: MIT 
-- nav: 
-  - links:
+nav: 
+  links:
     - HREF: https://github.com/framestd/sledge/
       TITLE: Sledge
     - HREF: https://github.com/framestd/
@@ -181,4 +181,4 @@ package name could be sledge we can't tell that now, depends on name availabilit
 Looking to be a contributor, no problem, you are welcome. Read our guidelines to contributing to sledge. We have a [CONTRIBUTING.md](https://github.com/framestd/sledge/blob/master/CONTRIBUTING.md) for that.  
 
 # License  
-Sledge is Licensed under [MIT](https://github.com/framestd/sledge/blob/master/LICENSE)
+Sledge is licensed under [MIT](https://github.com/framestd/sledge/blob/master/LICENSE)
