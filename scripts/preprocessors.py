@@ -22,6 +22,23 @@ def Initialize(inst, cls):
     FrameInst = inst
     FrameClass = cls
 
+def CleanExports():
+    global exports
+    exports = {
+        "pane": {},
+        "layout": None,
+        "dest": None,
+        "specific": {}
+    }
+
+def cleanup():
+    global workspace, dest
+    global FrameInst, FrameClass
+    CleanExports()
+    workspace = dest = FrameInst = FrameClass = ""
+
+
+
 def loadpane(src):
     panefile = panecontent = None
     try:
@@ -62,16 +79,17 @@ def getAttribute(attr, _collection):
             sys.exit(1)
     return rel
 
+pane = dict()
 def processor(tag, attr, mode):
     global __panenotfound__, __destinationunresolved__
-    global exports
+    global exports, pane
     if tag.lower() == "load":
         rel = getAttribute('rel', attr).lstrip().lower()
         src = ""
         if rel == "panes":
             src = getAttribute('src', attr)
             src = realpath(workspace, src)
-            pane = dict()
+            
             if os.path.isfile(src):
                 pane.update(loadpane(src))
             else:
