@@ -1,0 +1,32 @@
+{
+    "name": "Frame Studios Sledge",
+    "short_name": "Sledge",
+    "start_url": "../index.html",
+    "display": "standalone",
+    "background_color": "#fff",
+    "description": "Build and deploy websites faster than you can blink your eyes.",
+    "icons": [{
+        "src": "./img/frameX32.png",
+        "sizes": "32x32",
+        "type": "image/png"
+    }, {
+        "src": "./img/frameX64.png",
+        "sizes": "64x64",
+        "type": "image/png"
+    }, {
+        "src": "./img/frame.png",
+        "sizes": "92x92",
+        "type": "image/png"
+    }, {
+        "src": "./img/frame_white192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+    }, {
+        "src": "./img/frame_white192.ico",
+        "sizes": "192x192",
+        "type": "image/x-icon"
+    }],
+    "lang": "en-GB",
+    "theme": "#ff7300",
+    "scope": "../"
+}
