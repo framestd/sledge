@@ -19,11 +19,15 @@ def _rep(s, o, n):
 class Frame():
     def __init__(self):
 
-        self.pane = {}
-        self.specific = {}
+        self.pane = {} # general pane
+        self.specific = {} # contains unique props. for each file,
+                           # title, meta variables are accessed from here
+                           # The usage is defered until build time
         self.dest = ""
-        self.WORKSPACE = self.PAGESFILE = self.CURFILE = ""
-        self.BASESPACE = ""
+        self.WORKSPACE = "" # current working dir
+        self.PAGESFILE = "" # current page file not layout or import
+        self.CURFILE = "" # file currently working on + layout + import
+        self.BASESPACE = "" # root src dir
 
         prep.Initialize(self, Frame)
 
@@ -46,8 +50,8 @@ class Frame():
     BODY = "BODY"    # CONSTANT FIELD, PROPERTY OF `FRAME`
     DIRNAME = "DIRNAME"    # CONSTANT FIELD, PROPERTY OF `FRAME`
     FILENAME = "FILENAME"    # CONSTANT FIELD, PROPERTY OF `FRAME`
-    TITLE = "TITLE"    # CONSTANT FIELD, PROPERTY OF `FRAME`
-    METAS = "METAS"    # NAMESPACE FIELD, PROPERTY OF `FRAME`
+    TITLE = "TITLE"    # UNIQUE FIELD, PROPERTY OF `FRAME`
+    METAS = "METAS"    # NAMESPACE FIELD, UNIQUE, PROPERTY OF `FRAME`
     GROUP = "GROUP"    # DEPENDENT CONSTANT FIELD, PROPERTY OF `FRAME`
     LAST_MODIFIED = "LASTMOD"    # CONSTANT FIELD, PROPERTY OF `FRAME`
     TIME = "TIME"
@@ -127,8 +131,8 @@ class Frame():
         return classframe
 
     def __parse_id(self, frameup):
-        idframe = re.sub(r"(<.+?)(?<!(?:[\x5C\x3D\x3E]\x22))#([\w\d.:-]+)(?!\x22)", 
-                         "\\1 id=\"\\2\"", frameup) 
+        idframe = re.sub(r"(<.+?)(?<!(?:[\x5C\x3D\x3E]\x22))#([\w\d:-]+)(?!\x22)", 
+                         "\\1 id=\"\\2\"", frameup) # dots can be present in id attr. come back
         return idframe
 
     def __autoclose(self, frameup):
