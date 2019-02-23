@@ -83,9 +83,11 @@ pane = dict()
 def processor(tag, attr, mode):
     global __panenotfound__, __destinationunresolved__
     global exports, pane
+
     if tag.lower() == "load":
         rel = getAttribute('rel', attr).lstrip().lower()
         src = ""
+
         if rel == "panes":
             src = getAttribute('src', attr)
             src = realpath(workspace, src)
@@ -95,7 +97,10 @@ def processor(tag, attr, mode):
             else:
                 __panenotfound__ = True
             exports["pane"] = pane
+
         elif rel == "dest":
+            check_mode(mode, FrameClass.LAYOUT_MODE, "dest") # check mode
+
             dest = getAttribute('href', attr)
             dest = realpath(workspace, dest)
             if os.path.isdir(dest):
@@ -106,14 +111,17 @@ def processor(tag, attr, mode):
                 except OSError as ex:
                     __destinationunresolved__ = True
             exports["dest"] = dest
+
         elif rel == "layout":
-            if mode == FrameClass.LAYOUT_MODE:
-                console.error("layout cannot have a layout")
-                return
+            check_mode(mode, FrameClass.LAYOUT_MODE, "layout") # check mode
+
             src = getAttribute('src', attr)
             src = realpath(workspace, src)
             exports["layout"] = src
+
         elif rel == "specific":
+            check_mode(mode, FrameClass.LAYOUT_MODE, "specific") # check mode
+
             src = getAttribute('src', attr)
             address = getAttribute('find', attr)
             src = realpath(workspace, src)
@@ -125,6 +133,7 @@ def processor(tag, attr, mode):
             exports["specific"] = pane[address]
         else:
             pass
+
     elif tag.lower() == "import":
         src = getAttribute('src', attr)
         src = realpath(workspace, src)
@@ -141,3 +150,14 @@ def realpath(workspace, path):
         path = os.path.join(workspace, path, '')
         return os.path.normpath(path)
     else: return path
+
+def check_mode(mode, against, msg):
+    msgs = {
+        "layout": "layout file cannot have a layout",
+        "dest": "layout file is not qualified to have a 'dest' relationship",
+        "specific": "layout file is not qualified to have a 'specific' relationship"
+    }
+    if mode == against:
+        console.error(msgs[msg])
+        sys.exit(1)
+    return 0
