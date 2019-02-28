@@ -15,10 +15,4 @@ package:
   description: Build and deploy websites faster than you can blink your eyes
   SCM: Git
   repository: https://github.com/framestd/sledge
-  tags:
-    - HTML
-    - python
-    - sledge
-    - frame
-    - pane
   dist: sledge
