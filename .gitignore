@@ -2,4 +2,7 @@
 **/**/.vscode/
 **/**/__pycache__/
 tests/**/build/
+*.egg*?/
+dist/
+build/**
 *.pyc
