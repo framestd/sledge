@@ -38,9 +38,13 @@ def get_all_files(path, *ignore):
             get_all_files(os.path.join(path, eachdir), *ignore)
 
 def couple(p, f):
-    print(p, f)
+    global path
     src = os.path.join(p,f)
-    dest = os.path.join(dist, f)
+    from sledge import jobs
+    pd = jobs.path_diff(path, p)['positive']
+    pd = '' if pd is None else pd
+    dest = os.path.join(dist, pd, f)
+    print('copying "%s" to "%s"'%(src, dest))
     fs = open(src)
     fc = fs.read()
     fc = '# ' + banner + '\n\n' + fc
@@ -50,9 +54,7 @@ def couple(p, f):
     fd.close()
 
 absp = os.path.dirname(os.path.abspath(sys.argv[0]))
-path = os.path.join(absp, 'scripts')
+#path = os.path.join(absp, 'scripts') # no need to use absolute path
+path = 'scripts'
 get_all_files(path, '.vs', '.vscode', '__pycache__')#py3 env
-"""try:
-    raw_input('press return to cancel')
-except KeyboardInterrupt:
-    sys.exit(0)"""
+
