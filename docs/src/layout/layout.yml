@@ -1,4 +1,5 @@
 title: &title Sledge
+theme: "#ffffff"
 baseuri: https://framestd.github.io/sledge/
 get-sledge: https://github.com/framestd/sledge/releases/
 icons:
@@ -36,35 +37,35 @@ nav:
   links:
     Get Started:
       - TITLE: Get Started
-        HREF: ./getstarted.html
+        HREF: ${FRAME::PATH_PREFIX}./getstarted.html
       - TITLE: What is Remarkup
-        HREF: ./getstarted.html#sec:what-is-remarkup
+        HREF: ${FRAME::PATH_PREFIX}./getstarted.html#sec:what-is-remarkup
       - TITLE: What is a Frame
-        HREF: ./getstarted.html#sec:what-is-a-frame
+        HREF: ${FRAME::PATH_PREFIX}./getstarted.html#sec:what-is-a-frame
       - TITLE: What is a Pane
-        HREF: ./getstarted.html#sec:what-is-a-pane
-    Learn:
-      - TITLE: How to use
-        HREF: ./docs/how-to-use.html
+        HREF: ${FRAME::PATH_PREFIX}./getstarted.html#sec:what-is-a-pane
+    Remarkup:
       - TITLE: Using variables
-        HREF: ./learn/variables.html
+        HREF: ${FRAME::PATH_PREFIX}./remarkup/using-variables.html
       - TITLE: Remarkup functions
-        HREF: ./learn/functions.html
+        HREF: ${FRAME::PATH_PREFIX}./remarkup/functions.html
       - TITLE: Remarkup data-types
-        HREF: ./learn/data-types.html
+        HREF: ${FRAME::PATH_PREFIX}./remarkup/data-types.html
       - TITLE: Preprocessors
-        HREF: ./learn/preprocessors.html
+        HREF: ${FRAME::PATH_PREFIX}./remarkup/preprocessors.html
       - TITLE: class attributes
-        HREF: ./learn/class-attributes.html
+        HREF: ${FRAME::PATH_PREFIX}./remarkup/class-attributes.html
       - TITLE: id attributes
-        HREF: ./learn/id-attributes.html
+        HREF: ${FRAME::PATH_PREFIX}./remarkup/id-attributes.html
       - TITLE: Fields
-        HREF: ./learn/fields.html
+        HREF: ${FRAME::PATH_PREFIX}./remarkup/fields.html
       - TITLE: Wrap ups
-        HREF: ./learn/wrap-up.html
+        HREF: ${FRAME::PATH_PREFIX}./remarkup/wrap-up.html
     Docs:
-      - TITLE: How to use
-        HREF: ./docs/how-to-use.html
+      - TITLE: Using from CLI and CLI API
+        HREF: ${FRAME::PATH_PREFIX}./docs/command-line.html
+      - TITLE: Using with Python and Python API
+        HREF: ${FRAME::PATH_PREFIX}./docs/using-with-python.html
     Services:
       - TITLE: Help
         HREF: https://framestd.github.io/services/help
