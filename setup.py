@@ -25,7 +25,7 @@ setup(
         'sledge'
     ],
     package_dir={'sledge': 'sledge'},
-    scripts=['bin/sledge_cli'],
+    scripts=['bin/sledge.sh', 'bin/sledge.cmd', 'bin/sledge_cli'],
     install_requires=requirements,
     license='MIT license',
     zip_safe=False,
