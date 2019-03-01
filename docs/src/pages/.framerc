@@ -1,0 +1,8 @@
+{
+  "ignore":[""],
+  "filter":["*.frame"],
+  "dest": {
+    "path": "../../build",
+    "rel_to_pages_root": false
+  }
+}
