@@ -1,0 +1,17 @@
+@load: rel-"dest" href-"../../../build"
+@load: rel-"layout" src-"../../layout/layout.frame"
+@load: rel-"specific" find-"getstarted" src-"../../panes/specific.yml"
+@import: src-"../../imports/footer.frame" as-"footer"
+@import: src-"../../imports/issue.frame" as-"issue"
+
+<div.span9>
+  <div.screen>
+    <div.intro>
+      <h1>Using variables in a Frame</h1>
+    </div>
+    <div>
+      ${issue}
+    </div>
+  </div>
+  ${footer}
+</div>
