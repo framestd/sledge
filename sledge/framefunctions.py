@@ -36,7 +36,7 @@ class FrameMethodError(Exception):
 
 #########               BEGIN FRAME FUNCTIONS                   ##########
 from ._compiler import frame
-from frame import Frame
+from .frame import Frame
 
 class FrameFunctions(Frame):
     def __init__(self, **kwargs):
