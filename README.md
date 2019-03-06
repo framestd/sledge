@@ -1,21 +1,15 @@
 [![Build Status](https://travis-ci.org/framestd/sledge.svg?branch=master)](https://travis-ci.org/framestd/sledge)  
-[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Develop%20codes%20easily%20no%20lag.%20Allow%20Sledge%20to%20handle%20your%20build%20Get%20Sledge&url=https://github.com/framestd/sledge/&via=RealLongman&hashtags=python,sledge,templates,framestd,developers,remarkup,templatingengine,programming,web)
+
 <p align="center">
   <img src="https://raw.githubusercontent.com/framestd/sledge/master/images/frame-text300.png" alt="Frame logo"/>
 </p>
 
 # Sledge  
-
-## Warning
-> Everything under this repository is still under development.  
-> There are no official releases for the public yet.  
-> To be informed when this repo leaves development and is released click the watch button in the top right corner relative to you, then choose your plan for the watch or you can star it to always remember to come back and check.  
-
 Sledge is a powerful dev-tool for building, but not limited to, webpages. In fact, you can use sledge to build anything you deem suitable. Majorly you'd want to use it for HTML development. It makes the task of writing HTML easier. You may think of sledge as a **markup script**&mdash;a very easy and fast way to write what would be a complex markup in a simple way, and still get the same result.  
 With this tool in your box, you should worry less about your markup and focus more on the functionality of your markup. Spend the time you need to write complex markup on scripting your markup's functionality, and your back-end's.
 
 ## What do I need?
-Sledge is written in python, so you need python installed on your system. If you don't have python installed on your system and you run windows [download python](https://www.python.org/downloads/windows) for windows. If you are a linux user you should have python, you've just not unlocked it. Run this to unlock or consider this [python guide](https://docs.python-guide.org/starting/install3/linux/), but first check if it's installed, run:
+Sledge is written in python, so you need python installed on your system. If you don't have python installed on your system and you run windows [download python](https://www.python.org/downloads/windows) for windows. If you are a linux user you should have python, you've just not unlocked it. Run this to get python or consider this [python guide](https://docs.python-guide.org/starting/install3/linux/), but first check if it's installed, run:
 ```bash
 python --version
 # if this returns something like:
@@ -33,7 +27,7 @@ Sledge is tested and runs fine with the following versions of python:
 3. Python 3.5  
 4. Python 3.6  
 
-So if your version is any of the above, sledge is yours.  
+So if your version is any of the above, sledge is yours, and if your version is not listed above, you can still try it out it would surely work. **Compatibility is not assured with versions less than 2.7**.  
 
 ## What we offer in a nutshell  
 
@@ -136,39 +130,55 @@ Frame makes use of CSS `class` selector `.` and `id` selector `#` to specify cla
   </div>
 </div>
 ```  
-> **Note**: preprocessors should be added at the begining of file, the parser terminates when it reads a token that is not a preprocessor, and never continue or come back to parse later.  
+> **Note**: preprocessors should be added at the begining of file, the parser terminates when it reads a token that is not a preprocessor, and never continue or come back to parse later, excepts for comments and HTML 5 `<!DOCTYPE html>` declaration.  
 
 ## Using Sledge  
-Sledge has all you need. We already have a python file `sledge.py` that does your work for you **_check it out_** [sledge.py script](https://github.com/framestd/sledge/blob/master/sledge.py). You can write your own script if you think you want to have more than the priviledges `sledge.py` offers. The sledge package exports three methods: 
-* `render(src, mode)` this may return a tuple or a compiled markup. `mode` tells it whether it's a layout file or not `mode=1` for layout files then it returns a compiled markup; `mode=0` default it returns tuple containing compiled page and all other information from the preprocessors.   
-* `hammer(src)` this does the whole build work and returns nothing (void).  
-* a bonus `get_all_files` that can walk directorys recursively and call private `_build` method to do the build job.  
+Sledge has all you need. Sledge has support for both UNIX and Windows users as long as there is a bash/shell or command prompt, sledge can be run from the command line with its rich **Command Line API**(CLAPI). Sledge can also be run directly from python, so if you aren't familiar with a command line you can still use sledge. The sledge package exports three methods, and one `<enum>` object, `Mode`:  
 
-### ...from command line  
-You can also automate your build. Using our `Vigilante` class you can watch files, limited to your pages only, i.e if your layout or panes&mdash;`.yml` sources are not in your pages directory then any change to layout or YAML source won't trigger a build. The directory passed from the command line as args to...as in:  
+* `render(src, mode)` this may return a dict or a compiled markup as response. `mode` tells it what kind of mode to use to compile. If it's a layout file `mode=Mode.LAYOUT_MODE`, for single pages file `mode=Mode.FILE_MODE`, for all files in a directory `mode=Mode.DIR_MODE`. When using `Mode.LAYOUT_MODE`, `sledge.render` returns a string of compiled markup; `Mode.DIR_MODE`, _default_, it returns a dict containing compiled page and all other information from the preprocessors.   
+* `hammer(src)` this does the whole build work and returns nothing (void).  
+* a bonus `get_all_files` that can walk directorys recursively, ignore files and directories, and call `_build` method to do the build job.  
+* `get_build_output` which return whatever has been built after the call on `sledge.hammer(src, ret=True)`. If `ret=True` is not set on `sledge.hammer` `get_build_output` will not work as you expect.
+
+### ...from command line   
 
 ```bash
-python sledge.py -w ../tests/pages 
-# everything under this dir is watched
-# [-w|--watch] will watch
-python sledge.py ../tests/pages
-# nothing is being watched
+cd project/folder
+sledge init
+# initialises a new project
+```  
+#### project structure  
+```text
+project/
+|__ folder/
+-----------------------------
+    |__ src/
+        |__ imports/
+        |__ layout/
+        |   |__ layout.frame
+        |   |__ layout.yml
+        |__ pages/
+        |   |__ .sledge/
+        |   |__ .framerc
+        |   |__ index.frame
+        |__ panes/
+            |__ index.yml
+            |__ specific.yml
 ```  
 
-### ..with bash
-We do not provide any shell script yet, but we'll do soon  
+### ...with bash  
 ```bash
-python sledge.py --watch path/to/workspace 
-# watching [-w|--watch]
-```   
+sledge build -w src/pages 
+# everything under this dir is watched
+# until a Ctrl + C
+# [-w|--watch] will watch
+sledge build src/pages
+# nothing is being watched
+```  
+   
 ### ...with cmd  
-We provide a `.cmd` script which we called our **API Entry Point** and idealy this should be used 
-
 ```batch
-cd where\sledge\cmd\is
-rem sledge script --update path/to/your-script.py
-rem if you'll not use sledge.py but your own script
-sledge nail -w path/to/workspace
+sledge build -w src/pages
 rem watching path for changes
 ```  
 # Installing Sledge  
@@ -179,6 +189,9 @@ pip install <package-name>
 package name could be sledge we can't tell that now, depends on name availability.  
 # Contributing  
 Looking to be a contributor, no problem, you are welcome. Read our guidelines to contributing to sledge. We have a [CONTRIBUTING.md](https://github.com/framestd/sledge/blob/master/CONTRIBUTING.md) for that.  
+## Share
+[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Build%20and%20deploy%20websites%20faster%20than%20you%20can%20wink%20your%20eye.%20Allow%20Sledge%20to%20handle%20your%20the%20hard%20work.%20Get%20Sledge&url=https://github.com/framestd/sledge/&via=framestd&hashtags=python,sledge,framestd,remarkup)  
 
 # License  
-Sledge is licensed under [MIT](https://github.com/framestd/sledge/blob/master/LICENSE)
+Sledge is licensed under the [MIT License](https://github.com/framestd/sledge/blob/master/LICENSE)  
+Copyright (c) Caleb Adepitan `datetime.datetime.now().strftime(%Y)`
