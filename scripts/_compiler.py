@@ -1,4 +1,5 @@
 import os
+from . import frame
 from .frame import Frame
 
 class Compiler(Frame):
