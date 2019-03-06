@@ -1,21 +1,29 @@
 from __future__ import print_function
-import yaml
 import os
 import sys
 
-banner = """Copyright {}. All rights reserved.
-Remarkup v1.0 python implementation.
+pkg = {
+    'copyright': '2019 Caleb Adepitan',
+    'name': 'Sledge',
+    'version': '1.0.0',
+    'authors': ['Caleb Pitan'],
+    'license': 'MIT',
+    'dist': 'sledge',
+    'repo': 'https://github.com/framestd/sledge/',
+    'site': 'https://framestd.github.io/sledge/'
+}
+
+banner = """Copyright (c) {}. All rights reserved.
+Remarkup for HTML, python implementation.
 {} v{}.
-Project Manager: {}.
-The Remarkup specifications that govern this implementation can be found at:
-https://framestd.github.io/remarkup/spec/v1/
+Author(s): {}.
+The Remarkup guides that govern this implementation can be found at:
+https://framestd.github.io/sledge/remarkup/
 Developers Indulgent Program (DIP)
 Use of this source code is licensed under the {} LICENSE
 which can be found in the LICENSE file."""
-package = open("package.yml")
-pkg = yaml.load(package)
-pkg = pkg['package']
-banner = banner.format(pkg["copyright"], pkg['name'], pkg['version'], pkg['authors'][1], pkg['license'])
+
+banner = banner.format(pkg["copyright"], pkg['name'], pkg['version'], (''.join(pkg['authors'])), pkg['license'])
 banner = '# '.join(banner.splitlines(True))
 dist = pkg['dist']
 
