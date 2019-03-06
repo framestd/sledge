@@ -15,7 +15,7 @@ DEST = 'dest'
 BUILD = 'path'
 
 from . import frame
-from frame import Frame
+from .frame import Frame
 class PreProcessor(Frame):
     def __init__(self, **kwargs):
         self.CURDIR = kwargs['cd']
