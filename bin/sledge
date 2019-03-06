@@ -1,0 +1,22 @@
+#!/bin/sh
+# Sledge Command Line API (CLAPI) Entry
+# Copyright (c) 2019 Caleb Adepitan
+# Licensed under the MIT License.
+
+basedir=$(dirname "$(echo "$0" | sed -e 's,\\,/,g')")
+script="$basedir/sledge_cli.py"
+if command -v python >/dev/null 2>/dev/null
+then
+  pypath=$(command -v python)
+elif command -v python2 >/dev/null 2>/dev/null
+then
+  pypath=$(command -v python2)
+elif command -v python3 >/dev/null 2>/dev/null
+then
+  pypath=$(command -v python3)
+else
+  echo "[error]: the script could not find python"
+  exit 1
+fi
+"$pypath" "$script" "$@"
+exit $?
