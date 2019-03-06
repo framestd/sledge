@@ -1,5 +1,5 @@
 {
-  "ignore":[""],
+  "ignore":["*.sledge/"],
   "filter":["*.frame"],
   "dest": {
     "path": "../../build",
