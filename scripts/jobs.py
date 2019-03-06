@@ -9,7 +9,9 @@ job = dict()
 class PathException(Exception):
     def __init__(self, msg):
         Exception.__init__(self, msg)
-    
+        self.message = msg
+    def log(self):
+        print(self.msg)
 
 def path_diff(path, _path):
     drive, path = os.path.splitdrive(path)
@@ -26,15 +28,14 @@ def path_diff(path, _path):
         diff for diff in path if not diff in _path
     ])
     if posdiff != nullstr and negdiff != nullstr:
-        raise PathException("The two paths don't follow the same branch")
-        return
+        #raise PathException("The two paths don't follow the same branch '%s' '%s'"%(posdiff, negdiff))
+        #return
+        pass
     if not posdiff == nullstr:
-        print(posdiff, "p")
-        dif[pos] = posdiff
+        dif[pos] = posdiff + os.sep
         dif[neg] = None
     else:
-        print(negdiff, "n")
-        dif[neg] = negdiff
+        dif[neg] = negdiff + os.sep
         dif[pos] = None
     return dif
 
@@ -43,10 +44,12 @@ def add( filename):
     job[1]["tocompile"] = filename
 
 def dojob():
-    fr = _compiler.Frame()
+    fr = _compiler.Compiler()
     # compile imports
     # imports should have the same mode as layout
     # imports are considered to be a part of the page's layout
     return fr.compile(job[1]["tocompile"], _compiler.Frame.LAYOUT_MODE) # build imports.
     
-#path_diff("C:\\Users\\Adepitan", "C:\\Users\\Adepitan\\MyPrograms\\WebAidBox")['positive']
+#path_diff("C:\\Caleb, 
+#       "C:\\Caleb\\MyPrograms\\jumper")['positive'] = 
+#       'MyPrograms\\jumper'

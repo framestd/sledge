@@ -1,12 +1,8 @@
 import re
 import sys
 from . import console
-from .preprocessors import realpath
 
-functions = dict()
-framepane = dict()
-Framecls = object()
-workspace = ''
+
 
 def recurseAddress(o, x, i=0):
     try:
@@ -14,180 +10,190 @@ def recurseAddress(o, x, i=0):
     except KeyError:
         pass
 
-def Export(cls):
-    global Framecls, workspace
-    Framecls = cls
-    return
-
 def sub(pattern, item, where, key):
     return re.sub(pattern, 
     "{}".format(item[key]), 
     where) if key in item else re.sub(pattern, 
     '', where)
 
+
+#########               METHOD EXCEPTION                   ##########
+
+class FrameMethodError(Exception):
+    def __init__(self, msg):
+        Exception.__init__(msg)
+
+
 #########               BEGIN FRAME FUNCTIONS                   ##########
+from ._compiler import frame
+from frame import Frame
 
-def explode(options, arg):
-    """The Frame function -- explode:
-    This is used to propagate a given string and formatting it with unique Panes.
-    It is used for links. For example, navbar links, other navigation links 
-    and footer links for an HTML page
-    Learn more:
-    https://framestd.github.io/remarkup/spec/v1/frame-functions.html#explode"""
-    Framecls._Frame__RESTRUCTURE = 1
-    cond = len(arg) == 3
-    temparg = arg[2] if cond else arg[1]
-    templateAddress = str(temparg).lstrip().rstrip().split("::")
-    #pane = options["WAB-NAV"]["NAV-LINKS"]
-    pane = recurseAddress(options, templateAddress, 0)
-    
-    group = arg[0] if cond else None
-    data = arg[1] if cond else arg[0]
-    datalist = []
-    ndata = None
-    index = 0
+class FrameFunctions(Frame):
+    def __init__(self, **kwargs):
+        self.CURDIR = kwargs['cd']
+        self.BASESPACE = kwargs['bs']
+        self.pane = kwargs['pn']
 
-    if type(pane) is list:
-        for item in pane:
-            ndata = sub(r'\x24\x7BICON\x7D', item, data, "ICON")
-            ndata = sub(r'\x24\x7BTITLE\x7D', item, ndata, "TITLE")
-            ndata = sub(r'\x24\x7BHREF\x7D', item, ndata, "HREF")
-            datalist.append(ndata)
+    functions = dict()
+    def explode(self):
+        return 0
+    def explode(self, group="", ctx="", address=""):
+        """The Frame function -- explode:
+        This is used to propagate a given string arg, mostly a markup and formatting it with unique Panes.
+        It is used for links. For example, navbar links, other navigation links 
+        and footer links for an HTML page"""
+        
+        Frame._RESTRUCTURE = 1
+        options = self.pane
+
+        cond = address == ""
+        if cond:
+            address, ctx, group = ctx, group, None
+        temparg = address
+        templateAddress = str(temparg).lstrip().rstrip().split("::")
+        #pane = options["nav"]["nav-links"]
+        pane = recurseAddress(options, templateAddress, 0)
+
+        data = ctx
+        datalist = []
+        ndata = None
+        index = 0
+
+        if type(pane) is list:
+            for item in pane:
+                ndata = sub(r'\x24\x7BICON\x7D', item, data, "ICON")
+                ndata = sub(r'\x24\x7BTITLE\x7D', item, ndata, "TITLE")
+                ndata = sub(r'\x24\x7BHREF\x7D', item, ndata, "HREF")
+                datalist.append(ndata)
+            return str("".join(datalist))
+        
+        cond = not group is None
+        for item in pane.values():
+            group_pane = list(pane.keys())[index] if cond else ''
+            index += 1
+            group_ = re.sub(r'\x24\x7BFRAME::GROUP\x7D', group_pane, group) if cond else ''
+            datalist.append(group_)
+
+            for i in range(len(item)):
+                ndata = sub(r'\x24\x7BICON\x7D', item[i], data, "ICON")
+                ndata = sub(r'\x24\x7BTITLE\x7D', item[i], ndata, "TITLE")
+                ndata = sub(r'\x24\x7BHREF\x7D', item[i], ndata, "HREF")
+                datalist.append((datalist.pop() + ndata))
         return str("".join(datalist))
 
-    for item in pane.values():
-        group_pane = list(pane.keys())[index] if cond else ''
-        index += 1
-        group_ = re.sub(r'\x24\x7BFRAME::GROUP\x7D', group_pane, group) if cond else ''
-        datalist.append(group_)
-
-        for i in range(len(item)):
-            ndata = sub(r'\x24\x7BICON\x7D', item[i], data, "ICON")
-            ndata = sub(r'\x24\x7BTITLE\x7D', item[i], ndata, "TITLE")
-            ndata = sub(r'\x24\x7BHREF\x7D', item[i], ndata, "HREF")
-            datalist.append((datalist.pop() + ndata))
-    return str("".join(datalist))
-
-def getf(options, filepath):
-    Framecls._Frame__RESTRUCTURE = 0 # do not restructure tabs, pad them
-
-
-    if type(filepath) is list and len(filepath) != 1:
-        console.error("read function expected 1 argument {} given".format(len(filepath)))
-        return
-    filepath = filepath[0]
-    filepath = filepath.lstrip().rstrip()
-    with open(realpath(workspace, filepath)) as res:
-        return Framecls.escape(
-            str(
-                res.read()
-            )
-        )
-    return ""
-
-def encodeURI(options, s):
-    Framecls._Frame__RESTRUCTURE = 0
-    safe = "/"
-    try:
-        safe = s[1]
-    except IndexError:
-        safe = safe
-    encoded = ""
-    s = s[0]
-    s = Framecls.unescape(s)
-    try:
-        from urllib import parse # for Python 3
-    except ImportError:
+    def getf(self, filepath):
+        Frame._RESTRUCTURE = 0 # do not restructure tabs, pad them
+        
+        options = self.pane
+        
+        filepath = self.setformating(filepath.lstrip().rstrip())
+        from .preprocessors import PreProcessor
         try:
-            import urllib as parse # for Python 2
-        except ImportError:
-            console.error("could not load library \"urllib\"")
-            console.error("cannot encode URI")
+            f = open(PreProcessor.realpath(self.CURDIR, filepath))
+            return Frame.escape(
+                str(
+                    f.read()
+                )
+            )
+        except IOError as ex:
+            console.error(ex.message)
             sys.exit(1)
-    encoded = parse.quote_plus(s, safe=safe)
-    return encoded
+        return ""
 
-def encodeBase64(options, s):
-    import base64 as b64
-    try:
-        urlsafe = int(s[1]) if type(s) is list else False
-    except IndexError:
-        urlsafe = False
-    try:
-        s = s[0] if type(s) is list else s
-    except IndexError:
-        console.error("expected a string as first argument got null string")
-        sys.exit(1)
+    def encodeURI(self, uri, safe='/'):
+        Frame._RESTRUCTURE = 0
 
-    s = Framecls.unescape(s)
-    try:
-        s = s.encode("utf-8")
-    except TypeError:
-        console.error('Internal error')
-        sys.exit(1)
-    encoded = ""
+        options = self.pane
+        encoded = ""
+        # unescape, you won't want to encode an \x5C:
+        # reverse-solidus along with string 
+        uri = Frame.unescape(uri)
+        try:
+            from urllib import parse # for Python 3
+        except ImportError:
+            try:
+                import urllib as parse # for Python 2
+            except ImportError:
+                console.error("could not load required library 'urllib'")
+                console.error("cannot encode URI")
+                sys.exit(1)
+        encoded = parse.quote_plus(uri, safe=safe)
+        return encoded
 
-    if urlsafe:
-        encoded = b64.urlsafe_b64encode(s).decode("ascii")
-    else:
-        encoded = b64.b64encode(s)
-    return encoded
+    def encodeBase64(self, string, urlsafe=False):
+        import base64 as b64
+        # unescape, you won't want to encode an \x5C:
+        # reverse-solidus along with string 
+        string = Frame.unescape(self.setformating(string))
+        try:
+            string = string.encode("utf-8")
+        except TypeError:
+            console.error('Internal error') # this is not meant to happen
+            sys.exit(1)
+        encoded = ""
 
-def decodeBase64(options, s):
-    import base64 as b64
-    try:
-        urlsafe = int(s[1]) if type(s) is list else False
-    except IndexError:
-        urlsafe = False
-    try:
-        s = s[0] if type(s) is list else s
-    except IndexError:
-        console.error("expected a string as first argument got null string")
-        sys.exit(1)
+        if urlsafe:
+            encoded = b64.urlsafe_b64encode(string).decode("ascii")
+        else:
+            encoded = b64.b64encode(string).decode("ascii")
+        return encoded
 
-    s = Framecls.unescape(s)
-    try:
-        s = s.encode("utf-8")
-    except TypeError:
-        console.error('Internal error')
-        sys.exit(1)
-    decoded = ""
+    def decodeBase64(self, string, urlsafe=False):
+        import base64 as b64
+        # unescape not really necessary here
+        # but to be on a safer side
+        # unescape or not, I don't think anything is affected
+        # Base64 don't contain "(" or "," or ")" or "\"
+        string = Frame.unescape(self.setformating(string))
+        try:
+            string = string.encode("utf-8")
+        except TypeError:
+            console.error('Internal error') # this is not meant to happen
+            sys.exit(1)
+        decoded = ""
 
-    if urlsafe:
-        decoded = b64.urlsafe_b64decode(s).decode("ascii")
-    else:
-        decoded = b64.b64decode(s).decode("ascii")
-    return decoded
+        if urlsafe:
+            decoded = b64.urlsafe_b64decode(string).decode("ascii")
+        else:
+            decoded = b64.b64decode(string).decode("ascii")
+        return decoded
 
 
-def htmlchars(options, arg):
-    #useful for writing in <pre> and <code> tags without stress.
-    try:
-        arg[1] = arg[1].lstrip().rstrip()
-        if str(arg[1]).isdigit():
-            Framecls._Frame__RESTRUCTURE = int(arg[1])
+    def htmlchars(self, code, inline_or_block=1):
+        #useful for writing in <pre> and <code> tags without stress.
+        # inline_or_block: 1 for block, 0 for inline
+        if str(inline_or_block).isdigit():
+            Frame._RESTRUCTURE = int(inline_or_block)
         else:
             console.warn("expected a number as the second argument")
-            Framecls._Frame__RESTRUCTURE = 0
-    except IndexError:
-        Framecls._Frame__RESTRUCTURE = 1
-    if len(arg) < 1:
-        return
-    specialchars = [
-        ("&", "&amp;"),
-        ("<", "&lt;"),
-        (">", "&gt;"),
-        ("\"", "&quot;")
-    ]
-    inv = arg[0].rstrip()
-    for char, code in specialchars:
-        inv = inv.replace(char, code)
-    return str(inv).lstrip()
-
-# export functions
-functions["explode"] = explode
-functions["read"] = getf
-functions["code"] = htmlchars
-functions["encodeURI"] = encodeURI
-functions["encodeB64"] = encodeBase64
-functions["decodeB64"] = decodeBase64
+            Frame._RESTRUCTURE = 0 # make inline if anything other than number
+        
+        specialchars = [
+            ("&", "&amp;"),
+            ("<", "&lt;"),
+            (">", "&gt;"),
+            ("\"", "&quot;"),
+            ("'", "&#39;")
+        ]
+        inv = self.setformating(code.rstrip())
+        for char, ent in specialchars:
+            inv = inv.replace(char, ent)
+        return str(inv).lstrip()
+    
+    @staticmethod
+    def mount_method(method, access_name):
+        """if method is None or access_name is None:
+            raise FrameMethodError("access_name or method cannot be of type 'None'")
+        if not True:
+            raise AttributeError()
+        FrameFunctions.functions[access_name] = method"""
+        return NotImplemented#yet
+    
+    # export functions
+    def mount(self):
+        FrameFunctions.functions["explode"] = self.explode
+        FrameFunctions.functions["read"] = self.getf
+        FrameFunctions.functions["code"] = self.htmlchars
+        FrameFunctions.functions["encodeURI"] = self.encodeURI
+        FrameFunctions.functions["encodeB64"] = self.encodeBase64
+        FrameFunctions.functions["decodeB64"] = self.decodeBase64
