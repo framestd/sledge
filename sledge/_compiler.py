@@ -9,8 +9,7 @@
 # which can be found in the LICENSE file.
 
 import os
-from . import frame
-from frame import Frame
+from .frame import Frame
 
 class Compiler(Frame):
     def __init__(self):
