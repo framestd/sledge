@@ -1,9 +1,9 @@
-# Copyright 2019 Frame Studios. All rights reserved.
-# Remarkup v1.0 python implementation.
-# Sledge v1.0.
-# Project Manager: Caleb Pitan.
-# The Remarkup specifications that govern this implementation can be found at:
-# https://framestd.github.io/remarkup/spec/v1/
+# Copyright (c) 2019 Caleb Adepitan. All rights reserved.
+# Remarkup for HTML, python implementation.
+# Sledge v1.0.0.
+# Author(s): Caleb Pitan.
+# The Remarkup guides that govern this implementation can be found at:
+# https://framestd.github.io/sledge/remarkup/
 # Developers Indulgent Program (DIP)
 # Use of this source code is licensed under the MIT LICENSE
 # which can be found in the LICENSE file.
@@ -13,28 +13,30 @@ import os
 import time
 import sys
 msg = "{} is missing -- sledge {} continue without {}"
-cprint = lambda m, c: print(m)
+verbose = False
+
+try:
+    from termcolor import cprint
+except ImportError:
+    print(msg.format("termcolor", "will", "all those fancy colors"))
 if os.name == 'nt':
     try:
         import colorama
         colorama.init()
     except ImportError:
         print(msg.format("colorama", "will", "all those fancy colors"))
-try:
-    from termcolor import cprint
-except ImportError:
-    print(msg.format("termcolor", "will", "all those fancy colors"))
+        cprint = lambda m, *c: print(m)
 
 def log(*msgs):
     print(*msgs)
 def error(msg):
-    cprint("error: {}".format(msg), "red")
+    cprint("[error]: {}".format(msg), "red")
     time.sleep(2.0)
     sys.stdout.write('\x1b[1A')
     sys.stdout.write('\x1b[2K')
 def warn(msg):
-    cprint("warning: {}".format(msg), "yellow")
-    time.sleep(0.75)
+    cprint("[warning]: {}".format(msg), "yellow")
+    #time.sleep(0.75)
     sys.stdout.write('\x1b[1A')
     sys.stdout.write('\x1b[2K')
 def info(msg):

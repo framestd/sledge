@@ -1,9 +1,9 @@
-# Copyright 2019 Frame Studios. All rights reserved.
-# Remarkup v1.0 python implementation.
-# Sledge v1.0.
-# Project Manager: Caleb Pitan.
-# The Remarkup specifications that govern this implementation can be found at:
-# https://framestd.github.io/remarkup/spec/v1/
+# Copyright (c) 2019 Caleb Adepitan. All rights reserved.
+# Remarkup for HTML, python implementation.
+# Sledge v1.0.0.
+# Author(s): Caleb Pitan.
+# The Remarkup guides that govern this implementation can be found at:
+# https://framestd.github.io/sledge/remarkup/
 # Developers Indulgent Program (DIP)
 # Use of this source code is licensed under the MIT LICENSE
 # which can be found in the LICENSE file.
@@ -23,7 +23,7 @@ class Remarkup:
         pass
     __version__ = (1, 0)
 
-console.aware("SLEDGE -- NAIL 'EM ALL!")
+console.aware("Frame Studios -- Sledge")
 
 nullstr = ""
 
@@ -31,16 +31,19 @@ should_return = False
 # root      # curdir
 basespace = workshop = nullstr
 
+framerc = {}
 ignore = ()
 _filter = ()
 
-conf = ".framerc"
+confile = ".framerc"
 ext = ".html"
 n = "\n"
 
 status = ["sorry it failed. Check to see if you left \
-some nails in your pocket", "you nailed 'em all!"]
+some nails in your pocket", "completed"]
 
+Indexer = None
+_mode = None
 
 _ptrns = [r"(?:\..+)$", r"([ \t]*)\$\{FRAME::BODY\}", 
          r"[ \t]*\$\{FRAME::BODY\}", r"\$\{FRAME::TITLE\}", 
@@ -50,20 +53,20 @@ _ptrns = [r"(?:\..+)$", r"([ \t]*)\$\{FRAME::BODY\}",
 
 feedout = nullstr
 
-
+# <enum>
 class Mode:
     def __init__(self):
-        pass
-    DIR_MODE = compiler.Frame.DIR_MODE
-    FILE_MODE = compiler.Frame.FILE_MODE
-    LAYOUT_MODE = compiler.Frame.LAYOUT_MODE
+        raise TypeError('object of type enum cannot be instatiated')
+    DIR_MODE = compiler.Compiler.DIR_MODE
+    FILE_MODE = compiler.Compiler.FILE_MODE
+    LAYOUT_MODE = compiler.Compiler.LAYOUT_MODE
 
 
 def recurseAddress(o, x, i=0):
     try:
         return o[x[i]] if i == (len(x) - 1) else recurseAddress(o[x[i]], x, i+1)
     except KeyError:
-        console.error("invalid address {}".format(x))
+        console.warn("value at address '{}' is null-string".format(x))
         return None
 
 def specifics(frameup, pane):
@@ -73,11 +76,11 @@ def specifics(frameup, pane):
         if each_[1] != "METAS":
             each_ = each_[1:]
         else:
-            each_ = each_[2:]
+            each_ = ['meta'] + each_[2:]
         paneValue = recurseAddress(pane, each_, 0)
         if paneValue is None:
-            console.error("could not resolve address \"{}\"".format(each))
-            sys.exit(1)
+            console.warn("could not resolve address \"{}\"".format(each))
+            paneValue = nullstr
         if type(paneValue) is list:
             index = str(index)
             index = int(index) if index.isdigit() else index
@@ -97,83 +100,79 @@ def specifics(frameup, pane):
     return frameup
 
 def render(src, mode=Mode.DIR_MODE):
-
+    global _mode 
+    _mode = mode
+    fname = src if mode & 3 else None
     if src is None or src == nullstr:
         console.warn("nothing to build")
         return None
-    fr = compiler.Frame()
-    fr.inform(basespace, workshop)
+    fr = compiler.Compiler()
+    fr.inform(mode, fname, basespace, workshop, framerc)
     return fr.compile(src, mode)
 
-def get_all_files(basedir, ignore=(), _filter=()):
+def get_all_files(basedir, ignore=None, _filter=None):
     global workshop, feedout, basespace
-
-    ignore = [os.path.join(basespace,d) for d in ignore]
+    import fnmatch
+    if _filter is None or ignore is None:
+        # it should never come to this
+        raise TypeError("expected filter and ignore to be of type 'list' got 'NoneType'")
+    ignore = [os.path.join(basespace, d) for d in ignore]
+    ignore = [''] if len(ignore) < 1 else ignore
 
     allfiles = os.listdir(basedir)
     dirsOnly = os.listdir(basedir)
     temp = []
     workshop = basedir
 
-    for eachfile in allfiles:
-        abs_eachfile = os.path.join(basedir, eachfile)
-        if os.path.isfile(abs_eachfile) and not abs_eachfile in ignore:
-            temp.append(eachfile)
-            dirsOnly.remove(eachfile)
+    for n in range(len(ignore)):
+        for eachfile in allfiles:
+            abs_eachfile = os.path.join(basedir, eachfile)
+            if os.path.isfile(abs_eachfile) and not fnmatch.fnmatch(abs_eachfile, ignore[n]):
+                temp.append(eachfile)
+                dirsOnly.remove(eachfile)
     for i in range(len(_filter)):
         for each in temp:
-            if each.endswith(_filter[i]):
+            if fnmatch.fnmatch(each, _filter[i]): # allow globs pattern matching
                 feedout = _build(each, render(os.path.join(basedir, each)))
-    for eachdir in dirsOnly:
-        abs_eachdir = os.path.join(basedir, eachdir)
-        if os.path.isdir(abs_eachdir) and not abs_eachdir in ignore:
-            get_all_files(os.path.join(basedir, eachdir), ignore, _filter)
-    del allfiles, temp
+    for j in range(len(ignore)):
+        for eachdir in dirsOnly:
+            abs_eachdir = os.path.join(basedir, eachdir)
+            if os.path.isdir(abs_eachdir) and not fnmatch.fnmatch(abs_eachdir, ignore[j]): # allow globs pattern matching
+                get_all_files(os.path.join(basedir, eachdir), ignore, _filter) # recurse
+    del allfiles, temp # insignificant though
 
 def _build(filename, response):
+    global Indexer, _mode
+    if _mode == Mode.DIR_MODE:
+        Indexer = response['INDEXER']
     if response is None:
         return
-
     fileo = nfc = None
     dest = cLayoutFrame = genHTMLFile = None
-
-    cMainFrame = response[1]
-
-    if not response[0] is None:
-        cLayoutFrame = render(response[0], Mode.LAYOUT_MODE)
-    dest = response[2]
-    specific = response[3]
+    cMainFrame = response['PAGE']
+    if not response['LAYOUT_FILE'] is None:
+        cLayoutFrame = render(response['LAYOUT_FILE'], Mode.LAYOUT_MODE)
+    dest = response['DEST']
+    specific = response['UNIQUE']
+    specific['PATH_PREFIX'] = response['PATH_PREFIX']
     fname = re.sub(_ptrns[0], ext, filename)
-
     if not should_return and not dest is None:
         genHTMLFile = os.path.join(workshop, dest, fname)
     if not cLayoutFrame is None:
-        tab = re.search(_ptrns[1], cLayoutFrame).group(1) #search the current tab order
-        cMainFrame = _doTabs(cMainFrame, tab) #pad tabs according to tab order
-    
+        tab = re.search(_ptrns[1], cLayoutFrame).group(1) # query the current tab order
+        cMainFrame = _doTabs(cMainFrame, tab) # pad tabs according to tab order
         nfc = re.sub(_ptrns[2], cMainFrame, cLayoutFrame) # layout body
         nfc = re.sub(_ptrns[3], specific["title"], nfc) # page title
-        nfc = specifics(nfc, specific["meta"]) # page meta tags
+        nfc = specifics(nfc, specific) # all defered variables
     else:
         nfc = cMainFrame
-
-    if should_return or not genHTMLFile or not cLayoutFrame:
-        """if not meant to write out just feed out
-        Three cases: if should_return is true, return
-                     if no build destination specified, return
-                     if no layout specified, return
-        so you know sledge won't write to a file if there is no layout 
-        or no destination specified"""
+    if should_return or not genHTMLFile:
         return nfc
-    """# nfc: New Frame Content
-    # specific: a frame pane containing variables unique to
-              # each frame file. They are defered and are used during build time, 
-              # and are different from those used during compile time."""
     try:
         fileo = open(genHTMLFile, 'w')
         fileo.write(nfc)
     except IOError as ex:
-        console.error(ex.message)
+        console.error("could not open file '{}'".format(genHTMLFile))
     finally:
         fileo.close()
         check = re.search(_ptrns[4], nfc)
@@ -200,8 +199,6 @@ def _doTabs(context=nullstr, tab=nullstr):
             nctx += "%s\n"%(each)
         if codecheck:
             codeframe = True
-        
-        
     return nctx.rstrip()
 
 def _metas(x, c):
@@ -209,60 +206,69 @@ def _metas(x, c):
         yield re.sub(_ptrns[6]%(r".+?"), x, c)
         return
     for key, value in x.items():
-        # del x[key] #commented out for Py 3 RuntimeError: dictionary changed size during iteration
         if not value:
             yield nullstr
             return
         c = re.sub(_ptrns[6]%key, value, c)
         yield c
 
-
-from watchdog.observers import Observer
-from watchdog.events import PatternMatchingEventHandler
-class Vigilante(PatternMatchingEventHandler):
-    """Note: directory watching is experimental and not standard yet.
-To watch, make sure you watch from the `pages` dir; the directory 
-where your `webpage` files are and not from the `src` dir.
-Watching from the `src` dir causes undesired effects. Due
-to the fact that the API is not yet fully implemented."""
-    patterns = list(_filter).append("*.yml")
-
-    def vigil(self, event):
-        feedout = _build(os.path.basename(event.src_path), render(event.src_path, Mode.FILE_MODE))
-    
-    def on_modified(self, event):
-        self.vigil(event)
-
-    def on_created(self, event):
-        self.vigil(event)
-
-
-
-def hammer(workspace=os.path.dirname(__file__), watch=False, ret=False):
+def hammer(workspace=os.path.dirname(
+            os.path.abspath(__file__)), watch=False,
+            verbose=False, ret=False):
     global basespace, feedout, should_return
+    global framerc, confile, Indexer
+    if ret and watch:
+        console.error("you can't watch while expecting a return value")
+        sys.exit(1)
+    if not os.path.exists(workspace):
+        console.error('the specified path could not be found')
+        sys.exit(3)
+    import json
+    default_conf = """{
+        "ignore":["*.sledge/"],
+        "filter":["*.frame"],
+        "dest": {
+            "path": "../../build",
+            "rel_to_pages_root": true
+        }
+    }"""
+    framerc.update(json.loads(default_conf))
 
     should_return = ret
-
     if os.path.isfile(workspace):
+        basespace = os.path.dirname(workspace)
         feedout = _build(os.path.basename(workspace), render(workspace, mode=Mode.FILE_MODE))
         return
-
     basespace = workspace
 
-    import json
-    default_conf = '{"ignore":[],"filter":[".frame"]}'
-    confile = os.path.join(workspace, conf)
+    
+    confile = os.path.join(workspace, confile)
+    confile = open(confile).read() if os.path.exists(confile) else default_conf
+    framerc.update(json.loads(confile))
 
-    framerc = open(confile).read() if os.path.exists(confile) else default_conf
-    framerc = json.loads(framerc)
-    ignore = tuple(framerc['ignore'])
-    _filter = tuple(framerc['filter'])
+    ignore = framerc['ignore']
+    _filter = framerc['filter']
 
     get_all_files(workspace, ignore, _filter)
 
     if watch:
-        ob = Observer()
-        ob.schedule(Vigilante(), path=workspace)
+        import watchdog.observers
+        from .utils import vigilante
+
+        class callbacks:
+            def __init__(self):
+                pass
+            @staticmethod
+            def build(filename, response):
+                return _build(filename, response)
+            @staticmethod
+            def renderer(src, mode):
+                return render(src, mode)
+
+        handler = vigilante.Vigilante(_filter, ignore, Indexer, callbacks, Mode)
+        path_to_watch = os.path.normpath(os.path.join(workspace, '..'))
+        ob = watchdog.observers.Observer()
+        ob.schedule(handler, path=path_to_watch, recursive=True)
         ob.start()
         import time
         try:
@@ -270,7 +276,8 @@ def hammer(workspace=os.path.dirname(__file__), watch=False, ret=False):
                 time.sleep(1)
         except KeyboardInterrupt:
             ob.stop()
-            sys.exit(1)
+            Indexer.close()
+            #sys.exit(1)
         ob.join()
 
 def get_build_output():
@@ -278,4 +285,3 @@ def get_build_output():
     after calling `sledge.hammer(..., ret=True)`
     then `my_page = sledge.get_build_output()`"""
     return feedout
-
