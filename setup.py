@@ -16,20 +16,21 @@ test_requirements = [
 setup(
     name='sledge',
     version='1.0',
-    description='Build and deploy websites faster than you can blink your eyes',
+    description='Build and deploy websites faster than you can wink your eye',
     long_description=readme,
     author='Caleb Pitan',
     author_email='calebpitan@gmail.com',
     url='https://github.com/framestd/sledge',
     packages=[
-        'sledge'
+        'sledge',
+        'sledge.utils'
     ],
     package_dir={'sledge': 'sledge'},
-    scripts=['bin/sledge.sh', 'bin/sledge.cmd', 'bin/sledge_cli'],
+    scripts=['bin/sledge', 'bin/sledge.cmd', 'bin/sledge_cli.py'],
     install_requires=requirements,
     license='MIT license',
     zip_safe=False,
-    keywords='sledge remarkup frame pane',
+    keywords='sledge framestd remarkup html build',
     classifiers=[
         'Development Status :: pre-release',
         'Intended Audience :: developers',
